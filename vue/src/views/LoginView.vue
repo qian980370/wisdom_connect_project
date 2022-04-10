@@ -32,6 +32,9 @@
 
 <script>
 import {Document, LocationFilled, MapLocation, Money, Setting, Lock, User} from '@element-plus/icons-vue'
+import { ElForm } from 'element-plus'
+import { ElButton } from 'element-plus'
+import { ElFormItem } from 'element-plus'
 import request from "@/utils/request";
 export default {
   name: "LoginView",

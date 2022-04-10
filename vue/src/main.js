@@ -9,14 +9,3 @@ import '@/assets/css/global.css'
 createApp(App).use(store).use(router).use(ElementPlus).mount('#app')
 
 
-axios.interceptors.request.use(
-    config => {
-        if (localStorage.getItem('Authorization')) {
-            config.headers.Authorization = localStorage.getItem('Authorization');
-        }
-
-        return config;
-    },
-    error => {
-        return Promise.reject(error);
-    });

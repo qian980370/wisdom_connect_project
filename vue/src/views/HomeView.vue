@@ -2,8 +2,12 @@
   <div style="padding: 10px; width: 100%">
     <div style="margin: 10px 0">
       <el-button type="primary" @click="addUser">New</el-button>
+      <el-button type="primary" @click="addProfile">new profile</el-button>
     </div>
-
+    <div style="margin: 10px 0">
+      <el-button type="primary" @click="addUser">User</el-button>
+      <el-button type="primary" @click="addProfile">Profile</el-button>
+    </div>
     <div style="margin: 10px 0">
       <el-input v-model="query" placeholder="please input username information to search" style="width: 20%" clearable></el-input>
       <el-button type="primary" style="margin-left: 7px" @click="load">Search</el-button>
@@ -50,6 +54,22 @@
           prop="address"
           label="Address">
       </el-table-column>
+      <el-table-column
+          prop="hobby"
+          label="Hobby">
+      </el-table-column>
+      <el-table-column
+          prop="block"
+          label="Block">
+      </el-table-column>
+      <el-table-column
+          prop="privacy"
+          label="Privacy">
+      </el-table-column>
+      <el-table-column
+          prop="friend"
+          label="Friend">
+      </el-table-column>
 
 
 
@@ -89,71 +109,53 @@
             <el-form-item label="Email Address">
               <el-input type="email" v-model="form.email" />
             </el-form-item>
-            <el-form-item label="Age">
-              <el-input type="number" v-model="form.age" />
-            </el-form-item>
-            <el-form-item label="Address">
-              <el-input v-model="form.address" />
-            </el-form-item>
-            <el-form-item label="Gender">
-              <el-radio v-model="form.gender" label="Male" value="male" />
-              <el-radio v-model="form.gender" label="Woman" value="woman" />
-              <el-radio v-model="form.gender" label="Secret" value="secret" />
-            </el-form-item>
-            <el-form-item label="Administrator">
-              <el-switch v-model="form.admin"
-                         :active-value="1"
-                         :inactive-value="0"/>
-            </el-form-item>
             <el-form-item>
               <el-button type="primary" @click="onSubmit">Apply</el-button>
-              <el-button>Cancel</el-button>
+              <el-button @click="dialogVisible = false">Cancel</el-button>
             </el-form-item>
           </el-form>
         </div>
+      </el-dialog>
 
-
-<!--          <el-form-item label="Activity time">-->
-<!--            <el-col :span="11">-->
-<!--              <el-date-picker-->
-<!--                  v-model="form.date1"-->
-<!--                  type="date"-->
-<!--                  placeholder="Pick a date"-->
-<!--                  style="width: 100%"/>-->
-<!--            </el-col>-->
-<!--            <el-col :span="2" class="text-center">-->
-<!--              <span class="text-gray-500">-</span>-->
-<!--            </el-col>-->
-<!--            <el-col :span="11">-->
-<!--              <el-time-picker-->
-<!--                  v-model="form.date2"-->
-<!--                  placeholder="Pick a time"-->
-<!--                  style="width: 100%"-->
-<!--              />-->
-<!--            </el-col>-->
-<!--          </el-form-item>-->
-
-<!--          <el-form-item label="Activity type">-->
-<!--            <el-checkbox-group v-model="form.type">-->
-<!--              <el-checkbox label="Online activities" name="type" />-->
-<!--              <el-checkbox label="Promotion activities" name="type" />-->
-<!--              <el-checkbox label="Offline activities" name="type" />-->
-<!--              <el-checkbox label="Simple brand exposure" name="type" />-->
-<!--            </el-checkbox-group>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item label="Resources">-->
-<!--            <el-radio-group v-model="form.resource">-->
-<!--              <el-radio label="Sponsor" />-->
-<!--              <el-radio label="Venue" />-->
-<!--            </el-radio-group>-->
-<!--          </el-form-item>-->
-<!--          <el-form-item label="Activity form">-->
-<!--            <el-input v-model="form.desc" type="textarea" />-->
-<!--          </el-form-item>-->
-
-
-
-
+        <el-dialog id="profileForm" v-model="dialogProfileVisible" :title=dialogProfileTitle width="30%">
+          <div style="width: 85%">
+            <el-form :model="form" label-width="120px">
+              <el-form-item label="UserID">
+                <el-input v-model="form.userid" />
+              </el-form-item>
+              <el-form-item label="Username">
+                <el-input v-model="form.username" />
+              </el-form-item>
+              <el-form-item label="Age">
+                <el-input type="number" v-model="form.age" />
+              </el-form-item>
+              <el-form-item label="Gender">
+                <el-radio v-model="form.gender" label="Male" value="male" />
+                <el-radio v-model="form.gender" label="Woman" value="woman" />
+                <el-radio v-model="form.gender" label="Secret" value="secret" />
+              </el-form-item>
+              <el-form-item label="Privacy">
+                <el-radio v-model="form.privacy" label="True" value="1" />
+                <el-radio v-model="form.privacy" label="False" value="0" />
+              </el-form-item>
+              <el-form-item label="Hobby">
+                <el-input v-model="form.hobby" />
+              </el-form-item>
+              <el-form-item label="Block">
+                <el-input v-model="form.block" />
+              </el-form-item>
+              <el-form-item label="Friend">
+                <el-input v-model="form.friend" />
+              </el-form-item>
+              <el-form-item label="Icon">
+                <el-input v-model="form.icon" />
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onProfileSubmit">Apply</el-button>
+                <el-button @click="dialogProfileVisible = false">Cancel</el-button>
+              </el-form-item>
+            </el-form>
+          </div>
       </el-dialog>
 
     </div>
@@ -172,13 +174,16 @@ export default {
     return{
       form: {},
       dialogTitle:"Create new user",
+      dialogProfileTitle:"Create new profile",
       dialogVisible: false,
+      dialogProfileVisible: false,
       query: '',
       total: 0,
       currentPage: 1,
       pageSize: 10,
       pageNum: 10,
       search: '',
+      mode: 0,
       tableData:[
 
       ],
@@ -194,25 +199,36 @@ export default {
     //   this.dialogVisible = false;
     // },
     load(){
-      
-      request.get("user", {
-        params: {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          query: this.query
-        }
+      if(this.mode === 0){
+        request.get("user", {
+          params: {
+            pageNum: this.currentPage,
+            pageSize: this.pageSize,
+            query: this.query
+          }
 
-      }).then(res =>{
-        this.tableData = res.data.records;
-        this.total = res.data.total;
-      })
+        }).then(res =>{
+          this.tableData = res.data.records;
+          this.total = res.data.total;
+        })
+      }else if(this.mode === 1){
+
+      }else if(this.mode === 2){
+
+      }
+      
+
     },
     addUser(){
       this.dialogVisible = true;
       this.form = {};
       this.dialogTitle = "Create new user";
     },
-
+    addProfile(){
+      this.dialogProfileVisible = true;
+      this.form = {};
+      this.dialogProfileTitle = "Create new profile";
+    },
     onSubmit(){
       if (this.form.id){
         console.log("update");
@@ -237,10 +253,51 @@ export default {
         console.log("create");
         request.post("/user", this.form).then(res =>{
           console.log(res);
-          if (res.code === '0'){
+          if (res === true){
             this.$message({
               type: "success",
               message: "Successfully add user"
+            })
+          }else{
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.load();
+          this.dialogVisible=false;
+        });
+      }
+
+
+    },onProfileSubmit(){
+      if (this.form.id){
+        console.log("update");
+        request.put("/profile", this.form).then(res =>{
+          console.log(res);
+          if (res.code === '0'){
+            this.$message({
+              type: "success",
+              message: "Successfully update profile"
+            })
+          }else{
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.load();
+          this.dialogVisible=false;
+
+        });
+      }else{
+        console.log("create");
+        request.post("/profile", this.form).then(res =>{
+          console.log(res);
+          if (res === true){
+            this.$message({
+              type: "success",
+              message: "Successfully add profile"
             })
           }else{
             this.$message({

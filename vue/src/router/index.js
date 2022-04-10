@@ -35,18 +35,5 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start();
-  if (to.path === '/register' || to.path === '/login') {
-    next();
-  } else {
-    let token = localStorage.getItem('Authorization');
-    if (token === 'null' || token === '') {
-      next('/Login');
-    } else {
-      next();
-    }
-  }
-});
 
 export default router

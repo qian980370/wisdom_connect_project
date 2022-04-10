@@ -2,6 +2,7 @@ package com.project.wisdomconnect.service;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.wisdomconnect.common.Result;
 import com.project.wisdomconnect.entity.User;
 import com.project.wisdomconnect.mapper.UserMapper;
@@ -14,7 +15,7 @@ import java.sql.Wrapper;
 
 
 @Service
-public class UserService {
+public class UserService extends ServiceImpl<UserMapper, User> {
     @Resource
     UserMapper userMapper;
 
@@ -25,7 +26,7 @@ public class UserService {
 
         }
 
-        user.setRegisterTime(timeGetter.getCurrenTime());
+        //user.setRegisterTime(timeGetter.getCurrenTime());
         userMapper.insert(user);
         return Result.success();
     }
@@ -38,5 +39,11 @@ public class UserService {
     }
 
 
-
+    public boolean saveUser(User user) {
+        if(user.getId()==null){
+            return save(user);
+        }else{
+            return updateById(user);
+        }
+    }
 }

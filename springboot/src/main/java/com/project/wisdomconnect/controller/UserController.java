@@ -6,35 +6,42 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.wisdomconnect.common.Result;
+import com.project.wisdomconnect.controller.dto.UserDTO;
 import com.project.wisdomconnect.entity.User;
 import com.project.wisdomconnect.mapper.UserMapper;
 //import com.project.wisdomconnect.service.UserService;
+import com.project.wisdomconnect.service.UserService;
 import com.project.wisdomconnect.utils.timeGetter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+
 public class UserController {
+
+    @Autowired
+    private UserService userService;
 
     @Resource
     UserMapper userMapper;
     //UserService userService = new UserService();
 
     @PostMapping
-    public Result<?> save(@RequestBody User user){
+    public boolean save(@RequestBody User user){
         user.setRegisterTime(timeGetter.getCurrenTime());
-        userMapper.insert(user);
-        return Result.success();
+        return userService.saveUser(user);
 
     }
 
     @PostMapping("/login")
     public Result<?> login(@RequestBody User user){
+
+
         User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()).eq(User::getPassword, user.getPassword()));
         if(res == null){
             return Result.error("-1", "username or password invalid");
@@ -53,20 +60,6 @@ public class UserController {
             return Result.error("-1", "email has been register");
         }
 
-        User userInfo = User.builder()
-                .username(user.getUsername())
-                .email(user.getEmail())
-                .password(new BCryptPasswordEncoder().encode(user.getPassword()))
-                .registerTime(timeGetter.getCurrenTime())
-                .build();
-
-        userMapper.insert(userInfo);
-
-//        UserRole userRole = UserRole.builder()
-//                .userId(userInfo.getId())
-//                .roleId(RoleEnum.USER.getRoleId())
-//                .build();
-//        userRoleMapper.insert(userRole);
         return Result.success();
     }
 

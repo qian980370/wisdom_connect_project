@@ -8,18 +8,13 @@ import lombok.Data;
 
 @TableName("user")
 @Data
-@Builder
 public class User {
     //@TableId(type = IdType.AUTO);
     private String registerTime;
     private Integer id;
-//    private Integer admin;
     private String username;
     private String password;
     private String email;
-//    private Integer age;
-//    private String gender;
-//    private String address;
 
 
 
@@ -40,13 +35,6 @@ public class User {
         this.id = id;
     }
 
-//    public Integer getAdmin() {
-//        return admin;
-//    }
-
-//    public void setAdmin(Integer admin) {
-//        this.admin = admin;
-//    }
 
     public String getUsername() {
         return username;
@@ -72,27 +60,4 @@ public class User {
         this.email = email;
     }
 
-//    public Integer getAge() {
-//        return age;
-//    }
-//
-//    public void setAge(Integer age) {
-//        this.age = age;
-//    }
-//
-//    public String getGender() {
-//        return gender;
-//    }
-//
-//    public void setGender(String gender) {
-//        this.gender = gender;
-//    }
-//
-//    public String getAddress() {
-//        return address;
-//    }
-//
-//    public void setAddress(String address) {
-//        this.address = address;
-//    }
 }
