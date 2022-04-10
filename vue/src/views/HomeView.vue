@@ -5,8 +5,8 @@
       <el-button type="primary" @click="addProfile">new profile</el-button>
     </div>
     <div style="margin: 10px 0">
-      <el-button type="primary" @click="addUser">User</el-button>
-      <el-button type="primary" @click="addProfile">Profile</el-button>
+      <el-button type="primary" @click="showUser">User</el-button>
+      <el-button type="primary" @click="showProfile">Profile</el-button>
     </div>
     <div style="margin: 10px 0">
       <el-input v-model="query" placeholder="please input username information to search" style="width: 20%" clearable></el-input>
@@ -27,8 +27,8 @@
           label="Register Time">
       </el-table-column>
       <el-table-column
-          prop="admin"
-          label="Admin">
+          prop="owner"
+          label="Owner">
       </el-table-column>
       <el-table-column
           prop="username"
@@ -119,36 +119,37 @@
 
         <el-dialog id="profileForm" v-model="dialogProfileVisible" :title=dialogProfileTitle width="30%">
           <div style="width: 85%">
-            <el-form :model="form" label-width="120px">
-              <el-form-item label="UserID">
-                <el-input v-model="form.userid" />
+            <el-form :model="formProfile" label-width="120px">
+              <el-form-item label="Owner ID">
+                <el-input v-model="formProfile.owner" />
               </el-form-item>
               <el-form-item label="Username">
-                <el-input v-model="form.username" />
+                <el-input v-model="formProfile.username" />
               </el-form-item>
               <el-form-item label="Age">
-                <el-input type="number" v-model="form.age" />
+                <el-input type="number" v-model="formProfile.age" />
               </el-form-item>
               <el-form-item label="Gender">
-                <el-radio v-model="form.gender" label="Male" value="male" />
-                <el-radio v-model="form.gender" label="Woman" value="woman" />
-                <el-radio v-model="form.gender" label="Secret" value="secret" />
+                <el-radio v-model="formProfile.gender" label="Male" value="male" />
+                <el-radio v-model="formProfile.gender" label="Woman" value="woman" />
+                <el-radio v-model="formProfile.gender" label="Secret" value="secret" />
               </el-form-item>
               <el-form-item label="Privacy">
-                <el-radio v-model="form.privacy" label="True" value="1" />
-                <el-radio v-model="form.privacy" label="False" value="0" />
+                <el-switch v-model="formProfile.privacy"
+                           :active-value="1"
+                           :inactive-value="0"/>
               </el-form-item>
               <el-form-item label="Hobby">
-                <el-input v-model="form.hobby" />
+                <el-input v-model="formProfile.hobby" />
               </el-form-item>
               <el-form-item label="Block">
-                <el-input v-model="form.block" />
+                <el-input v-model="formProfile.block" />
               </el-form-item>
               <el-form-item label="Friend">
-                <el-input v-model="form.friend" />
+                <el-input v-model="formProfile.friend" />
               </el-form-item>
               <el-form-item label="Icon">
-                <el-input v-model="form.icon" />
+                <el-input v-model="formProfile.icon" />
               </el-form-item>
               <el-form-item>
                 <el-button type="primary" @click="onProfileSubmit">Apply</el-button>
@@ -173,6 +174,7 @@ export default {
   data(){
     return{
       form: {},
+      formProfile: {},
       dialogTitle:"Create new user",
       dialogProfileTitle:"Create new profile",
       dialogVisible: false,
@@ -212,7 +214,17 @@ export default {
           this.total = res.data.total;
         })
       }else if(this.mode === 1){
+        request.get("profile", {
+          params: {
+            pageNum: this.currentPage,
+            pageSize: this.pageSize,
+            query: this.query
+          }
 
+        }).then(res =>{
+          this.tableData = res.data.records;
+          this.total = res.data.total;
+        })
       }else if(this.mode === 2){
 
       }
@@ -271,9 +283,9 @@ export default {
 
 
     },onProfileSubmit(){
-      if (this.form.id){
+      if (this.formProfile.id){
         console.log("update");
-        request.put("/profile", this.form).then(res =>{
+        request.put("/profile", this.formProfile).then(res =>{
           console.log(res);
           if (res.code === '0'){
             this.$message({
@@ -292,7 +304,7 @@ export default {
         });
       }else{
         console.log("create");
-        request.post("/profile", this.form).then(res =>{
+        request.post("/profile", this.formProfile).then(res =>{
           console.log(res);
           if (res === true){
             this.$message({
@@ -342,7 +354,15 @@ export default {
     handleCurrentChange(pageNum){
       this.currentPage = pageNum;
       this.load();
-    }
+    },
+    showUser(){
+      this.mode = 0;
+      this.load();
+    },
+    showProfile(){
+      this.mode = 1;
+      this.load();
+    },
   }
 
 }

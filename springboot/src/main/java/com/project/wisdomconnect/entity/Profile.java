@@ -2,14 +2,48 @@ package com.project.wisdomconnect.entity;
 
 public class Profile {
     private Integer id;
-    private Integer ownerId;
+    private Integer owner;
     private String username;
     private String icon;
     private Integer privacy;
     private Integer age;
     private String gender;
-    private String blockList;
-    private String hobbyList;
+    private String block;
+    private String hobby;
+    private String friend;
+
+    public Integer getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Integer owner) {
+        this.owner = owner;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
+    }
+
+    public String getHobby() {
+        return hobby;
+    }
+
+    public void setHobby(String hobby) {
+        this.hobby = hobby;
+    }
+
+    public String getFriend() {
+        return friend;
+    }
+
+    public void setFriend(String friend) {
+        this.friend = friend;
+    }
+
 
 
     public String getIcon() {
@@ -28,13 +62,7 @@ public class Profile {
         this.id = id;
     }
 
-    public Integer getOwnerId() {
-        return ownerId;
-    }
 
-    public void setOwnerId(Integer ownerId) {
-        this.ownerId = ownerId;
-    }
 
     public String getUsername() {
         return username;
@@ -69,21 +97,7 @@ public class Profile {
     }
 
 
-    public String getBlockList() {
-        return blockList;
-    }
 
-    public void setBlockList(String blockList) {
-        this.blockList = blockList;
-    }
-
-    public String getHobbyList() {
-        return hobbyList;
-    }
-
-    public void setHobbyList(String hobbyList) {
-        this.hobbyList = hobbyList;
-    }
 
 
 }
