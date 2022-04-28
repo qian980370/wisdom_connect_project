@@ -22,14 +22,18 @@ public class UserService extends ServiceImpl<UserMapper, User> {
     @PostMapping
     public Result<?> userInsert(@RequestBody User user){
 
-        if(user.getId() == null){
-
+        User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()));
+        if (res != null) {
+            return Result.error("-1", "username has been register");
+        }
+        res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, user.getEmail()));
+        if (res != null) {
+            return Result.error("-1", "email has been register");
         }
 
-        //user.setRegisterTime(timeGetter.getCurrenTime());
-        userMapper.insert(user);
         return Result.success();
     }
+
 
     //http://127.0.0.1:9090/user?pageNum=1&pageSize=1&query=
     @GetMapping

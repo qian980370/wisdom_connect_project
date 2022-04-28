@@ -7,6 +7,7 @@
     <div style="margin: 10px 0">
       <el-button type="primary" @click="showUser">User</el-button>
       <el-button type="primary" @click="showProfile">Profile</el-button>
+      <el-button type="primary" @click="testHobby">test hobby</el-button>
     </div>
     <div style="margin: 10px 0">
       <el-input v-model="query" placeholder="please input username information to search" style="width: 20%" clearable></el-input>
@@ -363,7 +364,20 @@ export default {
       this.mode = 1;
       this.load();
     },
-  }
+    testHobby(){
+      request.get("hobby", {
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          query: this.query
+        }
+      }).then(res =>{
+        this.tableData = res.data.records;
+        this.total = res.data.total;
+        console.log(this.tableData)
+      })
+    }
+  },
 
 }
 
