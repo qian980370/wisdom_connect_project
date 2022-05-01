@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.project.wisdomconnect.common.Constants;
 import com.project.wisdomconnect.common.Result;
 import com.project.wisdomconnect.controller.dto.UserDTO;
 import com.project.wisdomconnect.entity.User;
@@ -39,29 +40,27 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Result<?> login(@RequestBody User user){
+    public Result<?> login(@RequestBody UserDTO userDTO){
+        String username = userDTO.getUsername();
+        String password = userDTO.getPassword();
 
 
-        User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()).eq(User::getPassword, user.getPassword()));
-        if(res == null){
-            return Result.error("-1", "username or password invalid");
+        if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
+            return Result.error(Constants.CODE_400, Constants.CODE_400_MESSAGE);
         }
-        return Result.success();
+        UserDTO dto = userService.userLogin(userDTO);
 
+        return Result.success(dto);
     }
+
     @PostMapping("/register")
     public Result<?> register(@RequestBody User user) {
-        User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()));
-        if (res != null) {
-            return Result.error("-1", "username has been register");
-        }
-        res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, user.getEmail()));
-        if (res != null) {
-            return Result.error("-1", "email has been register");
-        }
-
-        return Result.success();
+        return userService.register(user);
     }
+
+
+
+
 
     //http://127.0.0.1:9090/user?pageNum=1&pageSize=1&query=
     @GetMapping

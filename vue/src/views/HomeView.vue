@@ -1,12 +1,19 @@
 <template>
   <div style="padding: 10px; width: 100%">
     <div style="margin: 10px 0">
+      <span>current user: {{user.username}}</span>
+    </div>
+
+    <div style="margin: 10px 0">
       <el-button type="primary" @click="addUser">New</el-button>
       <el-button type="primary" @click="addProfile">new profile</el-button>
     </div>
     <div style="margin: 10px 0">
       <el-button type="primary" @click="showUser">User</el-button>
       <el-button type="primary" @click="showProfile">Profile</el-button>
+      <el-button type="primary" @click="testHobby">test hobby</el-button>
+      <el-button type="primary" @click="login">login</el-button>
+      <el-button type="primary" @click="logout">logout</el-button>
     </div>
     <div style="margin: 10px 0">
       <el-input v-model="query" placeholder="please input username information to search" style="width: 20%" clearable></el-input>
@@ -97,6 +104,26 @@
           :total="total"
       />
 
+      <el-dialog id="loginForm" v-model="dialogLoginVisible" :title=dialogLoginTitle width="30%">
+        <div style="width: 85%">
+          <el-form :model="loginForm" label-width="120px">
+            <el-form-item label="Username">
+              <el-input v-model="loginForm.username" />
+            </el-form-item>
+            <el-form-item label="Password">
+              <el-input type="password" v-model="loginForm.password" />
+            </el-form-item>
+            <el-form-item label="Email Address">
+              <el-input type="email" v-model="loginForm.email" />
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="loginSubmit">Apply</el-button>
+              <el-button @click="dialogVisible = false">Cancel</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+      </el-dialog>
+
       <el-dialog id="userForm" v-model="dialogVisible" :title=dialogTitle width="30%">
         <div style="width: 85%">
           <el-form :model="form" label-width="120px">
@@ -173,12 +200,15 @@ export default {
   },
   data(){
     return{
+      loginForm:{},
       form: {},
       formProfile: {},
       dialogTitle:"Create new user",
       dialogProfileTitle:"Create new profile",
+      dialogLoginTitle: "login",
       dialogVisible: false,
       dialogProfileVisible: false,
+      dialogLoginVisible: false,
       query: '',
       total: 0,
       currentPage: 1,
@@ -190,6 +220,8 @@ export default {
 
       ],
 
+      user: localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+
     }
 
   },
@@ -197,6 +229,9 @@ export default {
     this.load();
   },
   methods:{
+    refreshUser(){
+      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    },
     // handleClose(){
     //   this.dialogVisible = false;
     // },
@@ -236,17 +271,51 @@ export default {
       this.form = {};
       this.dialogTitle = "Create new user";
     },
+    login(){
+      this.dialogLoginVisible = true;
+      this.form = {};
+      this.dialogLoginTitle = "login";
+    },
+    logout(){
+      localStorage.removeItem("user");
+      this.refreshUser();
+      this.$message({
+        type: "success",
+        message: "Successfully logout"
+      })
+    },
     addProfile(){
       this.dialogProfileVisible = true;
       this.form = {};
       this.dialogProfileTitle = "Create new profile";
+    },
+    loginSubmit() {
+      console.log("login");
+      request.post("/user/login", this.loginForm).then(res => {
+        console.log(res);
+        if (res.code === '200') {
+          localStorage.setItem("user", JSON.stringify(res.data));
+          this.refreshUser()
+          this.$message({
+            type: "success",
+            message: "Successfully login"
+          })
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+        this.dialogVisible = false;
+      });
+
     },
     onSubmit(){
       if (this.form.id){
         console.log("update");
         request.put("/user", this.form).then(res =>{
           console.log(res);
-          if (res.code === '0'){
+          if (res.code === '200'){
             this.$message({
               type: "success",
               message: "Successfully update user"
@@ -263,9 +332,9 @@ export default {
         });
       }else{
         console.log("create");
-        request.post("/user", this.form).then(res =>{
+        request.post("/user/register", this.form).then(res =>{
           console.log(res);
-          if (res === true){
+          if (res.code === '200'){
             this.$message({
               type: "success",
               message: "Successfully add user"
@@ -363,7 +432,20 @@ export default {
       this.mode = 1;
       this.load();
     },
-  }
+    testHobby(){
+      request.get("hobby", {
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          query: this.query
+        }
+      }).then(res =>{
+        this.tableData = res.data.records;
+        this.total = res.data.total;
+        console.log(this.tableData)
+      })
+    }
+  },
 
 }
 

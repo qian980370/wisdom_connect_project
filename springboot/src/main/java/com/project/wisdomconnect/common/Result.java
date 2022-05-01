@@ -38,15 +38,22 @@ public class Result<T> {
 
     public static Result success() {
         Result result = new Result<>();
-        result.setCode("0");
-        result.setMsg("success");
+        result.setCode(Constants.CODE_200);
+        result.setMsg(Constants.CODE_200_MESSAGE);
         return result;
     }
 
     public static <T> Result<T> success(T data) {
         Result<T> result = new Result<>(data);
-        result.setCode("0");
-        result.setMsg("success");
+        result.setCode(Constants.CODE_200);
+        result.setMsg(Constants.CODE_200_MESSAGE);
+        return result;
+    }
+
+    public static Result error() {
+        Result result = new Result();
+        result.setCode(Constants.CODE_500);
+        result.setMsg(Constants.CODE_500_MESSAGE);
         return result;
     }
 
