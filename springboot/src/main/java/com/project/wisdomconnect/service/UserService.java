@@ -47,6 +47,13 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
             throw new ServiceException(Constants.CODE_500, Constants.CODE_500_MESSAGE);
         }
 
+        User userInfo = new User();
+        userInfo.setRegisterTime(timeGetter.getCurrenTime());
+        userInfo.setUsername(user.getUsername());
+        userInfo.setEmail(user.getEmail());
+        userInfo.setPassword(user.getPassword());
+
+        save(userInfo);
 
         return Result.success();
     }

@@ -294,7 +294,6 @@ export default {
       request.post("/user/login", this.loginForm).then(res => {
         console.log(res);
         if (res.code === '200') {
-
           localStorage.setItem("user", JSON.stringify(res.data));
           this.refreshUser()
           this.$message({
@@ -316,7 +315,7 @@ export default {
         console.log("update");
         request.put("/user", this.form).then(res =>{
           console.log(res);
-          if (res.code === '0'){
+          if (res.code === '200'){
             this.$message({
               type: "success",
               message: "Successfully update user"
@@ -335,7 +334,7 @@ export default {
         console.log("create");
         request.post("/user/register", this.form).then(res =>{
           console.log(res);
-          if (res === true){
+          if (res.code === '200'){
             this.$message({
               type: "success",
               message: "Successfully add user"
