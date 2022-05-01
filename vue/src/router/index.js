@@ -3,6 +3,10 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView'
 import Layout from "../layout/Layout";
 import RegisterView from "@/views/RegisterView";
+import WebLogin from "@/views/WebLogin";
+import Webregister from "@/views/WebRegister";
+import WebRegister from "@/views/WebRegister";
+
 
 const routes = [
   {
@@ -28,6 +32,17 @@ const routes = [
     name: 'Register',
     component: RegisterView
   },
+  {
+    path: '/weblogin',
+    name: 'Weblogin',
+    component: WebLogin
+  },
+  {
+    path: '/webregister',
+    name: 'Webregister',
+    component: WebRegister
+  },
+
 ]
 
 const router = createRouter({
