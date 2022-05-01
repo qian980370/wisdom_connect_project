@@ -36,4 +36,20 @@ const router = createRouter({
 })
 
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/login' || to.path === '/register') {
+    next()
+    return
+  }
+  let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+  console.log(user);
+  if (!user) {
+    next('/login')
+  }else if(user === {}){
+    next('/login')
+  }  else {
+    next()
+  }
+})
+
 export default router

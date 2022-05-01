@@ -2,7 +2,6 @@ package com.project.wisdomconnect.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.project.wisdomconnect.common.Constants;
@@ -12,7 +11,8 @@ import com.project.wisdomconnect.entity.User;
 import com.project.wisdomconnect.mapper.UserMapper;
 //import com.project.wisdomconnect.service.UserService;
 import com.project.wisdomconnect.service.UserService;
-import com.project.wisdomconnect.utils.timeGetter;
+import com.project.wisdomconnect.utils.TimeGetter;
+import com.project.wisdomconnect.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +34,7 @@ public class UserController {
 
     @PostMapping
     public boolean save(@RequestBody User user){
-        user.setRegisterTime(timeGetter.getCurrenTime());
+        user.setRegisterTime(TimeGetter.getCurrenTime());
         return userService.saveUser(user);
 
     }
@@ -48,7 +48,7 @@ public class UserController {
         if (StrUtil.isBlank(username) || StrUtil.isBlank(password)){
             return Result.error(Constants.CODE_400, Constants.CODE_400_MESSAGE);
         }
-        UserDTO dto = userService.userLogin(userDTO);
+        UserDTO dto = userService.login(userDTO);
 
         return Result.success(dto);
     }
@@ -71,6 +71,9 @@ public class UserController {
         if (StrUtil.isNotBlank(query)) {
             wrapper.like(User::getUsername, query);
         }
+
+        User checkUser = TokenUtils.getUser();
+        System.out.println("current user is: " + checkUser.getUsername());
 
         Page<User> userPage = userMapper.selectPage(new Page<>(pageNum,pageSize), wrapper);
         return Result.success(userPage);

@@ -5,14 +5,14 @@
     </div>
 
     <div style="margin: 10px 0">
-      <el-button type="primary" @click="addUser">New</el-button>
+<!--      <el-button type="primary" @click="addUser">New</el-button>-->
       <el-button type="primary" @click="addProfile">new profile</el-button>
     </div>
     <div style="margin: 10px 0">
       <el-button type="primary" @click="showUser">User</el-button>
       <el-button type="primary" @click="showProfile">Profile</el-button>
       <el-button type="primary" @click="testHobby">test hobby</el-button>
-      <el-button type="primary" @click="login">login</el-button>
+<!--      <el-button type="primary" @click="login">login</el-button>-->
       <el-button type="primary" @click="logout">logout</el-button>
     </div>
     <div style="margin: 10px 0">
@@ -104,25 +104,25 @@
           :total="total"
       />
 
-      <el-dialog id="loginForm" v-model="dialogLoginVisible" :title=dialogLoginTitle width="30%">
-        <div style="width: 85%">
-          <el-form :model="loginForm" label-width="120px">
-            <el-form-item label="Username">
-              <el-input v-model="loginForm.username" />
-            </el-form-item>
-            <el-form-item label="Password">
-              <el-input type="password" v-model="loginForm.password" />
-            </el-form-item>
-            <el-form-item label="Email Address">
-              <el-input type="email" v-model="loginForm.email" />
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="loginSubmit">Apply</el-button>
-              <el-button @click="dialogVisible = false">Cancel</el-button>
-            </el-form-item>
-          </el-form>
-        </div>
-      </el-dialog>
+<!--      <el-dialog id="loginForm" v-model="dialogLoginVisible" :title=dialogLoginTitle width="30%">-->
+<!--        <div style="width: 85%">-->
+<!--          <el-form :model="loginForm" label-width="120px">-->
+<!--            <el-form-item label="Username">-->
+<!--              <el-input v-model="loginForm.username" />-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Password">-->
+<!--              <el-input type="password" v-model="loginForm.password" />-->
+<!--            </el-form-item>-->
+<!--            <el-form-item label="Email Address">-->
+<!--              <el-input type="email" v-model="loginForm.email" />-->
+<!--            </el-form-item>-->
+<!--            <el-form-item>-->
+<!--              <el-button type="primary" @click="loginSubmit">Apply</el-button>-->
+<!--              <el-button @click="dialogVisible = false">Cancel</el-button>-->
+<!--            </el-form-item>-->
+<!--          </el-form>-->
+<!--        </div>-->
+<!--      </el-dialog>-->
 
       <el-dialog id="userForm" v-model="dialogVisible" :title=dialogTitle width="30%">
         <div style="width: 85%">
@@ -147,9 +147,7 @@
         <el-dialog id="profileForm" v-model="dialogProfileVisible" :title=dialogProfileTitle width="30%">
           <div style="width: 85%">
             <el-form :model="formProfile" label-width="120px">
-              <el-form-item label="Owner ID">
-                <el-input v-model="formProfile.owner" />
-              </el-form-item>
+
               <el-form-item label="Username">
                 <el-input v-model="formProfile.username" />
               </el-form-item>
@@ -245,6 +243,7 @@ export default {
           }
 
         }).then(res =>{
+          console.log(res);
           this.tableData = res.data.records;
           this.total = res.data.total;
         })
@@ -257,6 +256,7 @@ export default {
           }
 
         }).then(res =>{
+          console.log(res);
           this.tableData = res.data.records;
           this.total = res.data.total;
         })
@@ -266,16 +266,16 @@ export default {
       
 
     },
-    addUser(){
-      this.dialogVisible = true;
-      this.form = {};
-      this.dialogTitle = "Create new user";
-    },
-    login(){
-      this.dialogLoginVisible = true;
-      this.form = {};
-      this.dialogLoginTitle = "login";
-    },
+    // addUser(){
+    //   this.dialogVisible = true;
+    //   this.form = {};
+    //   this.dialogTitle = "Create new user";
+    // },
+    // login(){
+    //   this.dialogLoginVisible = true;
+    //   this.form = {};
+    //   this.dialogLoginTitle = "login";
+    // },
     logout(){
       localStorage.removeItem("user");
       this.refreshUser();
@@ -283,33 +283,34 @@ export default {
         type: "success",
         message: "Successfully logout"
       })
+      this.$router.push("/login")
     },
     addProfile(){
       this.dialogProfileVisible = true;
       this.form = {};
       this.dialogProfileTitle = "Create new profile";
     },
-    loginSubmit() {
-      console.log("login");
-      request.post("/user/login", this.loginForm).then(res => {
-        console.log(res);
-        if (res.code === '200') {
-          localStorage.setItem("user", JSON.stringify(res.data));
-          this.refreshUser()
-          this.$message({
-            type: "success",
-            message: "Successfully login"
-          })
-        } else {
-          this.$message({
-            type: "error",
-            message: res.msg
-          })
-        }
-        this.dialogVisible = false;
-      });
-
-    },
+    // loginSubmit() {
+    //   console.log("login");
+    //   request.post("/user/login", this.loginForm).then(res => {
+    //     console.log(res);
+    //     if (res.code === '200') {
+    //       localStorage.setItem("user", JSON.stringify(res.data));
+    //       this.refreshUser()
+    //       this.$message({
+    //         type: "success",
+    //         message: "Successfully login"
+    //       })
+    //     } else {
+    //       this.$message({
+    //         type: "error",
+    //         message: res.msg
+    //       })
+    //     }
+    //     this.dialogVisible = false;
+    //   });
+    //
+    // },
     onSubmit(){
       if (this.form.id){
         console.log("update");
@@ -331,23 +332,23 @@ export default {
 
         });
       }else{
-        console.log("create");
-        request.post("/user/register", this.form).then(res =>{
-          console.log(res);
-          if (res.code === '200'){
-            this.$message({
-              type: "success",
-              message: "Successfully add user"
-            })
-          }else{
-            this.$message({
-              type: "error",
-              message: res.msg
-            })
-          }
-          this.load();
-          this.dialogVisible=false;
-        });
+        // console.log("create");
+        // request.post("/user/register", this.form).then(res =>{
+        //   console.log(res);
+        //   if (res.code === '200'){
+        //     this.$message({
+        //       type: "success",
+        //       message: "Successfully add user"
+        //     })
+        //   }else{
+        //     this.$message({
+        //       type: "error",
+        //       message: res.msg
+        //     })
+        //   }
+        //   this.load();
+        //   this.dialogVisible=false;
+        // });
       }
 
 
@@ -373,9 +374,9 @@ export default {
         });
       }else{
         console.log("create");
-        request.post("/profile", this.formProfile).then(res =>{
+        request.post("/profile/create", this.formProfile).then(res =>{
           console.log(res);
-          if (res === true){
+          if (res.code === "200"){
             this.$message({
               type: "success",
               message: "Successfully add profile"

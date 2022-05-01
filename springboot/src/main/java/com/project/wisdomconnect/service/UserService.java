@@ -1,7 +1,6 @@
 package com.project.wisdomconnect.service;
 
 import cn.hutool.core.bean.BeanUtil;
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -11,16 +10,15 @@ import com.project.wisdomconnect.common.Constants;
 import com.project.wisdomconnect.common.Result;
 import com.project.wisdomconnect.controller.dto.UserDTO;
 import com.project.wisdomconnect.entity.User;
-import com.project.wisdomconnect.exception.MyExceptionHandler;
 import com.project.wisdomconnect.exception.ServiceException;
 import com.project.wisdomconnect.mapper.UserMapper;
 import com.project.wisdomconnect.service.inter.UserServiceInterface;
-import com.project.wisdomconnect.utils.timeGetter;
+import com.project.wisdomconnect.utils.TimeGetter;
+import com.project.wisdomconnect.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.Wrapper;
 
 
 @Service
@@ -48,7 +46,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
         }
 
         User userInfo = new User();
-        userInfo.setRegisterTime(timeGetter.getCurrenTime());
+        userInfo.setRegisterTime(TimeGetter.getCurrenTime());
         userInfo.setUsername(user.getUsername());
         userInfo.setEmail(user.getEmail());
         userInfo.setPassword(user.getPassword());
@@ -59,11 +57,16 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
     }
 
     @Override
-    public UserDTO userLogin(@RequestBody UserDTO userDTO){
+    public UserDTO login(@RequestBody UserDTO userDTO){
         User user = getUserInfo(userDTO);
 
         if (user != null){
+            // copy query result into userDTO
             BeanUtil.copyProperties(user, userDTO, true);
+
+            // set token
+            String token = TokenUtils.genToken(user.getId().toString(), user.getPassword());
+            userDTO.setToken(token);
             return userDTO;
         }else {
             throw new ServiceException(Constants.CODE_400, Constants.CODE_400_MESSAGE);
