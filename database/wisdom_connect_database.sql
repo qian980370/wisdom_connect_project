@@ -62,7 +62,7 @@ CREATE TABLE `hobby`  (
   `id` int(7) NOT NULL,
   `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `level` int(3) NOT NULL,
-  `tophobbyid` int(7) NULL DEFAULT NULL,
+  `super_hobby_id` int(7) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
@@ -72,6 +72,22 @@ CREATE TABLE `hobby`  (
 INSERT INTO `hobby` VALUES (1234567, 'swim', 2, 2345678);
 INSERT INTO `hobby` VALUES (2345678, 'sport', 1, NULL);
 INSERT INTO `hobby` VALUES (3456789, 'basketball', 2, 2345678);
+
+-- ----------------------------
+-- Table structure for user_hobbies
+-- ----------------------------
+DROP TABLE IF EXISTS `user_hobbies`;
+CREATE TABLE `user_hobbies`  (
+                                 `id` int(8) NOT NULL,
+                                 `user_id` int(8) NOT NULL,
+                                 `hobby_id` int(7) NULL DEFAULT NULL,
+                                 PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_hobbies
+-- ----------------------------
+
 
 -- ----------------------------
 -- Table structure for profile
