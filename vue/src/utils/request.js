@@ -1,8 +1,9 @@
 import axios from 'axios'
 import router from "@/router";
+import ElementUI from "@element-plus/icons-vue/dist";
 
 const request = axios.create({
-    baseURL: "/api",
+    baseURL: "/api", //api在vue.config.js 里面
     timeout: 5000
 })
 
@@ -12,6 +13,11 @@ const request = axios.create({
 // 比如统一加token，对请求参数统一加密
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
+    let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+
+    if (user){
+        config.headers['token'] = user.token;
+    }
 
     return config
 }, error => {
@@ -31,11 +37,15 @@ request.interceptors.response.use(
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }
+        if (res.code === '301') {
+            console.error("token invalid")
+        }
         return res;
     },
     error => {
         console.log('err' + error) // for debug
         return Promise.reject(error)
+        // router.push("/login")
     }
 )
 

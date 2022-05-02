@@ -6,7 +6,7 @@ import com.project.wisdomconnect.controller.dto.UserDTO;
 import com.project.wisdomconnect.entity.User;
 
 public interface UserServiceInterface extends IService<User> {
-    UserDTO userLogin(UserDTO userDTO);
+    UserDTO login(UserDTO userDTO);
 
     Result<?> register(User user);
 

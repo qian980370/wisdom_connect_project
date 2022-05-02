@@ -9,8 +9,8 @@ import com.project.wisdomconnect.entity.Profile;
 import com.project.wisdomconnect.entity.User;
 import com.project.wisdomconnect.mapper.ProfileMapper;
 import com.project.wisdomconnect.mapper.UserMapper;
-import com.project.wisdomconnect.utils.timeGetter;
 
+import com.project.wisdomconnect.utils.TokenUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,12 +24,14 @@ public class ProfileController {
     @Resource
     UserMapper userMapper;
 
-    @PostMapping
+    @PostMapping("/create")
     public Result<?> save(@RequestBody Profile profile){
-        User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getId, profile.getOwner()));
+        User user = TokenUtils.getUser();
+        User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getId, user.getId()));
         if (res == null) {
             return Result.error("-1", "user id not exist");
         }
+        profile.setOwner(user.getId());
         profileMapper.insert(profile);
         return Result.success();
 
@@ -40,7 +42,8 @@ public class ProfileController {
     public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               @RequestParam(defaultValue = "") String query){
-        LambdaQueryWrapper<Profile> wrapper = Wrappers.<Profile>lambdaQuery().orderByAsc(Profile::getId);
+        User user = TokenUtils.getUser();
+        LambdaQueryWrapper<Profile> wrapper = Wrappers.<Profile>lambdaQuery().eq(Profile::getOwner, user.getId());
         if (StrUtil.isNotBlank(query)) {
             wrapper.like(Profile::getUsername, query);
         }

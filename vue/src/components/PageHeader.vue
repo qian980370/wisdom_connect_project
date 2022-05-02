@@ -5,7 +5,7 @@
     <div style="width: 100px">
       <el-dropdown>
         <span class="el-dropdown-link">
-          <br>username<el-icon class="el-icon--right"><arrow-down/></el-icon>
+          <br>test<el-icon class="el-icon--right"><arrow-down/></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>

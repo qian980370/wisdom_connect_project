@@ -82,20 +82,24 @@ export default {
 
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          request.post("/user/register", this.form).then(res => {
-            if (res.code === '0') {
+          console.log("create");
+          request.post("/user/register", this.form).then(res =>{
+            console.log(res);
+            if (res.code === '200'){
               this.$message({
                 type: "success",
-                message: "Register Successfully"
+                message: "Successfully add user"
               })
               this.$router.push("/login")
-            } else {
+            }else{
               this.$message({
                 type: "error",
                 message: res.msg
               })
             }
-          })
+            this.load();
+            this.dialogVisible=false;
+          });
         }
       })
     }
