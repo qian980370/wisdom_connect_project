@@ -52,7 +52,6 @@ import {Message, Document, LocationFilled, Lock, MapLocation, Money, Setting, Us
 
 export default {
   name: "RegisterView",
-  components: {Money, MapLocation, LocationFilled, Document, Message, Setting, Lock, User},
   data() {
     return {
       form: {},
@@ -71,7 +70,6 @@ export default {
   },
   methods: {
     register() {
-
       if (this.form.password !== this.form.confirm) {
         this.$message({
           type: "error",
@@ -79,8 +77,6 @@ export default {
         })
         return
       }
-
-      this.$refs['form'].validate((valid) => {
         if (valid) {
           console.log("create");
           request.post("/user/register", this.form).then(res =>{
@@ -90,7 +86,7 @@ export default {
                 type: "success",
                 message: "Successfully add user"
               })
-              this.$router.push("/login")
+              this.$router.push("/facilitylogin")
             }else{
               this.$message({
                 type: "error",
@@ -101,10 +97,8 @@ export default {
             this.dialogVisible=false;
           });
         }
-      })
-    }
-  }
-}
+      }
+},}
 </script>
 
 <style scoped>
