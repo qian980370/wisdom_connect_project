@@ -52,7 +52,6 @@ import {Message, Document, LocationFilled, Lock, MapLocation, Money, Setting, Us
 
 export default {
   name: "RegisterView",
-  components: {Money, MapLocation, LocationFilled, Document, Message, Setting, Lock, User},
   data() {
     return {
       form: {},

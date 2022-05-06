@@ -1,11 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/BackendManagerViews/HomeView.vue'
 import LoginView from '../views/LoginView'
 import Layout from "../layout/Layout";
 import RegisterView from "@/views/RegisterView";
 import WebLogin from "@/views/WebLogin";
 import Webregister from "@/views/WebRegister";
 import WebRegister from "@/views/WebRegister";
+import UserControllerView from "@/views/BackendManagerViews/UserControllerView";
+import FileControllerView from "@/views/BackendManagerViews/FileControllerView";
+import ProfileControllerView from "@/views/BackendManagerViews/ProfileControllerView";
+import HobbyControllerView from "@/views/BackendManagerViews/HobbyControllerView";
 
 
 const routes = [
@@ -19,6 +23,26 @@ const routes = [
         path: 'home',
         name: 'Home',
         component: HomeView,
+      },
+      {
+        path: 'user-controller',
+        name: 'UserControllerView',
+        component: UserControllerView,
+      },
+      {
+        path: 'file-controller',
+        name: 'FileControllerView',
+        component: FileControllerView,
+      },
+      {
+        path: 'hobby-controller',
+        name: 'HobbyControllerView',
+        component: HobbyControllerView,
+      },
+      {
+        path: 'profile-controller',
+        name: 'ProfileControllerView',
+        component: ProfileControllerView,
       },
     ]
   },
@@ -56,13 +80,13 @@ router.beforeEach((to, from, next) => {
     next()
     return
   }
-  let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
+  let user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null;
+  // let user = sessionStorage.getItem("user") ? JSON.parse(sessionStorage.getItem("user")) : {}
   console.log(user);
   if (!user) {
     next('/login')
-  }else if(user === {}){
-    next('/login')
-  }  else {
+  } else {
+    console.log("pass")
     next()
   }
 })

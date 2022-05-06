@@ -49,7 +49,6 @@ public class UserController {
             return Result.error(Constants.CODE_400, Constants.CODE_400_MESSAGE);
         }
         UserDTO dto = userService.login(userDTO);
-
         return Result.success(dto);
     }
 
@@ -86,7 +85,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public Result<?> update(@PathVariable Long id) {
+    public Result<?> delete(@PathVariable Long id) {
         userMapper.deleteById(id);
         return Result.success();
     }

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 
 @Service
@@ -30,7 +31,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
 
     @Override
     public Result<?> register(@RequestBody User user){
-
+        // check is there any duplicated data in database
         try{
             User res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getUsername, user.getUsername()));
             if (res != null) {
@@ -40,17 +41,34 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
             if (res != null) {
                 return Result.error(Constants.CODE_403, Constants.CODE_403_MESSAGE);
             }
+
         }catch (Exception e){
             LOG.error(e);
             throw new ServiceException(Constants.CODE_500, Constants.CODE_500_MESSAGE);
         }
 
+        // build new user
         User userInfo = new User();
         userInfo.setRegisterTime(TimeGetter.getCurrenTime());
         userInfo.setUsername(user.getUsername());
         userInfo.setEmail(user.getEmail());
         userInfo.setPassword(user.getPassword());
 
+        // if register user is a facility, user should provide the abn
+        if (!Objects.equals(user.getRole(), "facility")){
+            if (user.getAbn() != null){
+                return Result.error(Constants.CODE_407, Constants.CODE_407_MESSAGE);
+            }
+        }else {
+            userInfo.setAbn(user.getAbn());
+        }
+        // check the role
+        if (!Objects.equals(user.getRole(), "manager") && !Objects.equals(user.getRole(), "facility")
+                && !Objects.equals(user.getRole(), "nurse") && !Objects.equals(user.getRole(), "resident")){
+            return Result.error(Constants.CODE_405, Constants.CODE_405_MESSAGE);
+        }
+        userInfo.setRole(user.getRole());
+        userInfo.setAddress(user.getAddress());
         save(userInfo);
 
         return Result.success();

@@ -11,9 +11,9 @@
         <span>Database</span>
       </template>
       <el-menu-item index="1-1" @click="routeToUser">User</el-menu-item>
-      <el-menu-item index="1-2">Profile</el-menu-item>
-      <el-menu-item index="1-3">Hobby</el-menu-item>
-      <el-menu-item index="1-4">File</el-menu-item>
+      <el-menu-item index="1-2" @click="routeToProfile">Profile</el-menu-item>
+      <el-menu-item index="1-3" @click="routeToHobby">Hobby</el-menu-item>
+      <el-menu-item index="1-4" @click="routeToFile">File</el-menu-item>
     </el-sub-menu>
 
     <el-menu-item index="2">
@@ -32,21 +32,21 @@
 import {Document, LocationFilled, MapLocation, Money, Setting} from "@element-plus/icons-vue";
 
 export default {
-  name: "aside",
+  name: "myAside",
   components: {Money, MapLocation, LocationFilled, Document, Setting},
   methods:{
     routeToUser(){
       this.$router.push("/user-controller")
     },
-    // routeToProfile(){
-    //
-    // },
-    // routeToHobby(){
-    //
-    // },
-    // routeToFile(){
-    //
-    // },
+    routeToProfile(){
+      this.$router.push("/profile-controller")
+    },
+    routeToHobby(){
+      this.$router.push("/hobby-controller")
+    },
+    routeToFile(){
+      this.$router.push("/file-controller")
+    },
   }
 }
 </script>

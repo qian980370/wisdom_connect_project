@@ -5,7 +5,7 @@
     <div style="width: 100px">
       <el-dropdown>
         <span class="el-dropdown-link">
-          <br>test<el-icon class="el-icon--right"><arrow-down/></el-icon>
+          <br>{{this.username}}<el-icon class="el-icon--right"><ArrowDown/></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -19,8 +19,24 @@
 </template>
 
 <script>
+import {ArrowDown, Document, LocationFilled, MapLocation, Money, Setting} from "@element-plus/icons-vue";
+
 export default {
-  name: "header"
+  name: "myHeader",
+  components:{
+    ArrowDown
+  },
+
+  data() {
+    return{
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+      username: '',
+    }
+  },
+  created() {
+    this.username = this.user.username;
+  }
+
 }
 </script>
 
