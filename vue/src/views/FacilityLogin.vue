@@ -38,7 +38,7 @@ import { ElFormItem } from 'element-plus'
 import request from "@/utils/request";
 export default {
   name: "LoginView",
-
+  components: {Money, MapLocation, LocationFilled, Document, Setting, Lock, User},
   data(){
     return{
       loginForm:{},
@@ -60,7 +60,6 @@ export default {
         console.log(res);
         if (res.code === '200') {
           localStorage.setItem("user", JSON.stringify(res.data));
-          // localStorage.getItem("user");
           this.$message({
             type: "success",
             message: "Successfully login"
