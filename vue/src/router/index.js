@@ -64,6 +64,17 @@ const routes = [
         component: ProfileControllerView,
       },
     ]
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView
+  },
     {
         path: '/',
         name: 'First',
