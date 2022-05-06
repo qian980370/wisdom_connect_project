@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import ManagerLoginView from '../views/BackendManagerViews/LoginView'
+import ManagerRegisterView from "@/views/BackendManagerViews/RegisterView";
 import HomeView from '../views/BackendManagerViews/HomeView.vue'
-import LoginView from '../views/LoginView'
-import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/FacilityLogin'
 import Layout from "../layout/Layout";
-import RegisterView from "@/views/RegisterView";
-import WebLogin from "@/views/WebLogin";
-import Webregister from "@/views/WebRegister";
-import WebRegister from "@/views/WebRegister";
+
+
 import UserControllerView from "@/views/BackendManagerViews/UserControllerView";
 import FileControllerView from "@/views/BackendManagerViews/FileControllerView";
 import ProfileControllerView from "@/views/BackendManagerViews/ProfileControllerView";
@@ -74,6 +72,15 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: RegisterView
+  },{
+    path: '/manager-login',
+    name: 'ManagerLogin',
+    component: ManagerLoginView
+  },
+  {
+    path: '/manager-register',
+    name: 'ManagerRegister',
+    component: ManagerRegisterView
   },
     {
         path: '/',
