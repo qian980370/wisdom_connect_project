@@ -43,7 +43,7 @@
 
       <el-table-column label="Enable">
         <template #default="enableScope">
-          <el-switch v-model="enableScope.row.enable" active-value="1" inactive-value="0" active-color="#13ce66" inactive-color="#ccc" @change="changeEnable(enableScope.row)"></el-switch>
+          <el-switch :disabled=this.checkSpecial(enableScope.row) v-model="enableScope.row.enable" active-value="1" inactive-value="0" active-color="#13ce66" inactive-color="#ccc" @change="changeEnable(enableScope.row.cid, enableScope.row)"></el-switch>
         </template>
       </el-table-column>
 
@@ -139,6 +139,12 @@ export default {
     // console.log(this.uploadHeaders);
   },
   methods:{
+    checkSpecial(row){
+      if(row.md5 === "special"){
+        return true;
+      }
+      return false;
+    },
     handleLicensePreview(res){
       const isLt2M = res.size / 1024 / 1024 < 2;
       if (!isLt2M) {
@@ -177,7 +183,7 @@ export default {
       return true
 
     },
-    changeEnable(row){
+    changeEnable(id, row){
       request.post("/file/update", row).then(res =>{
         //console.log(res);
         if (res.code === "200"){
@@ -190,8 +196,14 @@ export default {
             type: "error",
             message: res.msg
           })
+          // if (this.tableData[id].enable === "1"){
+          //   this.tableData[id].enable = "0";
+          // }else{
+          //   this.tableData[id].enable = "1";
+          // }
+
         }
-        this.load();
+        //location.reload();
       });
     },
     refreshUser(){

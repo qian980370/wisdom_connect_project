@@ -9,7 +9,21 @@ spring:
   mvc:
     hiddenmethod:
       filter:
-        enabled=true:
+        enabled: true
+  mail:
+    host: smtp.gmail.com
+    username: wisdomConnectOfficial@gmail.com
+    password: 15853198730CQC
+    protocol: smtp
+    properties.mail.smtp.auth: true
+    properties.mail.smtp.port: 465
+    properties.mail.display.sendmail: Javen
+    properties.mail.display.sendname: Spring Boot Guide Email
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true
+    form: wisdomConnectOfficial@gmail.com
+    default-encoding: utf-8
 files:
   upload:
     path: D:/2022s1/wisdomConnect/wisdom_connect_project/files/ #ziqian

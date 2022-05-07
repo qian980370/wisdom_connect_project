@@ -170,8 +170,13 @@ public class FileController {
      */
     @DeleteMapping("/{id}")
     public Result<?> delete(@PathVariable Long id) {
-        fileMapper.deleteById(id);
-        return Result.success();
+        if (id == 26){
+            return Result.error(Constants.CODE_406, Constants.CODE_406_MESSAGE);
+        }else {
+            fileMapper.deleteById(id);
+            return Result.success();
+        }
+
     }
 
     @PostMapping("/update")

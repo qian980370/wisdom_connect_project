@@ -16,7 +16,7 @@
       <el-menu-item index="1-4" @click="routeToFile">File</el-menu-item>
     </el-sub-menu>
 
-    <el-menu-item index="2">
+    <el-menu-item index="2" @click="routeToFastCode">
       <el-icon><money/></el-icon>
       <span>Fast Code</span>
     </el-menu-item>
@@ -46,6 +46,9 @@ export default {
     },
     routeToFile(){
       this.$router.push("/file-controller")
+    },
+    routeToFastCode(){
+      this.$router.push("/fastcode-controller")
     },
   }
 }

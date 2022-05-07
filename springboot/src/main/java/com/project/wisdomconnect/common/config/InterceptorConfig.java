@@ -1,6 +1,7 @@
 package com.project.wisdomconnect.common.config;
 
 import com.project.wisdomconnect.common.AuthInterceptor;
+import com.project.wisdomconnect.common.ManagerAuthInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -17,9 +18,17 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //        .excludePathPatterns("/user/login", "/user/register", "/imserver/**", "/files/**", "/alipay/**",
 //                "/doc.html", "/webjars/**", "/swagger-resources/**");
 
+        registry.addInterceptor(managerAuthInterceptor())
+                .addPathPatterns("/fastcode/**", "/**/page")
+                .excludePathPatterns("/fastcode/create");
     }
     @Bean
     public AuthInterceptor authInterceptor(){
         return new AuthInterceptor();
+    }
+
+    @Bean
+    public ManagerAuthInterceptor managerAuthInterceptor(){
+        return new ManagerAuthInterceptor();
     }
 }

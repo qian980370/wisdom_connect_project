@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 07/05/2022 02:34:40
+ Date: 07/05/2022 23:57:41
 */
 
 SET NAMES utf8mb4;
@@ -34,6 +34,31 @@ CREATE TABLE `chat`  (
 -- Records of chat
 -- ----------------------------
 INSERT INTO `chat` VALUES (1982541823, 1982541826, 1982541825, NULL, 0);
+
+-- ----------------------------
+-- Table structure for fastcode
+-- ----------------------------
+DROP TABLE IF EXISTS `fastcode`;
+CREATE TABLE `fastcode`  (
+  `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `md5` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
+  `manager` int(11) NULL DEFAULT NULL,
+  `role` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `abn` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `address` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+  `state` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'wait for code',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of fastcode
+-- ----------------------------
+INSERT INTO `fastcode` VALUES (00000000001, 'b2c7db8916ff28d5e0fd3d13bc504cd1', '123asd', 2, 'facility', '22@aa.com', '123a5a6', '3a st', 'testDavid', 'done');
+INSERT INTO `fastcode` VALUES (00000000002, 'f350d524103f8639d0df4e9c7ba45a14', 'sadadv2121a', 2, 'facility', '804404826@qq.com', '1212', '12112', 'testNike', 'done');
+INSERT INTO `fastcode` VALUES (00000000004, '9d6f3590a9bc81820594eb88ba973ebb', '123456', 2, 'facility', '12@q.com', '1231', '12313', 'testLee', 'wait for user apply');
 
 -- ----------------------------
 -- Table structure for file
@@ -133,14 +158,17 @@ CREATE TABLE `user`  (
   `address` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `abn` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `role` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '0',
+  `code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (00000002, 'testEric', '123', '25@g.com', '05/05/2022 17:53:04', NULL, NULL, NULL, 'manager');
-INSERT INTO `user` VALUES (00000003, 'testMike', '123', '122@q.com', '05/05/2022 17:59:56', NULL, 'asa', NULL, 'nurse');
-INSERT INTO `user` VALUES (00000004, 'hobbyFacility', '123', '3122@qa.com', '05/05/2022 18:01:50', NULL, '3a st kg', 'asda2ba', 'facility');
+INSERT INTO `user` VALUES (00000002, 'testEric', '123', 'qian980730@gmail.com', '05/05/2022 17:53:04', NULL, NULL, NULL, 'manager', NULL);
+INSERT INTO `user` VALUES (00000003, 'testMike', '123', '122@q.com', '05/05/2022 17:59:56', NULL, 'asa', NULL, 'nurse', NULL);
+INSERT INTO `user` VALUES (00000004, 'hobbyFacility', '123', '3122@qa.com', '05/05/2022 18:01:50', NULL, '3a st kg', 'asda2ba', 'facility', NULL);
+INSERT INTO `user` VALUES (00000005, 'testNike', '132', '804404826@qq.com', '07/05/2022 23:42:16', NULL, '12112', '1212', 'facility', NULL);
+INSERT INTO `user` VALUES (00000006, 'testDavid', '123', '22@aa.com', '07/05/2022 23:44:44', NULL, '3a st', '123a5a6', 'facility', NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;

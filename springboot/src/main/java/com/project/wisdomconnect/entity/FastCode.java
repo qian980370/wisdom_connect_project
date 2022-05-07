@@ -3,23 +3,22 @@ package com.project.wisdomconnect.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import lombok.Builder;
 import lombok.Data;
 
 
 @Data
-@TableName("user")
-public class User {
+@TableName("fastcode")
+public class FastCode {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private String registerTime;
-    private String lastLogin;
+    private Integer manager;
     private String role;
-    private String abn;
-    private String username;
-    private String password;
+    private String code;
+    private String md5;
+    private String name;
     private String email;
     private String address;
-    private String code;
+    private String abn;
+    private String state;
 }

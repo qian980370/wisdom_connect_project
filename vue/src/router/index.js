@@ -27,6 +27,7 @@ import TapOnFriend from "@/views/TapOnFriend";
 import VideoCall from "@/views/VideoCall";
 import Second from "@/views/Second";
 import Flayout from "@/layout/Flayout";
+import FastCodeView from "@/views/BackendManagerViews/FastCodeView";
 
 
 const routes = [
@@ -60,6 +61,11 @@ const routes = [
         path: 'profile-controller',
         name: 'ProfileControllerView',
         component: ProfileControllerView,
+      },
+      {
+        path: 'fastcode-controller',
+        name: 'FastCodeView',
+        component: FastCodeView,
       },
     ]
   },

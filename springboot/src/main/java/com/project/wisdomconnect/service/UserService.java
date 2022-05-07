@@ -1,6 +1,7 @@
 package com.project.wisdomconnect.service;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.crypto.SecureUtil;
 import cn.hutool.log.Log;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,8 +10,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.project.wisdomconnect.common.Constants;
 import com.project.wisdomconnect.common.Result;
 import com.project.wisdomconnect.controller.dto.UserDTO;
+import com.project.wisdomconnect.entity.FastCode;
 import com.project.wisdomconnect.entity.User;
 import com.project.wisdomconnect.exception.ServiceException;
+import com.project.wisdomconnect.mapper.FastCodeMapper;
 import com.project.wisdomconnect.mapper.UserMapper;
 import com.project.wisdomconnect.service.inter.UserServiceInterface;
 import com.project.wisdomconnect.utils.TimeGetter;
@@ -27,6 +30,9 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
     @Resource
     UserMapper userMapper;
 
+    @Resource
+    FastCodeMapper fastCodeMapper;
+
     private static final Log LOG = Log.get();
 
     @Override
@@ -40,6 +46,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
             res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, user.getEmail()));
             if (res != null) {
                 return Result.error(Constants.CODE_403, Constants.CODE_403_MESSAGE);
+            }
+            res = userMapper.selectOne(Wrappers.<User>lambdaQuery().eq(User::getAbn, user.getAbn()));
+            if (res != null) {
+                return Result.error(Constants.CODE_410, Constants.CODE_410_MESSAGE);
             }
 
         }catch (Exception e){
@@ -60,7 +70,18 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
                 return Result.error(Constants.CODE_407, Constants.CODE_407_MESSAGE);
             }
         }else {
+            FastCode fastCode = fastCodeMapper.selectOne(Wrappers.<FastCode>lambdaQuery().eq(FastCode::getCode, user.getCode()));
+            if (fastCode == null) {
+                return Result.error(Constants.CODE_412, Constants.CODE_412_MESSAGE);
+            }
+
+            String md5 = SecureUtil.md5(user.getUsername() + user.getEmail() + user.getAddress() + user.getAbn());
+            if (!Objects.equals(fastCode.getMd5(), md5)) {
+                return Result.error(Constants.CODE_413, Constants.CODE_413_MESSAGE);
+            }
+            fastCode.setState(Constants.fastCode_Done);
             userInfo.setAbn(user.getAbn());
+            fastCodeMapper.updateById(fastCode);
         }
         // check the role
         if (!Objects.equals(user.getRole(), "manager") && !Objects.equals(user.getRole(), "facility")
