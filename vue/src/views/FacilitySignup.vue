@@ -3,42 +3,41 @@
     <div class="header">
       <h2 >wisdom connect</h2>
     </div>
-    <div style="width: 540px; height:500px;margin: 30px auto;background-color: #f3f3f3;border-radius: 5px">
-      <div style="text-align: center;margin: 30px auto">
+    <div style="width: 540px; height:600px;margin: 30px auto;background-color: #f3f3f3;border-radius: 5px">
+      <div style="text-align: center;margin: 30px auto;padding-top: 30px">
         <h2 style="color: #bfa0c8">Enter Nursing Home Information</h2>
       </div>
 
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
 
-      <el-form-item label="username" prop="name">
-        <el-input v-model="ruleForm.name"></el-input>
+      <el-form-item label="Username" prop="name">
+        <el-input v-model="ruleForm.name" class="textarea" style="width: 80%"></el-input>
       </el-form-item>
-        <el-form-item label="password" prop="password">
-          <el-input v-model="ruleForm.name"></el-input>
+        <el-form-item label="Password" prop="password">
+          <el-input v-model="ruleForm.password" class="textarea" style="width: 80%"></el-input>
         </el-form-item>
-        <el-form-item label="Address" prop="Address">
-          <el-input v-model="ruleForm.name"></el-input>
+        <el-form-item label="Address" prop="address">
+          <el-input v-model="ruleForm.address" class="textarea" style="width: 80%"></el-input>
         </el-form-item>
         <el-form-item label="ABN" prop="abn">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="ruleForm.abn" class="textarea" style="width: 80%"></el-input>
         </el-form-item>
 
-        <div style="text-align: center">
+        <div style="text-align: center;padding-top: 30px;padding-bottom: 30px">
         <h2 style="color: #bfa0c8">Enter FastCode</h2>
         </div>
         <el-form-item label="Email" prop="email">
-          <el-input v-model="ruleForm.name" style="width: 50%"></el-input>
-          <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">send</el-button>
+          <el-input v-model="ruleForm.email" class="textarea" style="width: 70%"></el-input>
+          <el-button  type="primary" @click="applyFastCode" style="background-color: #bfa0c8;width: 100px">{{status}}</el-button>
 
         </el-form-item>
         <el-form-item label="Fastcode" prop="fastcode">
-          <el-input v-model="ruleForm.name" style="width: 50%"></el-input>
-          <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">verify</el-button>
+          <el-input v-model="ruleForm.fastcode" class="textarea" style="width: 70%"></el-input>
 
         </el-form-item>
 
-        <div style="text-align: center">
-        <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">sign up</el-button>
+        <div style="text-align: center;margin-top: 30px">
+        <el-button  type="primary"  @click="submit" style="background-color: #bfa0c8;width: 200px">sign up</el-button>
         </div>
       </el-form>
     </div>
@@ -56,14 +55,20 @@ export default {
     return {
       ruleForm: {
         name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
+        password: '',
+        address: '',
+        abn: '',
+        email: '',
+        fastcode: '',
+
+
       },
+      fastCodeFrom:{},
+      Form:{},
+      status:'send code',
+      img: null,
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+
       rules: {
         name: [
           { required: true, message: 'please input the username', trigger: 'blur' }
@@ -72,40 +77,78 @@ export default {
         password:[
             {required:true,message:'please input the password',trigger: 'blur'},
             {min: 3, max: 8, message: 'invalid password', trigger: 'blur'}],
+        address: [
+          { required: true, message: 'please input the address', trigger: 'blur' }
 
-      }
+        ],
+        abn: [
+          { required: true, message: 'please input the abn', trigger: 'blur' }
+
+        ],
+      },
+
     }
   },
   methods: {
-    register() {
-      if (this.form.password !== this.form.confirm) {
-        this.$message({
-          type: "error",
-          message: 'Inconsistent password input!'
-        })
-        return
-      }
-        if (valid) {
-          console.log("create");
-          request.post("/user/register", this.form).then(res =>{
-            console.log(res);
-            if (res.code === '200'){
-              this.$message({
-                type: "success",
-                message: "Successfully add user"
-              })
-              this.$router.push("/facilitylogin")
-            }else{
-              this.$message({
-                type: "error",
-                message: res.msg
-              })
-            }
-            this.load();
-            this.dialogVisible=false;
-          });
+    applyFastCode(){
+      this.status = 'processing'
+      setTimeout(()=>{
+        this.status = 'send code'
+
+      },5000)
+      this.fastCodeFrom.name = this.ruleForm.name;
+      this.fastCodeFrom.email = this.ruleForm.email;
+      this.fastCodeFrom.address = this.ruleForm.address;
+      this.fastCodeFrom.abn = this.ruleForm.abn;
+      this.fastCodeFrom.role = 'facility';
+      // console.log(this.fastCodeFrom)
+      request.post("/fastcode/create", this.fastCodeFrom).then(res =>{
+        console.log(res);
+        if (res.code === '200'){
+          this.$message({
+            type: "success",
+            message: "Successfully Apply user fast code"
+          })
+        }else{
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
         }
-      }
+      });
+    },
+    submit(){
+      console.log("create");
+
+
+      this.Form.username = this.ruleForm.name;
+      this.Form.password = this.ruleForm.password;
+      this.Form.email = this.ruleForm.email;
+      this.Form.address = this.ruleForm.address;
+      this.Form.abn = this.ruleForm.abn;
+      this.Form.role = 'facility';
+      this.Form.code = this.ruleForm.fastcode;
+      console.log(this.Form);
+      request.post("/user/register", this.Form).then(res =>{
+        console.log(res);
+        if (res.code === '200'){
+          this.$message({
+            type: "success",
+            message: "Successfully add user"
+          })
+          this.$router.push("/profilelogin")
+
+        }else{
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
+      });
+
+    }
+
 },}
 </script>
 
@@ -122,5 +165,8 @@ export default {
   background-repeat: no-repeat;
   background-position: left center;
   margin: 70px auto 0;
+}
+.textarea>>>.el-input__inner{
+  height: 40px;
 }
 </style>
