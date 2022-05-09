@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import ManagerLoginView from '../views/BackendManagerViews/LoginView'
 import ManagerRegisterView from "@/views/BackendManagerViews/RegisterView";
 import HomeView from '../views/BackendManagerViews/HomeView.vue'
-import LoginView from '../views/FacilityLogin'
+import LoginView from '../views/BackendManagerViews/LoginView'
 import Layout from "../layout/Layout";
 
 
@@ -178,7 +178,11 @@ const router = createRouter({
 
 
 router.beforeEach((to, from, next) => {
-  if (to.path === '/login' || to.path === '/register') {
+  if (to.path === '/login' || to.path === '/register') { //manager check
+    next()
+    return
+  }
+  if (to.path === '/facilitylogin' || to.path === '/facilitysignup') { //user check
     next()
     return
   }

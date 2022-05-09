@@ -1,70 +1,78 @@
 <template>
-  <div style="width: 100%; height: 100vh; overflow: hidden">
-    <div style="width: 400px; margin: 100px auto">
-      <div style="font-size: 30px; text-align: center; padding: 30px 0">Welcome to Registration</div>
-      <el-form ref="form" :model="form" size="normal" :rules="rules">
-        <el-form-item prop="username">
-          <el-input v-model="form.username" placeholder="Please input username">
-            <template #prefix>
-              <el-icon class="el-input__icon" :size="20"><user /></el-icon>
-            </template>
-          </el-input>
+  <div style="width: 100%; height: 100vh;  overflow: hidden">
+    <div class="header">
+      <h2 >wisdom connect</h2>
+    </div>
+    <div style="width: 540px; height:500px;margin: 30px auto;background-color: #f3f3f3;border-radius: 5px">
+      <div style="text-align: center;margin: 30px auto">
+        <h2 style="color: #bfa0c8">Enter Nursing Home Information</h2>
+      </div>
+
+      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+
+      <el-form-item label="username" prop="name">
+        <el-input v-model="ruleForm.name"></el-input>
+      </el-form-item>
+        <el-form-item label="password" prop="password">
+          <el-input v-model="ruleForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="Address" prop="Address">
+          <el-input v-model="ruleForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="ABN" prop="abn">
+          <el-input v-model="ruleForm.name"></el-input>
+        </el-form-item>
+
+        <div style="text-align: center">
+        <h2 style="color: #bfa0c8">Enter FastCode</h2>
+        </div>
+        <el-form-item label="Email" prop="email">
+          <el-input v-model="ruleForm.name" style="width: 50%"></el-input>
+          <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">send</el-button>
+
+        </el-form-item>
+        <el-form-item label="Fastcode" prop="fastcode">
+          <el-input v-model="ruleForm.name" style="width: 50%"></el-input>
+          <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">verify</el-button>
 
         </el-form-item>
 
-        <el-form-item prop="email">
-          <el-input v-model="form.email" placeholder="Please input email">
-            <template #prefix>
-              <el-icon class="el-input__icon" :size="20"><message /></el-icon>
-            </template>
-          </el-input>
-
-        </el-form-item>
-
-        <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="Please input password" show-password>
-            <template #prefix>
-              <el-icon class="el-input__icon" :size="20"><lock /></el-icon>
-            </template>
-          </el-input>
-
-        </el-form-item>
-        <el-form-item prop="confirm">
-          <el-input v-model="form.confirm" placeholder="Please input password again" show-password>
-            <template #prefix>
-              <el-icon class="el-input__icon" :size="20"><lock /></el-icon>
-            </template>
-          </el-input>
-
-        </el-form-item>
-        <el-form-item>
-          <el-button style="width: 100%" type="primary" @click="register">Register</el-button>
-        </el-form-item>
-        <el-form-item><el-button type="text" @click="$router.push('/login')">&lt;&lt;Back to Login </el-button></el-form-item>
+        <div style="text-align: center">
+        <el-button  type="primary"  style="background-color: #bfa0c8;width: 200px">sign up</el-button>
+        </div>
       </el-form>
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
 import request from "@/utils/request";
 import {Message, Document, LocationFilled, Lock, MapLocation, Money, Setting, User} from "@element-plus/icons-vue";
-
+import { ElForm } from 'element-plus'
+import { ElButton } from 'element-plus'
 export default {
-  name: "RegisterView",
+  name: "FacilitySignup",
   data() {
     return {
-      form: {},
+      ruleForm: {
+        name: '',
+        region: '',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: ''
+      },
       rules: {
-        username: [
-          {required: true, message: 'please input username', trigger: 'blur'},
+        name: [
+          { required: true, message: 'please input the username', trigger: 'blur' }
+
         ],
-        password: [
-          {required: true, message: 'please input password', trigger: 'blur'},
-        ],
-        confirm: [
-          {required: true, message: 'please input your password again', trigger: 'blur'},
-        ],
+        password:[
+            {required:true,message:'please input the password',trigger: 'blur'},
+            {min: 3, max: 8, message: 'invalid password', trigger: 'blur'}],
+
       }
     }
   },
@@ -102,5 +110,17 @@ export default {
 </script>
 
 <style scoped>
-
+.header{
+  height: 70px;
+  width: 292px;
+  /* text-align: center; */
+  font-size:19px;
+  text-align: right;
+  line-height: 70px;
+  background-image: url(../image/WechatIMG2010.png);
+  background-size: 100px 70px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  margin: 70px auto 0;
+}
 </style>
