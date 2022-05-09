@@ -24,6 +24,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         // get token from request header
         String token = request.getHeader("token");
+
         if (StrUtil.isBlank(token)) {
             throw new ServiceException(Constants.CODE_301, Constants.CODE_301_MESSAGE);
         }

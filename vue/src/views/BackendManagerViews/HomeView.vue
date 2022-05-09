@@ -235,7 +235,7 @@ export default {
     // },
     load(){
       if(this.mode === 0){
-        request.get("user", {
+        request.get("user/page", {
           params: {
             pageNum: this.currentPage,
             pageSize: this.pageSize,
@@ -248,7 +248,7 @@ export default {
           this.total = res.data.total;
         })
       }else if(this.mode === 1){
-        request.get("profile", {
+        request.get("profile/page", {
           params: {
             pageNum: this.currentPage,
             pageSize: this.pageSize,
@@ -434,7 +434,7 @@ export default {
       this.load();
     },
     testHobby(){
-      request.get("hobby", {
+      request.get("hobby/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,

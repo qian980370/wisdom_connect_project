@@ -22,8 +22,6 @@ import java.util.Date;
 @Component
 public class TokenUtils {
 
-    private static int expireTime = 15; //after 15 minutes token will expire
-
     // import user mapper
     @Resource
     private UserMapper userMapper;
@@ -41,6 +39,8 @@ public class TokenUtils {
      * @return
      */
     public static String genToken(String userid, String password) {
+        // after 10080 minutes(7 days) token will expire
+        int expireTime = 60 * 24 * 7;
         return JWT.create().withExpiresAt(DateUtil.offsetMinute(new Date(), expireTime)).withAudience(userid)
                 .sign(Algorithm.HMAC256(password));
     }

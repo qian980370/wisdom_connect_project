@@ -1,10 +1,11 @@
 <template>
   <!--    header-->
   <PageHeader/>
+
   <!--    body-->
   <div style="display: flex">
     <!--      aside-->
-    <Aside/>
+    <AsideComponent/>
     <!--      main-part-->
     <router-view/>
   </div>
@@ -14,11 +15,14 @@
 import PageHeader from "@/components/PageHeader";
 import Aside from "@/components/Aside";
 
+import AsideComponent from "@/components/AsideComponent";
+
 export default {
   name: "Layout",
   components:{
     PageHeader,
-    Aside
+    Aside,
+    AsideComponent
   }
 }
 </script>

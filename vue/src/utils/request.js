@@ -4,7 +4,7 @@ import ElementUI from "@element-plus/icons-vue/dist";
 
 const request = axios.create({
     baseURL: "/api", //api在vue.config.js 里面
-    timeout: 5000
+    timeout: 10000
 })
 
 

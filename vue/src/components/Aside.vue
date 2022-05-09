@@ -1,28 +1,24 @@
 <template>
   <el-menu
-      style="width: 200px; min-height: calc(100vh - 50px)"
-      default-active="2"
+      style="width: 200px; height: calc(100vh - 50px)"
+      default-active="1"
       class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
+      router
   >
     <el-sub-menu index="1">
       <template #title>
         <el-icon><map-location/></el-icon>
-        <span>User List</span>
+        <span>Database</span>
       </template>
-
-      <el-menu-item index="1-1">All</el-menu-item>
-      <el-menu-item index="1-2">User</el-menu-item>
-      <el-menu-item index="1-3">Nurse</el-menu-item>
-      <el-menu-item index="1-4">Manager</el-menu-item>
-
+      <el-menu-item index="1-1" @click="routeToUser">User</el-menu-item>
+      <el-menu-item index="1-2">Profile</el-menu-item>
+      <el-menu-item index="1-3">Hobby</el-menu-item>
+      <el-menu-item index="1-4">File</el-menu-item>
     </el-sub-menu>
 
     <el-menu-item index="2">
       <el-icon><money/></el-icon>
-      <span>ALL USERS</span>
-
+      <span>Fast Code</span>
     </el-menu-item>
 
     <el-menu-item index="4">
@@ -34,9 +30,24 @@
 
 <script>
 import {Document, LocationFilled, MapLocation, Money, Setting} from "@element-plus/icons-vue";
+
 export default {
-  name: "Aside",
-  components: {Money, MapLocation, LocationFilled, Document, Setting}
+  name: "aside",
+  components: {Money, MapLocation, LocationFilled, Document, Setting},
+  methods:{
+    routeToUser(){
+      this.$router.push("/user-controller")
+    },
+    // routeToProfile(){
+    //
+    // },
+    // routeToHobby(){
+    //
+    // },
+    // routeToFile(){
+    //
+    // },
+  }
 }
 </script>
 
