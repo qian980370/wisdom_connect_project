@@ -1,7 +1,7 @@
 <template>
   <head>
     <meta charset="UTF-8">
-    <title>Your Interests</title>
+    <title>More Interests</title>
   </head>
 
   <body>
@@ -15,18 +15,18 @@
     </table>
   </div>
 
-  <div class="interests_container">
-    <div class="interests_form">
-      <div class="interests_form_header"><p>Your Interest List</p></div>
+  <div class="more_interests_container">
+    <div class="more_interests_form">
+      <div class="more_interests_form_header"><p>Add Interests</p></div>
 
       <hr>
 
-      <div class="interests_display_header"><p>Click to remove from list</p></div>
+      <div class="more_interests_display_header"><p>Click to add in your list</p></div>
 
 
-      <div class="interests_display_container">
+      <div class="more_interests_display_container">
         <!--------Table------>
-        <div class="interests_display_content">
+        <div class="more_interests_display_content">
           <table>
             <tr>
               <td>
@@ -45,7 +45,7 @@
           </table>
         </div>
         <!--------Table------>
-        <div class="interests_display_content">
+        <div class="more_interests_display_content">
           <table>
             <tr>
               <td>
@@ -64,7 +64,7 @@
           </table>
         </div>
         <!--------Table------>
-        <div class="interests_display_content">
+        <div class="more_interests_display_content">
           <table>
             <tr>
               <td>
@@ -83,7 +83,7 @@
           </table>
         </div>
         <!--------Table------>
-        <div class="interests_display_content">
+        <div class="more_interests_display_content">
           <table>
             <tr>
               <td>
@@ -104,11 +104,11 @@
 
       </div>
 
-      <div class="interests_buttons">
+      <div class="more_interests_buttons">
         <table>
           <tr>
-            <td><a href="javescript:"><button id="remove_btn">Remove</button></a></td>
-            <td><a href="more_interests.html"><button id="more_btn">More</button></a></td>
+            <td><a href="javascript:"><button id="more_interests_add_btn">Add</button></a></td>
+            <td><a href="javascript:"><button id="more_interests_refresh_btn">Refresh</button></a></td>
           </tr>
         </table>
       </div>
@@ -116,13 +116,14 @@
     </div>
 
   </div>
+
   </body>
 
 </template>
 
 <script>
 export default {
-  name: "InterestList"
+  name: "MoreInterest"
 }
 </script>
 
@@ -134,7 +135,7 @@ export default {
   padding-left: 37%;
   padding-top: 2%;
 }
-.interests_container{
+.more_interests_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
 
   height: 1000px;
@@ -143,7 +144,7 @@ export default {
   /* background-color: azure; */
 }
 
-.interests_form{
+.more_interests_form{
   width: 540px;
   height: 800px;
   /* border: 2px solid red; */
@@ -153,7 +154,7 @@ export default {
   border-color:#864a98;
   border-radius: 5px;
 }
-.interests_form_header p{
+.more_interests_form_header p{
   font-size: 28px;
   font-weight: bold;
   color:#864a98;
@@ -162,14 +163,14 @@ export default {
 .interests_display_header{
   margin-top: 30px;
 }
-.interests_display_header p{
+.more_interests_display_header p{
   font-size: 18px;
   font-weight: bold;
   color:#864a98;
   text-align: center;
 }
 
-.interests_display_container{
+.more_interests_display_container{
   width: 440px;
   overflow-y:auto;
   overflow-x: hidden;
@@ -180,22 +181,22 @@ export default {
   margin-top: 40px;
 }
 
-.interests_display_container::-webkit-scrollbar{
+.more_interests_display_container::-webkit-scrollbar{
   width: 10px;
 }
-.interests_display_container::-webkit-scrollbar-thumb{
+.more_interests_display_container::-webkit-scrollbar-thumb{
   background-color: #bfa0c8;
   border-radius: 5px;
 }
-.interests_display_container::-webkit-scrollbar-button{
+.more_interests_display_container::-webkit-scrollbar-button{
   display: none;
 }
-.interests_display_container::-webkit-scrollbar-track{
+.more_interests_display_container::-webkit-scrollbar-track{
   background-color: #f3f3f3;
 }
 
 
-.interests_display{
+.more_interests_display{
   height: 480px;
   width: 400px;
   margin-left: 70px;
@@ -205,37 +206,37 @@ export default {
   border-color: #864a98;
 }
 
-.interests_display_content{
+.more_interests_display_content{
   width: 400px;
   height: 140px;
   margin-top: 20px;
   margin-bottom: 10px;
   margin-left: 15px;
 }
-.interests_display_content img{
+.more_interests_display_content img{
   width: 100px;
   height: 100px;
   cursor: pointer;
 }
 
-.interests_display_content td{
+.more_interests_display_content td{
   width: 240px;
   height: 160px;
 }
-.interests_display_content tr{
+.more_interests_display_content tr{
   padding-top: 40px;
 }
 
-.interests_display_content p{
+.more_interests_display_content p{
   font-size: 14px;
   color:#864a98;
   font-weight: bold;
   text-align: center;
 }
-.interests_buttons{
+.more_interests_buttons{
   margin-left: 50px;
 }
-#remove_btn{
+#more_interests_add_btn{
   height: 44px;
   width: 215px;
   background-color: #bfa0c8;
@@ -245,7 +246,7 @@ export default {
   font-size: 18px;
   border-radius: 5px;
 }
-#more_btn{
+#more_interests_refresh_btn{
   height: 44px;
   width: 215px;
   background-color: #bfa0c8;
