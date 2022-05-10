@@ -9,7 +9,7 @@
 
       <div class="profiles_display_container">
         <!--------Table------>
-        <div class="profiles_display_content" v-for="item in userinfo">
+        <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username}})">
           <table>
             <tr>
               <td><img  :src="item.icon"></td>
@@ -17,12 +17,6 @@
             </tr>
           </table>
         </div>
-
-
-
-
-
-
 
       </div>
 
@@ -68,7 +62,7 @@ export default {
           query: this.query
         }
       }).then(res =>{
-        console.log(res.data.records[0].icon);
+        console.log(res);
         this.userinfo = res.data.records
         // this.tableData = res.data.records;
         // this.total = res.data.total;

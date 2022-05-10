@@ -1,13 +1,271 @@
 <template>
+  <div class="header">
+    <h2>wisdom connect</h2>
+  </div>
+
+  <div class="myprofile_container">
+    <div class="myprofile_form">
+      <div class="myprofile_form_header" style="margin: 30px auto"><p>Hi {{ username }}!</p></div>
+
+      <hr>
+
+      <div class="myprofile_addfriend">
+        <!-- <input type="input" placeholder="add a friend"/></td> -->
+        <a href="add_friends.html"><button style="margin: 20px auto">Add Firends</button></a>
+      </div>
+
+      <div class="myprofile_display_container">
+        <!--------Table------>
+        <div class="myprofile_talk_to_sb_new" onclick = "talkToSbNew()">
+          <table>
+            <tr>
+              <td><img src=""></td>
+              <td><p>Talk to someone new</p></td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="myprofile_display_content" onclick="makeVideoCall()">
+          <table>
+            <tr>
+              <td><img src=""></td>
+              <td><p>James</p></td>
+            </tr>
+          </table>
+        </div>
+
+
+
+      </div>
+
+      <div class="myprofile_switch">
+        <table>
+          <tr>
+            <td><a href="javascrpit:"><button id="videocall_btn">Make a Video Call</button></a></td>
+            <td><a href="me.html"><button id="me_btn">Me</button></a></td>
+          </tr>
+        </table>
+      </div>
+
+
+    </div>
+
+  </div>
+
 
 </template>
 
 <script>
 export default {
-  name: "TapOnFriend"
+  name: "TapOnFriend",
+  data(){
+    return{
+      userid:'',
+      username:''
+    }
+  },
+  created() {
+    this.userid = this.$route.params.userId
+    this.username = this.$route.params.userName
+    // console.log(id)
+  }
 }
 </script>
 
 <style scoped>
+.header{
+  height: 70px;
+  width: 292px;
+  margin: 0 auto;
+  /* text-align: center; */
+  font-size:19px;
+  text-align: right;
+  line-height: 70px;
+  background-image: url(../image/WechatIMG2010.png);
+  background-size: 100px 70px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  margin-top: 70px;
+}
+/*------------My Profile---------------*/
+.myprofile_container{
+  /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
+
+  height: 1000px;
+  /* background-color: #f3e6f7; */
+  /* padding: 50px; */
+  /* background-color: azure; */
+}
+
+.myprofile_form{
+  width: 540px;
+  height: 800px;
+  /* border: 2px solid red; */
+  margin:20px auto;
+  text-align: center;
+  border:solid 2px;
+  border-color:#864a98;
+  border-radius: 5px;
+}
+.myprofile_form_header p{
+  font-size: 28px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: center;
+}
+
+.myprofile_display_container{
+  width: 440px;
+  overflow-y:auto;
+  overflow-x: hidden;
+  height: 460px;
+  border: solid 2px #bfa0c8;
+  border-radius: 5px;
+  margin-left: 50px;
+}
+
+.myprofile_display_container::-webkit-scrollbar{
+  width: 10px;
+}
+.myprofile_display_container::-webkit-scrollbar-thumb{
+  background-color: #bfa0c8;
+  border-radius: 5px;
+}
+.myprofile_display_container::-webkit-scrollbar-button{
+  display: none;
+}
+.myprofile_display_container::-webkit-scrollbar-track{
+  background-color: #f3f3f3;
+}
+
+
+.myprofile_display{
+  height: 480px;
+  width: 400px;
+  margin-left: 70px;
+  border:dotted;
+  border-radius: 5px;
+  border-width:2px;
+  border-color: #864a98;
+}
+
+.myprofile_display_content{
+  width: 400px;
+  height: 120px;
+  background-color:#f3f3f3;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.myprofile_display_content img{
+  width: 100px;
+  height: 100px;
+}
+
+.myprofile_display_content td{
+  width: 180px;
+  height: 120px;
+}
+
+.myprofile_talk_to_sb_new{
+  width: 400px;
+  height: 120px;
+  background-color:#f3e6f7;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.myprofile_talk_to_sb_new img{
+  width: 100px;
+  height: 100px;
+}
+
+.myprofile_talk_to_sb_new td{
+  width: 180px;
+  height: 120px;
+}
+
+.myprofile_talk_to_sb_new p{
+  font-size: 16px;
+  color:#864a98;
+  font-weight: bold;
+}
+
+
+
+.myprofile_display_content p{
+  font-size: 18px;
+  color:#864a98;
+  font-weight: bold;
+}
+
+.myprofile_addfriend{
+  height: 50px;
+  margin-bottom: 30px;
+}
+/* .myprofile_addfriend input{
+    height: 38px;
+    width: 330px;
+    border: solid 2px #bfa0c8;
+    font-size: 18px;
+    border-radius: 5px;
+    outline: none;
+} */
+.myprofile_addfriend button {
+  /* height: 42px;
+  width: 70px;
+  background-color: white;
+  border: solid 2px;
+  margin-left: 20px;
+  font-size: 18px;
+  color:#bfa0c8;
+  border-radius: 5px; */
+  height: 42px;
+  width: 430px;
+  background-color: white;
+  border: solid 2px;
+  margin-left: 6px;
+  margin-top: 15px;
+  font-size: 18px;
+  color:#bfa0c8;
+  border-radius: 5px;
+}
+.myprofile_addfriend button:active {
+  height: 42px;
+  width: 430px;
+  background-color: #bfa0c8;
+  border: solid 2px;
+  margin-left: 6px;
+  margin-top: 15px;
+  font-size: 18px;
+  color:white;
+  border-radius: 5px;
+}
+
+.myprofile_switch{
+  margin-left: 50px;
+}
+#videocall_btn{
+  height: 44px;
+  width: 255px;
+  background-color: #bfa0c8;
+  color: white;
+  border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#me_btn{
+  height: 44px;
+  width: 175px;
+  background-color: #bfa0c8;
+  color: white;
+  border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
 
 </style>
