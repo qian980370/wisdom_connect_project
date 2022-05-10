@@ -24,16 +24,14 @@
       <div class="me_display_container">
         <!--------Table------>
         <div class="me_profile" @click="$router.push('/personalchange')">
-          <table>
-            <tr>
-              <td><el-table-column label="Header">
-                <template #default="imgScope">
-                  <el-image style="width: 100px; height: 100px" :src="imgScope.row.icon" />
-                </template>
-              </el-table-column></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
+
+            <table>
+              <tr>
+                <td><img :src="icon"></td>
+                <td><p>{{username}}</p></td>
+              </tr>
+            </table>
+
         </div>
 
         <div class="me_display_content" @click="$router.push('/interestlist')">
@@ -72,16 +70,20 @@ export default {
   name: "Personal",
   data(){
     return{
-      img: null,
       user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
-      uploadHeaders:{},
+      userinfo :null,
+      userid:'',
+      username:'',
+      icon:'',
     }
   },
   created() {
     this.load();
+    this.userid = this.$route.params.userId
+    this.username = this.$route.params.userName
+    this.icon=this.$route.params.icon
+
     // console.log(this.user);
-    this.uploadHeaders.token = this.user.token;
-    // console.log(this.uploadHeaders);
   },
   methods: {
     refreshUser() {
@@ -100,8 +102,7 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        this.tableData = res.data.records;
-        this.total = res.data.total;
+        this.userinfo = res.data.records;
       })
     },
 

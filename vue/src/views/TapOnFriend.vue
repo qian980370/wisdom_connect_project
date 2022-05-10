@@ -19,7 +19,7 @@
         <div class="myprofile_talk_to_sb_new" >
           <table>
             <tr>
-              <td><img src="../image/flower1.jpg"></td>
+              <td><img src="../image/flower1.png"></td>
               <td><p>Talk to someone new</p></td>
             </tr>
           </table>
@@ -41,8 +41,8 @@
       <div class="myprofile_switch">
         <table>
           <tr>
-            <td><a href="javascrpit:"><button id="videocall_btn">Make a Video Call</button></a></td>
-            <td><a href="me.html"><button id="me_btn">Me</button></a></td>
+            <td><button id="videocall_btn">Make a Video Call</button></td>
+            <td><button id="me_btn" @click="this.$router.push({name:'Personal',params:{userId:userid,userName:username,icon:icon}})">Me</button></td>
           </tr>
         </table>
       </div>
@@ -63,12 +63,14 @@ export default {
       userid:'',
       username:'',
       friendList:[{username:'jason',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
-        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}]
+        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}],
+      icon:'',
     }
   },
   created() {
     this.userid = this.$route.params.userId
     this.username = this.$route.params.userName
+    this.icon=this.$route.params.icon
     // console.log(id)
   }
 }

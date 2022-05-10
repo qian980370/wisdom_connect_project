@@ -26,39 +26,23 @@
 
       <div class="interests_display_container">
         <!--------Table------>
+
+
+            <!--------Table------>
         <div class="interests_display_content">
           <table>
             <tr>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[0].icon">
+                <p>{{userinfo[0].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[1].icon">
+                <p>{{userinfo[1].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[2].icon">
+                <p>{{userinfo[1].name}}</p>
               </td>
             </tr>
           </table>
@@ -121,8 +105,40 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
-  name: "InterestList"
+  name: "InterestList",
+  data(){
+    return{
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+
+      userinfo :null
+    }
+  },
+  created() {
+    this.load()
+  },
+  methods:{
+    refreshUser(){
+      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    },
+    load(){
+      this.refreshUser();
+      request.get("/hobby/page", {
+        params: {
+          pageNum: this.currentPage,
+          pageSize: this.pageSize,
+          query: this.query
+        }
+      }).then(res =>{
+        console.log(res.data);
+        this.userinfo = res.data.records
+        // this.tableData = res.data.records;
+        // this.total = res.data.total;
+      })
+    }
+  }
 }
 </script>
 

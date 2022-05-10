@@ -9,8 +9,8 @@
 
       <div class="profiles_display_container">
         <!--------Table------>
-        <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username}})">
-          <table>
+        <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username,icon:item.icon}})">
+          <table >
             <tr>
               <td><img  :src="item.icon"></td>
               <td><p>{{ item.username }}</p></td>
