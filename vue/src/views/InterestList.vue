@@ -2,8 +2,13 @@
 
 
   <body>
-  <div class="header">
-    <h2 >wisdom connect</h2>
+  <div class="logo_and_title">
+    <table>
+      <tr>
+        <td><img  src="../image/logo.png" alt="logo"></td>
+        <td><h1>Wisdom Connect</h1></td>
+      </tr>
+    </table>
   </div>
 
 
@@ -135,25 +140,18 @@ export default {
 </script>
 
 <style scoped>
-.header{
-  height: 70px;
-  width: 292px;
-  /* text-align: center; */
-  font-size:19px;
-  text-align: right;
-  line-height: 70px;
-  background-image: url(../image/WechatIMG2010.png);
-  background-size: 100px 70px;
-  background-repeat: no-repeat;
-  background-position: left center;
-  margin: 70px auto 0;
-}
-#logo_and_title{
+.logo_and_title{
   width: 400px;
   height: 120px;
   text-align: center;
   padding-left: 37%;
   padding-top: 2%;
+}
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
 }
 .interests_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */

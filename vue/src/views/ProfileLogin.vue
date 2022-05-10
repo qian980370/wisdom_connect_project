@@ -1,6 +1,11 @@
 <template>
-  <div class="header">
-    <h2>wisdom connect</h2>
+  <div class="logo_and_title">
+    <table>
+      <tr>
+        <td><img src="../image/logo.png" alt="logo"></td>
+        <td><h1>Wisdom Connect</h1></td>
+      </tr>
+    </table>
   </div>
 
   <div class="profiles_container">
@@ -95,6 +100,19 @@ export default {
   /* background-color: #f3e6f7; */
   /* padding: 50px; */
   /* background-color: azure; */
+}
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
+}
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
 }
 
 .profiles_form{

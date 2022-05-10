@@ -6,10 +6,10 @@
 
   <body>
 
-  <div id="logo_and_title">
+  <div class="logo_and_title">
     <table>
       <tr>
-        <td width="100px"><img  src="../image/logo.png" alt="logo" width="80px"></td>
+        <td><img src="../image/logo.png" alt="logo"></td>
         <td><h1>Wisdom Connect</h1></td>
       </tr>
     </table>
@@ -302,6 +302,21 @@ export default {
   background-color: #f3f3f3;
 }
 
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
+}
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+
+
 
 .addprofiles_add button{
   height: 44px;
@@ -325,6 +340,7 @@ export default {
     border-radius: 5px;
 
 } */
+
 
 </style>
 

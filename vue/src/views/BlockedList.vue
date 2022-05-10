@@ -3,8 +3,13 @@
 
   <body>
 
-  <div class="header">
-    <h2 >wisdom connect</h2>
+  <div class="logo_and_title">
+    <table>
+      <tr>
+        <td><img  src="../image/logo.png" alt="logo"></td>
+        <td><h1>Wisdom Connect</h1></td>
+      </tr>
+    </table>
   </div>
 
   <div class="blockedlist_container">
