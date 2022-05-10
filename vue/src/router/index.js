@@ -19,7 +19,7 @@ import BlockedList from "@/views/BlockedList";
 import InterestList from "@/views/InterestList";
 import InterestListRemove from "@/views/InterestListRemove";
 import NewProfile from "@/views/NewProfile";
-import OtherInterest from "@/views/OtherInterest";
+import OtherInterest from "@/views/MoreInterest";
 import Personal from "@/views/Personal";
 import PersonalChange from "@/views/PersonalChange";
 import ProfileLogin from "@/views/ProfileLogin";
@@ -134,8 +134,8 @@ const routes = [
     component: NewProfile
   },
   {
-    path: '/otherinterest',
-    name: 'OtherInterest',
+    path: '/moreinterest',
+    name: 'MoreInterest',
     component: OtherInterest
   },
   {
