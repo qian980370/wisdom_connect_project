@@ -12,7 +12,7 @@
         <div class="profiles_display_content" v-for="item in userinfo">
           <table>
             <tr>
-              <td><img src="item.icon"></td>
+              <td><img  :src="item.icon"></td>
               <td><p>{{ item.username }}</p></td>
             </tr>
           </table>
@@ -68,7 +68,7 @@ export default {
           query: this.query
         }
       }).then(res =>{
-        console.log(res.data.records);
+        console.log(res.data.records[0].icon);
         this.userinfo = res.data.records
         // this.tableData = res.data.records;
         // this.total = res.data.total;
