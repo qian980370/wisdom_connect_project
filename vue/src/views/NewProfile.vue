@@ -85,8 +85,8 @@
                     <p>{{userinfo[7].name}}</p>
                   </td>
                   <td>
-                    <img :src="userinfo[7].icon">
-                    <p>{{userinfo[7].name}}</p>
+                    <img :src="userinfo[8].icon">
+                    <p>{{userinfo[8].name}}</p>
                   </td>
                 </tr>
               </table>

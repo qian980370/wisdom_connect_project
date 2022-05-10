@@ -27,65 +27,52 @@
       <div class="blockedlist_display_container">
         <!--------Table------>
 
-        <div class="blockedlist_display_content">
+        <div class="blockedlist_display_content" v-for="item in userinfo">
           <table>
             <tr>
-              <td><img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td><img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
-        </div>
-
-        <!--------Table------>
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td> <img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td> <img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
+              <td><img  :src="item.icon"></td>
+              <td><p>{{ item.username }}</p></td>
             </tr>
           </table>
         </div>
       </div>
     </div>
-
   </div>
   </body>
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "BlockedList",
+  data(){
+    return{
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
 
-  methods: {
-    load() {
-      request.get("profile", {
+      userinfo :null
+    }
+  },
+  created() {
+    this.load()
+  },
+  methods:{
+    refreshUser(){
+      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    },
+    load(){
+      this.refreshUser();
+      request.get("/profile/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
           query: this.query
         }
-      }).then(res => {
+      }).then(res =>{
         console.log(res);
-        this.tableData = res.data.records;
-        this.total = res.data.total;
+        this.userinfo = res.data.records
+        // this.tableData = res.data.records;
+        // this.total = res.data.total;
       })
     }
   }

@@ -42,7 +42,7 @@
               </td>
               <td>
                 <img :src="userinfo[2].icon">
-                <p>{{userinfo[1].name}}</p>
+                <p>{{userinfo[2].name}}</p>
               </td>
             </tr>
           </table>
@@ -52,16 +52,16 @@
           <table>
             <tr>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[7].icon">
+                <p>{{userinfo[7].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[6].icon">
+                <p>{{userinfo[6].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[8].icon">
+                <p>{{userinfo[8].name}}</p>
               </td>
             </tr>
           </table>
@@ -71,16 +71,16 @@
           <table>
             <tr>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[3].icon">
+                <p>{{userinfo[3].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[4].icon">
+                <p>{{userinfo[4].name}}</p>
               </td>
               <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
+                <img :src="userinfo[5].icon">
+                <p>{{userinfo[5].name}}</p>
               </td>
             </tr>
           </table>
