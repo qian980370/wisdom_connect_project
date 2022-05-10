@@ -11,25 +11,25 @@
 
       <div class="myprofile_addfriend">
         <!-- <input type="input" placeholder="add a friend"/></td> -->
-        <a href="add_friends.html"><button style="margin: 20px auto">Add Firends</button></a>
+        <button style="margin: 20px auto">Add Firends</button>
       </div>
 
       <div class="myprofile_display_container">
         <!--------Table------>
-        <div class="myprofile_talk_to_sb_new" onclick = "talkToSbNew()">
+        <div class="myprofile_talk_to_sb_new" >
           <table>
             <tr>
-              <td><img src=""></td>
+              <td><img src="../image/flower1.jpg"></td>
               <td><p>Talk to someone new</p></td>
             </tr>
           </table>
         </div>
 
-        <div class="myprofile_display_content" onclick="makeVideoCall()">
+        <div class="myprofile_display_content" v-for="item in friendList">
           <table>
             <tr>
-              <td><img src=""></td>
-              <td><p>James</p></td>
+              <td><img :src="item.url"></td>
+              <td><p>{{ item.username }}</p></td>
             </tr>
           </table>
         </div>
@@ -61,7 +61,9 @@ export default {
   data(){
     return{
       userid:'',
-      username:''
+      username:'',
+      friendList:[{username:'jason',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
+        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}]
     }
   },
   created() {
