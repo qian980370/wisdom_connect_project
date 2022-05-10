@@ -63,7 +63,10 @@ export default {
       userid:'',
       username:'',
       friendList:[{username:'jason',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
-        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}],
+        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
+        {username:'tobe',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
+        {username:'tony',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}],
+
       icon:'',
     }
   },
@@ -77,6 +80,7 @@ export default {
 </script>
 
 <style scoped>
+
 .header{
   height: 70px;
   width: 292px;

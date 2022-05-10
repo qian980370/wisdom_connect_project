@@ -1,24 +1,16 @@
 <template>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Me</title>
-  </head>
+  <div class="header">
+    <h2 >wisdom connect</h2>
+  </div>
 
   <body>
 
-  <div id="logo_and_title">
-    <table>
-      <tr>
-        <td width="100px"><img  src="../image/logo.png" alt="logo" width="80px"></td>
-        <td><h1>Wisdom Connect</h1></td>
-      </tr>
-    </table>
-  </div>
+
 
   <div class="me_container">
     <div class="me_form">
-      <div class="me_form_header"><p>Me</p></div>
+      <div class="me_form_header" style="margin: 30px auto"><p >Me</p></div>
       <hr>
 
       <div class="me_display_container">
@@ -113,6 +105,19 @@ export default {
 
 
 <style scoped>
+.header{
+  height: 70px;
+  width: 292px;
+  /* text-align: center; */
+  font-size:19px;
+  text-align: right;
+  line-height: 70px;
+  background-image: url(../image/WechatIMG2010.png);
+  background-size: 100px 70px;
+  background-repeat: no-repeat;
+  background-position: left center;
+  margin: 70px auto 0;
+}
 #videocall_btn{
   height: 44px;
   width: 255px;
