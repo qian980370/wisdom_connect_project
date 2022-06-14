@@ -1,106 +1,112 @@
 <template>
-  <head>
-    <meta charset="UTF-8">
-    <title>Your Interests</title>
-  </head>
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
 
-  <body>
-
-  <div id="logo_and_title">
-    <table>
-      <tr>
-        <td width="100px"><img  src="../image/logo.png" alt="logo" width="80px"></td>
-        <td><h1>Wisdom Connect</h1></td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="interests_container">
-    <div class="interests_form">
-      <div class="interests_form_header"><p>Your Interest List</p></div>
-
-      <hr>
-
-      <div class="interests_display_header"><p>Click to remove from list</p></div>
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
+    </div>
 
 
-      <div class="interests_display_container">
-        <!--------Table------>
+    <div class="interests_container">
+      <div class="interests_form">
 
-
-            <!--------Table------>
-        <div class="interests_display_content">
-          <table>
+        <div class="interests_form_header">
+          <table class="=interests_form_header_table">
             <tr>
-              <td>
-                <img :src="userinfo[0].icon">
-                <p>{{userinfo[0].name}}</p>
-              </td>
-              <td>
-                <img :src="userinfo[1].icon">
-                <p>{{userinfo[1].name}}</p>
-              </td>
-              <td>
-                <img :src="userinfo[2].icon">
-                <p>{{userinfo[1].name}}</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
+              <td><div class="back_button" @click="$router.push('/personal')"><img src="../image/back_icon.png" style="height: 30px;" alt="back_icon"></div></td>
+              <td><p>Your Interest List</p></td>
             </tr>
           </table>
         </div>
 
-      </div>
+        <hr>
 
-      <div class="interests_buttons">
-        <table>
-          <tr>
-            <td><a href="javescript:"><button id="remove_btn">Remove</button></a></td>
-            <td><a href="more_interests.html"><button id="more_btn">More</button></a></td>
-          </tr>
-        </table>
+        <div class="interests_display_header"><p>Click to remove from list</p></div>
+
+
+        <div class="interests_display_container">
+          <!--------Table------>
+
+
+          <!--------Table------>
+          <div class="interests_display_content">
+            <table>
+              <tr>
+                <td>
+                  <img :src="userinfo[0].icon">
+                  <p>{{userinfo[0].name}}</p>
+                </td>
+                <td>
+                  <img :src="userinfo[1].icon">
+                  <p>{{userinfo[1].name}}</p>
+                </td>
+                <td>
+                  <img :src="userinfo[2].icon">
+                  <p>{{userinfo[1].name}}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!--------Table------>
+          <div class="interests_display_content">
+            <table>
+              <tr>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!--------Table------>
+          <div class="interests_display_content">
+            <table>
+              <tr>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+                <td>
+                  <img src="../image/flower1.png">
+                  <p>Basketball</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="interests_buttons">
+          <table>
+            <tr>
+              <td><a href="javescript:"><button id="remove_btn">Remove</button></a></td>
+              <td><a href="more_interests.html"><button id="more_btn">More</button></a></td>
+            </tr>
+          </table>
+        </div>
+
       </div>
 
     </div>
 
   </div>
-  </body>
+
 
 </template>
 
@@ -143,13 +149,21 @@ export default {
 </script>
 
 <style scoped>
-#logo_and_title{
+.logo_and_title{
   width: 400px;
   height: 120px;
   text-align: center;
   padding-left: 37%;
   padding-top: 2%;
 }
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+/*--------------Interests-----------------*/
+
 .interests_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
 
@@ -161,7 +175,7 @@ export default {
 
 .interests_form{
   width: 540px;
-  height: 800px;
+  height: 840px;
   /* border: 2px solid red; */
   margin:20px auto;
   text-align: center;
@@ -169,7 +183,9 @@ export default {
   border-color:#864a98;
   border-radius: 5px;
 }
+
 .interests_form_header p{
+  width: 370px;
   font-size: 28px;
   font-weight: bold;
   color:#864a98;
@@ -236,7 +252,13 @@ export default {
 
 .interests_display_content td{
   width: 240px;
-  height: 160px;
+  height: 150px;
+  border:solid 2px white;
+}
+.interests_display_content td:hover{
+  width: 240px;
+  height: 150px;
+  border:solid 2px #bfa0c8;
 }
 .interests_display_content tr{
   padding-top: 40px;
@@ -261,6 +283,26 @@ export default {
   font-size: 18px;
   border-radius: 5px;
 }
+#remove_btn:hover{
+  height: 44px;
+  width: 215px;
+  background-color:white;
+  color:  #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#remove_btn:active{
+  height: 44px;
+  width: 215px;
+  background-color:white;
+  color:  #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
 #more_btn{
   height: 44px;
   width: 215px;
@@ -271,7 +313,33 @@ export default {
   font-size: 18px;
   border-radius: 5px;
 }
-
-
+#more_btn:hover{
+  height: 44px;
+  width: 215px;
+  background-color:white;
+  color:  #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#more_btn:active{
+  height: 44px;
+  width: 215px;
+  background-color:white;
+  color:  #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+.back_button{
+  width: 80px;
+  cursor: pointer;
+}
+.interests_form_header{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 
 </style>

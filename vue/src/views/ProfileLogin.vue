@@ -1,37 +1,49 @@
 <template>
-  <div class="header">
-    <h2>wisdom connect</h2>
-  </div>
-
-  <div class="profiles_container">
-    <div class="profiles_form">
-      <div class="profiles_form_header"><p>Resident's Profiles</p></div>
-
-      <div class="profiles_display_container">
-        <!--------Table------>
-        <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username,icon:item.icon}})">
-          <table >
-            <tr>
-              <td><img  :src="item.icon"></td>
-              <td><p>{{ item.username }}</p></td>
-            </tr>
-          </table>
-        </div>
-
-      </div>
-
-      <div class="profiles_create">
-        <button id="create_btn" @click="$router.push('/newprofile')">Create a new profile</button>
-      </div>
-
-      <div class="profiles_logout">
-        <button id="logout_btn" @click="$router.push('/facilitylogin')">Log out</button>
-      </div>
-
-
+<!--  <div class="header">-->
+<!--    <h2>wisdom connect</h2>-->
+<!--  </div>-->
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
     </div>
 
+
+    <div class="profiles_container">
+      <div class="profiles_form">
+        <div class="profiles_form_header"><p>Resident's Profiles</p></div>
+
+        <div class="profiles_display_container">
+          <!--------Table------>
+          <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username,icon:item.icon}})">
+            <table >
+              <tr>
+                <td><img  :src="item.icon"></td>
+                <td><p>{{ item.username }}</p></td>
+              </tr>
+            </table>
+          </div>
+
+        </div>
+
+        <div class="profiles_create">
+          <button id="create_btn" @click="$router.push('/newprofile')">Create a new profile</button>
+        </div>
+
+        <div class="profiles_logout">
+          <button id="logout_btn" @click="$router.push('/facilitylogin')">Log out</button>
+        </div>
+
+
+      </div>
+
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -73,30 +85,24 @@ export default {
 </script>
 
 <style scoped>
-.header{
-  height: 70px;
-  width: 292px;
-  margin: 0 auto;
-  /* text-align: center; */
-  font-size:19px;
-  text-align: right;
-  line-height: 70px;
-  background-image: url(../image/WechatIMG2010.png);
-  background-size: 100px 70px;
-  background-repeat: no-repeat;
-  background-position: left center;
-  margin-top: 70px;
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
 }
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+
 /*------------Profiles---------------*/
-.profiles_container{
-  /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
-
+.profiles_container {
   height: 1000px;
-  /* background-color: #f3e6f7; */
-  /* padding: 50px; */
-  /* background-color: azure; */
 }
-
 .profiles_form{
   width: 540px;
   height: 880px;
@@ -152,6 +158,14 @@ export default {
   background-color:#f3f3f3;
   margin-bottom: 10px;
   margin-left: 70px;
+}
+.profiles_display_content:hover{
+  width: 400px;
+  height: 120px;
+  background-color:#f3f3f3;
+  border: solid 2px #bfa0c8;
+  margin-bottom: 10px;
+  margin-left: 70px;
   cursor: pointer;
 }
 .profiles_display_content img{
@@ -179,6 +193,29 @@ export default {
   margin-top: 70px;
   font-size: 18px;
   border-radius: 5px;
+  cursor: pointer;
+}
+.profiles_create button:hover{
+  height: 44px;
+  width: 240px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.profiles_create button:active{
+  height: 44px;
+  width: 240px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .profiles_logout button{
   height: 44px;
@@ -190,7 +227,19 @@ export default {
   color:white;
   margin-bottom: 40px;
   border-radius: 5px;
-
+  cursor: pointer;
+}
+.profiles_logout button:hover{
+  height: 44px;
+  width: 240px;
+  background-color: white;
+  border: solid 2px #bfa0c8;
+  margin-top: 20px;
+  font-size: 18px;
+  color:#bfa0c8;;
+  margin-bottom: 40px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>
 

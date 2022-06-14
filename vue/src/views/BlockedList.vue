@@ -1,73 +1,78 @@
 <template>
-  <head>
-  <meta charset="UTF-8">
-  <title>Blocked List</title>
-  </head>
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
 
-  <body>
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
+    </div>
 
-  <div id="logo_and_title">
-    <table>
-      <tr>
-        <td width="100px"><img  src="../image/logo.png" alt="logo" width="80px"></td>
-        <td><h1>Wisdom Connect</h1></td>
-      </tr>
-    </table>
-  </div>
-
-  <div class="blockedlist_container">
-    <div class="blockedlist_form">
-      <div class="blockedlist_form_header"><p>Your Blocked List</p></div>
-
-      <hr>
-
-      <div class="blockedlist_display_header"><p>These people will not show up in your call list</p></div>
-
-
-      <div class="blockedlist_display_container">
-        <!--------Table------>
-
-        <div class="blockedlist_display_content">
-          <table>
+    <div class="blockedlist_container">
+      <div class="blockedlist_form">
+        <div class="blockedlist_form_header">
+          <table class="=blockedlist_form_header_table">
             <tr>
-              <td><img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
+              <td><div class="back_button" @click="$router.push('/personal')"><img src="../image/back_icon.png" style="height: 30px;" alt="back_icon"></div></td>
+              <td><p>Your Blocked List</p></td>
             </tr>
           </table>
         </div>
 
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td><img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
-        </div>
 
-        <!--------Table------>
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td> <img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="blockedlist_display_content">
-          <table>
-            <tr>
-              <td> <img src="../image/flower1.png"></td>
-              <td><p>James</p></td>
-            </tr>
-          </table>
+        <hr>
+
+        <div class="blockedlist_display_header"><p>These people will not show up in your call list</p></div>
+
+
+        <div class="blockedlist_display_container">
+          <!--------Table------>
+
+          <div class="blockedlist_display_content">
+            <table>
+              <tr>
+                <td><img src="../image/flower1.png"></td>
+                <td><p>James</p></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="blockedlist_display_content">
+            <table>
+              <tr>
+                <td><img src="../image/flower1.png"></td>
+                <td><p>James</p></td>
+              </tr>
+            </table>
+          </div>
+
+          <!--------Table------>
+          <div class="blockedlist_display_content">
+            <table>
+              <tr>
+                <td> <img src="../image/flower1.png"></td>
+                <td><p>James</p></td>
+              </tr>
+            </table>
+          </div>
+          <!--------Table------>
+          <div class="blockedlist_display_content">
+            <table>
+              <tr>
+                <td> <img src="../image/flower1.png"></td>
+                <td><p>James</p></td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
+
     </div>
 
   </div>
-  </body>
+
 </template>
 
 <script>
@@ -93,13 +98,21 @@ export default {
 </script>
 
 <style scoped>
-#logo_and_title{
+.logo_and_title{
   width: 400px;
   height: 120px;
   text-align: center;
   padding-left: 37%;
   padding-top: 2%;
 }
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+/*-------------Blocked List----------------*/
+
 .blockedlist_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
 
@@ -120,6 +133,7 @@ export default {
   border-radius: 5px;
 }
 .blockedlist_form_header p{
+  width: 370px;
   font-size: 28px;
   font-weight: bold;
   color:#864a98;
@@ -194,7 +208,13 @@ export default {
   color:#864a98;
   font-weight: bold;
 }
-
-
+.back_button{
+  width: 80px;
+  cursor: pointer;
+}
+.blockedlist_form_header{
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 </style>
 

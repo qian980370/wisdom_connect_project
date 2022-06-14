@@ -1,29 +1,24 @@
 <template>
 
-  <head>
-    <meta charset="UTF-8">
-    <title>Me</title>
-  </head>
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
 
-  <body>
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
+    </div>
 
-  <div id="logo_and_title">
-    <table>
-      <tr>
-        <td width="100px"><img  src="../image/logo.png" alt="logo" width="80px"></td>
-        <td><h1>Wisdom Connect</h1></td>
-      </tr>
-    </table>
-  </div>
+    <div class="me_container">
+      <div class="me_form">
+        <div class="me_form_header"><p>Me</p></div>
+        <hr>
 
-  <div class="me_container">
-    <div class="me_form">
-      <div class="me_form_header"><p>Me</p></div>
-      <hr>
-
-      <div class="me_display_container">
-        <!--------Table------>
-        <div class="me_profile" @click="$router.push('/personalchange')">
+        <div class="me_display_container">
+          <!--------Table------>
+          <div class="me_profile" @click="$router.push('/personalchange')">
 
             <table>
               <tr>
@@ -32,34 +27,34 @@
               </tr>
             </table>
 
+          </div>
+
+          <div class="me_display_content" @click="$router.push('/interestlist')">
+            <p>Interests</p>
+          </div>
+
+          <div class="me_display_content" @click="$router.push('/blockedlist')">
+            <p>Blocked Lists</p>
+          </div>
+
+          <div class="me_display_content_logout" @click="$router.push('/facilitylogin')">
+            <p>Logout</p>
+          </div>
         </div>
 
-        <div class="me_display_content" @click="$router.push('/interestlist')">
-          <p>Interests</p>
-        </div>
-
-        <div class="me_display_content" @click="$router.push('/blockedlist')">
-          <p>Blocked Lists</p>
-        </div>
-
-        <div class="me_display_content" @click="$router.push('/second')">
-          <p style="color: white;">Logout</p>
+        <div class="me_switch">
+          <table>
+            <tr>
+              <td><button id="videocall_btn" @click="$router.push('/videocall')">Make a Video Call</button></td>
+              <td><button id="me_btn">Me</button></td>
+            </tr>
+          </table>
         </div>
       </div>
 
-      <div class="me_switch">
-        <table>
-          <tr>
-            <td><button id="videocall_btn" @click="$router.push('/videocall')">Make a Video Call</button></td>
-            <td><button id="me_btn">Me</button></td>
-          </tr>
-        </table>
-      </div>
     </div>
 
   </div>
-  </body>
-
 
 </template>
 
@@ -113,16 +108,21 @@ export default {
 
 
 <style scoped>
-#videocall_btn{
-  height: 44px;
-  width: 255px;
-  background-color: #bfa0c8;
-  color: white;
-  border: 0px;
-  margin-top: 70px;
-  font-size: 18px;
-  border-radius: 5px;
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
 }
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+
+/*----------------Me---------------------*/
 .me_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
 
@@ -131,6 +131,7 @@ export default {
   /* padding: 50px; */
   /* background-color: azure; */
 }
+
 .me_form{
   width: 540px;
   height: 700px;
@@ -140,6 +141,10 @@ export default {
   border:solid 2px;
   border-color:#864a98;
   border-radius: 5px;
+}
+.me_form_header{
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .me_form_header p{
   font-size: 28px;
@@ -205,16 +210,41 @@ export default {
   text-align: center;
   padding-top: 10px;
 }
+.me_display_content p:hover{
+  font-size: 18px;
+  color:white;
+  background-color:#e8dded;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+}
+.me_display_content_logout{
+  width: 400px;
+  height: 50px;
+  background-color:#e8dded;
+  border-radius: 5px;
+  margin-left: 15px;
+  margin-top: 30px;
+  cursor: pointer;
+}
+.me_display_content_logout p{
+  font-size: 18px;
+  color:white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+}
+.me_display_content_logout p:hover{
+  font-size: 18px;
+  color: #864a98;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 10px;
+}
+
 
 .me_switch{
   margin-left: 50px;
-}
-#logo_and_title{
-  width: 400px;
-  height: 120px;
-  text-align: center;
-  padding-left: 37%;
-  padding-top: 2%;
 }
 #me_btn {
   height: 44px;
@@ -222,6 +252,56 @@ export default {
   background-color: #bfa0c8;
   color: white;
   border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#me_btn:hover{
+  height: 44px;
+  width: 175px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#me_btn:active{
+  height: 44px;
+  width: 175px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#videocall_btn{
+  height: 44px;
+  width: 255px;
+  background-color: #bfa0c8;
+  color: white;
+  border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#videocall_btn:hover{
+  height: 44px;
+  width: 255px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#videocall_btn:active{
+  height: 44px;
+  width: 255px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
   margin-top: 70px;
   font-size: 18px;
   border-radius: 5px;

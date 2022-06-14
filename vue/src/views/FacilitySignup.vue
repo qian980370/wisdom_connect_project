@@ -1,46 +1,123 @@
 <template>
-  <div style="width: 100%; height: 100vh;  overflow: hidden">
-    <div class="header">
-      <h2 >wisdom connect</h2>
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
+<!--    <div class="header">-->
+<!--      <h2 >wisdom connect</h2>-->
+<!--    </div>-->
+
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
     </div>
-    <div style="width: 540px; height:600px;margin: 30px auto;background-color: #f3f3f3;border-radius: 5px">
-      <div style="text-align: center;margin: 30px auto;padding-top: 30px">
-        <h2 style="color: #bfa0c8">Enter Nursing Home Information</h2>
+
+
+    <div class="signup_container">
+      <div  class="signup_form">
+        <!---------header--------->
+        <div class="signup_form_header"><p>Enter Nursing Home Information</p></div>
+
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+          <!---------name--------->
+          <div class="signup_facility_name">
+            <table>
+              <tr>
+                <td><p>Name</p></td>
+                <td>
+                  <el-form-item prop="name">
+                    <el-input v-model="ruleForm.name"></el-input>
+                  </el-form-item>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!---------Password--------->
+          <div class="signup_facility_password">
+            <table>
+              <tr>
+                <td><p>Password</p></td>
+                <td>
+                  <el-form-item prop="password">
+                    <el-input v-model="ruleForm.password"></el-input>
+                  </el-form-item>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!---------Address--------->
+          <div class="signup_facility_address">
+            <table>
+              <tr>
+                <td><p>Address</p></td>
+                <td>
+                  <el-form-item prop="address">
+                    <el-input v-model="ruleForm.address"></el-input>
+                  </el-form-item>
+                </td>
+              </tr>
+            </table>
+          </div>
+          <!---------ABN--------->
+          <div class="signup_facility_abn">
+            <table>
+              <tr>
+                <td><p>ABN</p></td>
+                <td>
+                  <el-form-item prop="abn">
+                    <el-input v-model="ruleForm.abn" ></el-input>
+                  </el-form-item>
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!---------header--------->
+          <div class="signup_form_header"><p>Enter Fastcode</p></div>
+
+
+          <div class="signup_facility_fastcode" style="margin-bottom: 50px;">
+            <table>
+              <!---------Email--------->
+              <tr>
+                <td><p>Email</p></td>
+                <td>
+                  <el-form-item prop="email">
+                    <el-input v-model="ruleForm.email"></el-input>
+                  </el-form-item>
+                </td>
+                <td>
+                  <el-form-item prop="email">
+                    <el-button  type="primary" @click="applyFastCode" >{{status}}</el-button>
+                  </el-form-item>
+                </td>
+              </tr>
+              <!---------Fastcode--------->
+              <tr>
+                <td><p>Fastcode</p></td>
+                <td>
+                  <el-form-item prop="fastcode">
+                    <el-input v-model="ruleForm.fastcode" ></el-input>
+                  </el-form-item>
+                </td>
+<!--                <td>-->
+<!--                  <a href="javascript:"><button>Verify</button></a>-->
+<!--                </td>-->
+              </tr>
+            </table>
+          </div>
+
+          <hr >
+          <!---------Signup Button--------->
+          <div class="signup_create">
+            <el-button  type="primary"  @click="submit" class="signup_create">Sign up</el-button>
+          </div>
+        </el-form>
+
+      </div>
       </div>
 
-      <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-
-      <el-form-item label="Username" prop="name">
-        <el-input v-model="ruleForm.name" class="textarea" style="width: 80%"></el-input>
-      </el-form-item>
-        <el-form-item label="Password" prop="password">
-          <el-input v-model="ruleForm.password" class="textarea" style="width: 80%"></el-input>
-        </el-form-item>
-        <el-form-item label="Address" prop="address">
-          <el-input v-model="ruleForm.address" class="textarea" style="width: 80%"></el-input>
-        </el-form-item>
-        <el-form-item label="ABN" prop="abn">
-          <el-input v-model="ruleForm.abn" class="textarea" style="width: 80%"></el-input>
-        </el-form-item>
-
-        <div style="text-align: center;padding-top: 30px;padding-bottom: 30px">
-        <h2 style="color: #bfa0c8">Enter FastCode</h2>
-        </div>
-        <el-form-item label="Email" prop="email">
-          <el-input v-model="ruleForm.email" class="textarea" style="width: 70%"></el-input>
-          <el-button  type="primary" @click="applyFastCode" style="background-color: #bfa0c8;width: 100px">{{status}}</el-button>
-
-        </el-form-item>
-        <el-form-item label="Fastcode" prop="fastcode">
-          <el-input v-model="ruleForm.fastcode" class="textarea" style="width: 70%"></el-input>
-
-        </el-form-item>
-
-        <div style="text-align: center;margin-top: 30px">
-        <el-button  type="primary"  @click="submit" style="background-color: #bfa0c8;width: 200px">sign up</el-button>
-        </div>
-      </el-form>
-    </div>
     </div>
 </template>
 
@@ -153,20 +230,218 @@ export default {
 </script>
 
 <style scoped>
-.header{
-  height: 70px;
-  width: 292px;
-  /* text-align: center; */
-  font-size:19px;
-  text-align: right;
-  line-height: 70px;
-  background-image: url(../image/WechatIMG2010.png);
-  background-size: 100px 70px;
-  background-repeat: no-repeat;
-  background-position: left center;
-  margin: 70px auto 0;
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
 }
-.textarea>>>.el-input__inner{
-  height: 40px;
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
+}
+.signup_container{
+  height: 1200px;
+}
+.signup_form{
+  width: 600px;
+  height: 840px;
+  margin:20px auto;
+  background-color: #f3f3f3;
+  text-align: center;
+  border-radius: 5px;
+
+}
+.signup_form_header{
+  margin-bottom: 20px;
+}
+.signup_form_header p{
+  font-size: 24px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: center;
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+.signup_create button{
+  height: 44px;
+  width: 360px;
+  background-color: #bfa0c8;
+  border: 0px;
+  margin-top: 40px;
+  font-size: 18px;
+  color:white;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.signup_create button:hover{
+  height: 44px;
+  width: 360px;
+  background-color: #f3f3f3;
+  border: solid 2px #bfa0c8;
+  margin-top: 40px;
+  font-size: 18px;
+  color: #bfa0bf;
+  margin-bottom: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.signup_facility_name{
+  margin-left: 70px;
+  margin-top: 30px;
+}
+.signup_facility_name td{
+  height: 60px;
+}
+.signup_facility_name p{
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: left;
+  padding-bottom: 30px;
+}
+.signup_facility_name >>> .el-input__inner{
+  height: 50px;
+  width: 350px;
+  border: 0px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
+
+.signup_facility_address{
+  margin-left: 70px;
+}
+.signup_facility_address td{
+  height: 60px;
+}
+.signup_facility_address p{
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: left;
+  padding-bottom: 20px;
+}
+.signup_facility_address >>> .el-input__inner{
+  height: 50px;
+  width: 350px;
+  border: 0px;
+  padding-left: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
+
+.signup_facility_abn{
+  margin-left: 70px;
+}
+.signup_facility_abn td{
+  height: 60px;
+}
+.signup_facility_abn p{
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: left;
+  padding-bottom: 20px;
+}
+.signup_facility_abn >>> .el-input__inner{
+  height: 50px;
+  width: 350px;
+  border: 0px;
+  padding-left: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
+
+.signup_facility_password{
+  margin-left: 70px;
+}
+.signup_facility_password td{
+  height: 60px;
+}
+.signup_facility_password p{
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: left;
+  padding-bottom: 20px;
+}
+.signup_facility_password >>> .el-input__inner{
+  height: 50px;
+  width: 350px;
+  border: 0px;
+  padding-left: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
+
+
+.signup_facility_fastcode{
+  margin-left: 70px;
+}
+.signup_facility_fastcode td{
+  height: 60px;
+}
+.signup_facility_fastcode p{
+  width: 100px;
+  font-size: 18px;
+  font-weight: bold;
+  color:#864a98;
+  text-align: left;
+  padding-bottom: 20px;
+}
+.signup_facility_fastcode >>> .el-input__inner{
+  height: 50px;
+  width: 220px;
+  border: 0px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
+.signup_facility_fastcode button {
+  height: 44px;
+  width: 100px;
+  margin-left: 20px;
+  background-color: #f3f3f3;
+  border: solid 2px;
+  font-size: 18px;
+  color:#bfa0c8;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.signup_facility_fastcode button:hover {
+  height: 44px;
+  width: 100px;
+  margin-left: 20px;
+  background-color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  font-size: 18px;
+  color:white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.signup_facility_fastcode button:active {
+  height: 44px;
+  width: 100px;
+  margin-left: 20px;
+  background-color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  font-size: 18px;
+  color:white;
+  border-radius: 5px;
+  cursor: pointer;
 }
 </style>

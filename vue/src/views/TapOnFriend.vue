@@ -1,56 +1,70 @@
 <template>
-  <div class="header">
-    <h2>wisdom connect</h2>
-  </div>
+<!--  <div class="header">-->
+<!--    <h2>wisdom connect</h2>-->
+<!--  </div>-->
 
-  <div class="myprofile_container">
-    <div class="myprofile_form">
-      <div class="myprofile_form_header" style="margin: 30px auto"><p>Hi {{ username }}!</p></div>
+  <div style="width: 100%; height: 120vh;  overflow: hidden">
 
-      <hr>
-
-      <div class="myprofile_addfriend">
-        <!-- <input type="input" placeholder="add a friend"/></td> -->
-        <button style="margin: 20px auto">Add Firends</button>
-      </div>
-
-      <div class="myprofile_display_container">
-        <!--------Table------>
-        <div class="myprofile_talk_to_sb_new" >
-          <table>
-            <tr>
-              <td><img src="../image/flower1.png"></td>
-              <td><p>Talk to someone new</p></td>
-            </tr>
-          </table>
-        </div>
-
-        <div class="myprofile_display_content" v-for="item in friendList">
-          <table>
-            <tr>
-              <td><img :src="item.url"></td>
-              <td><p>{{ item.username }}</p></td>
-            </tr>
-          </table>
-        </div>
-
-
-
-      </div>
-
-      <div class="myprofile_switch">
-        <table>
-          <tr>
-            <td><button id="videocall_btn">Make a Video Call</button></td>
-            <td><button id="me_btn" @click="this.$router.push({name:'Personal',params:{userId:userid,userName:username,icon:icon}})">Me</button></td>
-          </tr>
-        </table>
-      </div>
-
-
+    <div class="logo_and_title">
+      <table>
+        <tr>
+          <td><img  src="../image/logo.png" alt="logo"></td>
+          <td><h1>Wisdom Connect</h1></td>
+        </tr>
+      </table>
     </div>
 
+    <div class="myprofile_container">
+      <div class="myprofile_form">
+        <div class="myprofile_form_header" style="margin: 30px auto"><p>Hi {{ username }}!</p></div>
+
+        <hr>
+
+        <div class="myprofile_addfriend">
+          <!-- <input type="input" placeholder="add a friend"/></td> -->
+          <button style="margin: 20px auto">Add Firends</button>
+        </div>
+
+        <div class="myprofile_display_container">
+          <!--------Table------>
+          <div class="myprofile_talk_to_sb_new" >
+            <table>
+              <tr>
+                <td><img src="../image/flower1.png"></td>
+                <td><p>Talk to someone new</p></td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="myprofile_display_content" v-for="item in friendList">
+            <table>
+              <tr>
+                <td><img :src="item.url"></td>
+                <td><p>{{ item.username }}</p></td>
+              </tr>
+            </table>
+          </div>
+
+
+
+        </div>
+
+        <div class="myprofile_switch">
+          <table>
+            <tr>
+              <td><button id="videocall_btn">Make a Video Call</button></td>
+              <td><button id="me_btn" @click="this.$router.push({name:'Personal',params:{userId:userid,userName:username,icon:icon}})">Me</button></td>
+            </tr>
+          </table>
+        </div>
+
+
+      </div>
+
+    </div>
   </div>
+
+
 
 
 </template>
@@ -77,19 +91,18 @@ export default {
 </script>
 
 <style scoped>
-.header{
-  height: 70px;
-  width: 292px;
-  margin: 0 auto;
-  /* text-align: center; */
-  font-size:19px;
-  text-align: right;
-  line-height: 70px;
-  background-image: url(../image/WechatIMG2010.png);
-  background-size: 100px 70px;
-  background-repeat: no-repeat;
-  background-position: left center;
-  margin-top: 70px;
+.logo_and_title{
+  width: 400px;
+  height: 120px;
+  text-align: center;
+  padding-left: 37%;
+  padding-top: 2%;
+}
+.logo_and_title img{
+  width: 80px;
+}
+.logo_and_title h1{
+  width: 300px;
 }
 /*------------My Profile---------------*/
 .myprofile_container{
@@ -162,6 +175,16 @@ export default {
   margin-top: 10px;
   cursor: pointer;
 }
+.myprofile_display_content:hover{
+  width: 400px;
+  height: 120px;
+  border: solid 2px #bfa0c8;
+  background-color:#f3f3f3;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-top: 10px;
+  cursor: pointer;
+}
 .myprofile_display_content img{
   width: 100px;
   height: 100px;
@@ -171,10 +194,25 @@ export default {
   width: 180px;
   height: 120px;
 }
+.myprofile_display_content p{
+  font-size: 18px;
+  color:#864a98;
+  font-weight: bold;
+}
 
 .myprofile_talk_to_sb_new{
   width: 400px;
   height: 120px;
+  background-color:#f3e6f7;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+.myprofile_talk_to_sb_new:hover{
+  width: 400px;
+  height: 120px;
+  border:solid 2px #bfa0c8;
   background-color:#f3e6f7;
   margin-bottom: 10px;
   margin-left: 15px;
@@ -198,34 +236,12 @@ export default {
 }
 
 
-
-.myprofile_display_content p{
-  font-size: 18px;
-  color:#864a98;
-  font-weight: bold;
-}
-
 .myprofile_addfriend{
   height: 50px;
   margin-bottom: 30px;
 }
-/* .myprofile_addfriend input{
-    height: 38px;
-    width: 330px;
-    border: solid 2px #bfa0c8;
-    font-size: 18px;
-    border-radius: 5px;
-    outline: none;
-} */
+
 .myprofile_addfriend button {
-  /* height: 42px;
-  width: 70px;
-  background-color: white;
-  border: solid 2px;
-  margin-left: 20px;
-  font-size: 18px;
-  color:#bfa0c8;
-  border-radius: 5px; */
   height: 42px;
   width: 430px;
   background-color: white;
@@ -235,6 +251,7 @@ export default {
   font-size: 18px;
   color:#bfa0c8;
   border-radius: 5px;
+  cursor: pointer;
 }
 .myprofile_addfriend button:active {
   height: 42px;
@@ -246,6 +263,7 @@ export default {
   font-size: 18px;
   color:white;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .myprofile_switch{
@@ -260,6 +278,27 @@ export default {
   margin-top: 70px;
   font-size: 18px;
   border-radius: 5px;
+  cursor: pointer;
+}
+#videocall_btn:hover{
+  height: 44px;
+  width: 255px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#videocall_btn:active{
+  height: 44px;
+  width: 255px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
 }
 #me_btn{
   height: 44px;
@@ -267,6 +306,27 @@ export default {
   background-color: #bfa0c8;
   color: white;
   border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+#me_btn:hover{
+  height: 44px;
+  width: 175px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#me_btn:active{
+  height: 44px;
+  width: 175px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
   margin-top: 70px;
   font-size: 18px;
   border-radius: 5px;
