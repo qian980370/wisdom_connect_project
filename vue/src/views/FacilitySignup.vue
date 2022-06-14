@@ -159,9 +159,25 @@ export default {
 
         ],
         abn: [
-          { required: true, message: 'please input the abn', trigger: 'blur' }
+          { required: true, message: 'please input the abn', trigger: 'blur' },
+          {validator(rule, value, callback){
+              const reg= /^[a-zA-Z][\w-. @]*$/;
+              if(value === '' || value === undefined){
+                callback();
+              }else {
+                if (!reg.test(value)){
+                  callback(new Error('要求为：英文字母开头，后续为字母数字及_-. @符号'));
+                }else {
+                  callback();
+                }
+              }
+            },
+            trigger: 'blur'}
 
         ],
+        email:[
+            {required:'true',message:'please input email',trigger:'blur'},
+          {type:'email',message: 'please input in correct email format',trigger: 'blur'}],
       },
 
     }
