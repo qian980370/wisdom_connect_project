@@ -86,7 +86,7 @@ export default {
             message: res.msg
           })
         }
-        this.dialogVisible = false;
+        // this.dialogVisible = false;
       });
     },
     signup(){
