@@ -38,6 +38,11 @@ public class ProfileController {
         if (res == null) {
             return Result.error("-1", "user id not exist");
         }
+
+        if (!Objects.equals(user.getRole(), "manager")){
+            profile.setOwner(user.getId());
+        }
+
         // check is there any duplicated data in database
         try{
             Profile res2 = profileMapper.selectOne(Wrappers.<Profile>lambdaQuery().eq(Profile::getUsername, profile.getUsername()));
@@ -56,19 +61,17 @@ public class ProfileController {
 
 
 
-        if (!Objects.equals(user.getRole(), "manager")){
-            profile.setOwner(user.getId());
-        }
+
 
         LambdaQueryWrapper<Profile> wrapper = Wrappers.<Profile>lambdaQuery().orderByAsc(Profile::getId);
         wrapper.like(Profile::getOwner, profile.getOwner());
         List<Profile> profileList = profileMapper.selectList(wrapper);
         if(!Objects.equals(user.getRole(), "facility")){
-            if (profileList.size() >= 1){
+            if (profileList.size() > 1){
                 return Result.error(Constants.CODE_409, Constants.CODE_409_MESSAGE);
             }
         }else {
-            if (profileList.size() >= 7){
+            if (profileList.size() > 7){
                 return Result.error(Constants.CODE_409, Constants.CODE_409_MESSAGE);
             }
         }
@@ -80,6 +83,22 @@ public class ProfileController {
     //http://127.0.0.1:9090/user?pageNum=1&pageSize=1&query=
     @GetMapping("/page")
     public Result<?> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                              @RequestParam(defaultValue = "10") Integer pageSize,
+                              @RequestParam(defaultValue = "") String query){
+        User user = TokenUtils.getUser();
+        LambdaQueryWrapper<Profile> wrapper = Wrappers.<Profile>lambdaQuery().orderByAsc(Profile::getId);
+        if (StrUtil.isNotBlank(query)) {
+            wrapper.like(Profile::getUsername, query);
+        }
+
+        wrapper.like(Profile::getOwner, user.getId());
+
+        Page<Profile> profilePage = profileMapper.selectPage(new Page<>(pageNum,pageSize), wrapper);
+        return Result.success(profilePage);
+    }
+
+    @GetMapping("/page-manager")
+    public Result<?> findPageManager(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,
                               @RequestParam(defaultValue = "") String query){
         User user = TokenUtils.getUser();
