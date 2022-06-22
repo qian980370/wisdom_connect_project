@@ -28,6 +28,8 @@ import VideoCall from "@/views/VideoCall";
 import Second from "@/views/Second";
 import Flayout from "@/layout/Flayout";
 import FastCodeView from "@/views/BackendManagerViews/FastCodeView";
+import ProfileDemoView from "@/views/BackendManagerViews/ProfileDemoView";
+import ProfileDetailDemo from "@/views/BackendManagerViews/ProfileDetailDemo";
 
 
 const routes = [
@@ -66,6 +68,16 @@ const routes = [
         path: 'fastcode-controller',
         name: 'FastCodeView',
         component: FastCodeView,
+      },
+      {
+        path: 'profile-demo',
+        name: 'ProfileDemoView',
+        component: ProfileDemoView,
+      },
+      {
+        path: 'profile-detail-demo',
+        name: 'ProfileDetailView',
+        component: ProfileDetailDemo,
       },
     ]
   },

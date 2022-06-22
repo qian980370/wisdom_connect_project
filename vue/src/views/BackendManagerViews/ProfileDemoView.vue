@@ -47,7 +47,7 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-
+          <el-button type="text" size="small" @click="handleAccess(scope.row)">Access</el-button>
           <el-button type="text" size="small" @click="handleEdit(scope.row)">Edit</el-button>
           <el-popconfirm title="Are you sure to delete this?" @confirm="handleDelete(scope.row.id)">
             <template #reference>
@@ -90,9 +90,6 @@
               <img v-if="this.img != null" :src="this.img" class="avatar" />
               <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
             </el-upload>
-          </el-form-item>
-          <el-form-item label="Owner ID">
-            <el-input v-model="form.owner" />
           </el-form-item>
           <el-form-item label="Profile Name">
             <el-input v-model="form.username" />
@@ -140,8 +137,9 @@ import request from "@/utils/request";
 import router from "@/router";
 import { Plus } from '@element-plus/icons-vue';
 
+
 export default {
-  name: 'ProfileControllerView',
+  name: "ProfileDemoView",
   components: {
     Plus
   },
@@ -265,7 +263,7 @@ export default {
     // },
     load(){
       this.refreshUser();
-      request.get("/profile/page-manager", {
+      request.get("/profile/page", {
         params: {
           pageNum: this.currentPage,
           pageSize: this.pageSize,
@@ -310,6 +308,12 @@ export default {
     },handleAccess(row){
       this.form = JSON.parse(JSON.stringify(row));
       console.log(this.form);
+      this.$router.push({
+        name: 'ProfileDetailView',
+        params:{
+          profileId: this.form.id
+        }
+      })
     },
     handleSizeChange(pageSize){
       this.pageSize = pageSize;
@@ -320,39 +324,9 @@ export default {
       this.load();
     },
   },
-
 }
-
-
-
 </script>
+
 <style scoped>
-.avatar-uploader .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-</style>
 
-<style>
-.avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
-
-.avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-
-.el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
 </style>

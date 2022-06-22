@@ -13,11 +13,11 @@ public class Profile {
     private Integer owner;
     private String username;
 
-    private String friend;
-    private Integer privacy;
-    private String block;
 
-    private String hobby;
+    private Integer privacy;
+
+
+
     private Integer age;
     private String gender;
 
