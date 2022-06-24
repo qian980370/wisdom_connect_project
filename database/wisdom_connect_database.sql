@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 18/06/2022 22:46:51
+ Date: 22/06/2022 21:30:06
 */
 
 SET NAMES utf8mb4;
@@ -104,7 +104,7 @@ CREATE TABLE `hobby`  (
                           `tophobbyname` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
                           `icon` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
                           PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hobby
@@ -117,7 +117,7 @@ INSERT INTO `hobby` VALUES (0000005, 'Apex Legend', 2, 'Video Game', 'http://loc
 INSERT INTO `hobby` VALUES (0000006, 'NBA 2K22', 2, 'Video Game', 'http://localhost:9090/file/download/ca12267033af4fbeb881f6e11c16ee61.jpg');
 INSERT INTO `hobby` VALUES (0000007, 'Baseball', 2, 'Sport', NULL);
 INSERT INTO `hobby` VALUES (0000008, 'Golf', 2, 'Sport', NULL);
-INSERT INTO `hobby` VALUES (0000009, 'Football', 2, 'Sport', NULL);
+INSERT INTO `hobby` VALUES (0000009, 'Footy', 2, 'Sport', NULL);
 INSERT INTO `hobby` VALUES (0000010, 'Table Tennis', 2, 'Sport', NULL);
 INSERT INTO `hobby` VALUES (0000011, 'Badminton', 2, 'Sport', NULL);
 INSERT INTO `hobby` VALUES (0000012, 'Music', 1, NULL, NULL);
@@ -134,6 +134,15 @@ INSERT INTO `hobby` VALUES (0000022, 'Crime', 2, 'Film', NULL);
 INSERT INTO `hobby` VALUES (0000023, 'History', 2, 'Film', NULL);
 INSERT INTO `hobby` VALUES (0000024, 'Horror', 2, 'Film', NULL);
 INSERT INTO `hobby` VALUES (0000025, 'War', 2, 'Film', NULL);
+INSERT INTO `hobby` VALUES (0000026, 'Baseball', 2, 'Sport', NULL);
+INSERT INTO `hobby` VALUES (0000027, 'Swimming', 2, 'Sport', NULL);
+INSERT INTO `hobby` VALUES (0000028, 'Jogging', 2, 'Sport', NULL);
+INSERT INTO `hobby` VALUES (0000029, 'Surfing', 2, 'Sport', NULL);
+INSERT INTO `hobby` VALUES (0000030, 'Arts', 1, NULL, NULL);
+INSERT INTO `hobby` VALUES (0000031, 'Painting', 2, 'Arts', NULL);
+INSERT INTO `hobby` VALUES (0000032, 'Pottery', 2, 'Arts', NULL);
+INSERT INTO `hobby` VALUES (0000033, 'Photography', 2, 'Arts', NULL);
+INSERT INTO `hobby` VALUES (0000034, 'Sculpture', 2, 'Arts', NULL);
 
 -- ----------------------------
 -- Table structure for profile
@@ -160,7 +169,9 @@ CREATE TABLE `profile`  (
 -- Records of profile
 -- ----------------------------
 INSERT INTO `profile` VALUES (00000001, 2, '123', NULL, 0, NULL, NULL, 12, 'male', 'http://localhost:9090/file/download/8a8e2c028a79435f8a697b4d530e4036.jpg', 0, 0, NULL);
-INSERT INTO `profile` VALUES (00000002, 3, 'haha', NULL, 1, NULL, NULL, 31, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
+INSERT INTO `profile` VALUES (00000002, 3, 'testEric', NULL, 1, NULL, NULL, 31, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
+INSERT INTO `profile` VALUES (00000003, 10, 'testMike', NULL, 0, NULL, NULL, 18, 'male', NULL, 0, 0, NULL);
+INSERT INTO `profile` VALUES (00000004, 5, 'hobbyFacility', NULL, 0, NULL, NULL, 23, 'female', NULL, 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000005, 4, 'xixi', NULL, 1, NULL, NULL, 22, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 
 -- ----------------------------
@@ -189,20 +200,5 @@ INSERT INTO `user` VALUES (00000003, 'testMike', '123', '122@q.com', '05/05/2022
 INSERT INTO `user` VALUES (00000004, 'hobbyFacility', '123', '3122@qa.com', '05/05/2022 18:01:50', NULL, '3a st kg', 'asda2ba', 'facility', NULL);
 INSERT INTO `user` VALUES (00000005, 'testNike', '132', '804404826@qq.com', '07/05/2022 23:42:16', NULL, '12112', '1212', 'facility', NULL);
 INSERT INTO `user` VALUES (00000006, 'testDavid', '123', '22@aa.com', '07/05/2022 23:44:44', NULL, '3a st', '123a5a6', 'facility', NULL);
-
--- ----------------------------
--- Table structure for user_hobbies
--- ----------------------------
-DROP TABLE IF EXISTS `user_hobbies`;
-CREATE TABLE `user_hobbies`  (
-                                 `id` int(8) NOT NULL,
-                                 `user_id` int(8) NOT NULL,
-                                 `hobby_id` int(7) NULL DEFAULT NULL,
-                                 PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user_hobbies
--- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
