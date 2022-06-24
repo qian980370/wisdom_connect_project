@@ -306,8 +306,7 @@ export default {
       this.dialogProfileVisible = true;
       this.dialogProfileTitle = "Update Profile";
     },handleAccess(row){
-      this.form = JSON.parse(JSON.stringify(row));
-      console.log(this.form);
+      localStorage.setItem("profile", JSON.stringify(row));
       this.$router.push({
         name: 'ProfileDetailView',
         params:{

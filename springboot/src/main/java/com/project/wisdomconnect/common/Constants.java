@@ -25,6 +25,9 @@ public interface Constants {
     String CODE_412 = "412"; // invalid fast code
     String CODE_413 = "413"; // register information not match original fast code information
     String CODE_414 = "414"; // you have been submitted fast code form, please check your email and our manager will contact you as soon as possible
+    String CODE_415 = "415"; // profile id missed
+    String CODE_416 = "416"; // database result unmatched issue
+    String CODE_417 = "417"; // repeat request error
 
     String CODE_200_MESSAGE = "success"; // SUCCESS
     String CODE_500_MESSAGE = "system error"; // system error
@@ -46,4 +49,7 @@ public interface Constants {
     String CODE_412_MESSAGE = "invalid fast code"; // invalid fast code
     String CODE_413_MESSAGE = "register information not match original fast code information"; // register information not match original fast code information
     String CODE_414_MESSAGE = "you have been submitted fast code form, please check your email and our manager will contact you as soon as possible"; // you have been submitted fast code form, please check your email and our manager will contact you as soon as possible
+    String CODE_415_MESSAGE = "profile id missed"; // profile id missed
+    String CODE_416_MESSAGE = "database result unmatched issue"; // database result unmatched issue
+    String CODE_417_MESSAGE = "repeat request error"; // repeat request error
 }

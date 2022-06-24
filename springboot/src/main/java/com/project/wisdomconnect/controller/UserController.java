@@ -72,6 +72,7 @@ public class UserController {
 //        }
 
         UserDTO dto = userService.login(userDTO);
+        dto.setPassword(null);
         return Result.success(dto);
     }
 
