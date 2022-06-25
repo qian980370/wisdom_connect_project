@@ -252,7 +252,7 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-          <el-popconfirm title="Are you sure to delete this?" @confirm="">
+          <el-popconfirm title="Are you sure to delete this hobby?" @confirm="deleteHobby(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small" >Delete</el-button>
             </template>
@@ -265,6 +265,9 @@
     <!--Random Hobby List-->
     <div style="margin: 10px 0">
       <span>Random Hobby List</span>
+    </div>
+    <div style="margin: 10px 0">
+      <el-button type="primary" @click="getRandomHobbies">Random Hobby</el-button>
     </div>
     <el-table :data="randomHobbyTableData" border stripe style="width: 100%">
       <el-table-column prop="id" label="ID">
@@ -290,7 +293,7 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-          <el-popconfirm title="Are you sure to delete this?" @confirm="">
+          <el-popconfirm title="Are you sure to add this?" @confirm="addHobby(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small" >Add Hobby</el-button>
             </template>
@@ -364,6 +367,8 @@ export default {
       this.getRandomFriends();
       this.getFriendsRequest();
       this.getAllBlock();
+      this.getAllHobbies();
+      this.getRandomHobbies();
     },
 
     getAllFriends(){
@@ -374,6 +379,74 @@ export default {
       }).then(res =>{
         console.log(res);
         this.friendTableData = res.data;
+      })
+    },
+    getAllHobbies(){
+      request.get("/hobby/hobbyList", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        console.log(res);
+        this.hobbyTableData = res.data;
+      })
+    },
+    getRandomHobbies(){
+      request.get("/hobby/randomHobbies", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        console.log(res);
+        this.randomHobbyTableData = res.data;
+      })
+    },
+
+    addHobby(id){
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.post("/hobby/addHobby", friendRequestForm).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully add hobby"
+          })
+          this.load()
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+      })
+    },
+
+    deleteHobby(id){
+      //console.log(id)
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.delete("/hobby/hobbyDelete", {data: friendRequestForm}).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully delete hobby"
+          })
+          this.load()
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
       })
     },
 

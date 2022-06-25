@@ -15,5 +15,4 @@ public class HobbyRelationship {
     private Integer profileid;
     private Integer hobbyid;
 
-    private String hobbyName;
 }
