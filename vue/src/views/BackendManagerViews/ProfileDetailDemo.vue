@@ -3,6 +3,13 @@
     <div style="margin: 10px 0">
       <span>current profile: {{profile.username}}</span>
     </div>
+
+    <!--privacy-->
+    <div style="margin: 10px 0">
+      <el-button type="primary" @click="setPrivacy">setPrivacy</el-button>
+      privacy state: {{this.privacy}}
+    </div>
+
     <!--table of data-->
     <!--Friend List-->
     <div style="margin: 10px 0">
@@ -59,9 +66,13 @@
 
     </el-table>
 
+
     <!--Random Friend List-->
     <div style="margin: 10px 0">
       <span>Random Friends</span>
+    </div>
+    <div style="margin: 10px 0">
+      <el-button type="primary" @click="getRandomFriends">Random Friend</el-button>
     </div>
     <el-table :data="randomFriendTableData" border stripe style="width: 100%">
       <el-table-column prop="id" label="ID">
@@ -97,9 +108,14 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-          <el-popconfirm title="Send Friend Request?" @confirm="sendFriendRequest">
+          <el-popconfirm title="Send Friend Request?" @confirm="sendFriendRequest(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small" >Add Friend</el-button>
+            </template>
+          </el-popconfirm>
+          <el-popconfirm title="Are you sure to block this user?" @confirm="blockUser(scope.row.id)">
+            <template #reference>
+              <el-button type="text" size="small" >Block</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -145,9 +161,14 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-          <el-popconfirm title="Accept Friend Request?" @confirm="acceptFriendRequest">
+          <el-popconfirm title="Accept Friend Request?" @confirm="acceptFriendRequest(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small" >Accept Friend</el-button>
+            </template>
+          </el-popconfirm>
+          <el-popconfirm title="Reject Friend Request?" @confirm="deleteFriend(scope.row.id)">
+            <template #reference>
+              <el-button type="text" size="small" >Reject Friend</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -193,9 +214,9 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
-          <el-popconfirm title="Send Friend Request?" @confirm="">
+          <el-popconfirm title="Unblock?" @confirm="unBlock(scope.row.id)">
             <template #reference>
-              <el-button type="text" size="small" >Add Friend</el-button>
+              <el-button type="text" size="small" >Unblock</el-button>
             </template>
           </el-popconfirm>
         </template>
@@ -297,6 +318,7 @@ export default {
   },
   data(){
     return{
+      privacy: '123',
       form: {},
       query: '',
       search: '',
@@ -329,8 +351,10 @@ export default {
 
     refreshProfile(){
       this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
-      console.log(this.profile);
+      // console.log(this.profile);
+      this.privacy = this.profile.privacy;
     },
+
     // handleClose(){
     //   this.dialogVisible = false;
     // },
@@ -339,6 +363,7 @@ export default {
       this.getAllFriends();
       this.getRandomFriends();
       this.getFriendsRequest();
+      this.getAllBlock();
     },
 
     getAllFriends(){
@@ -349,6 +374,17 @@ export default {
       }).then(res =>{
         console.log(res);
         this.friendTableData = res.data;
+      })
+    },
+
+    getAllBlock(){
+      request.get("/profile/blockList", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        console.log(res);
+        this.blockTableData = res.data;
       })
     },
 
@@ -375,38 +411,17 @@ export default {
     },
 
     acceptFriendRequest(id){
-      request.put("/profile/acceptFriendRequest", {
-        params: {
-          profileID: this.profile.id,
-          targetID: id,
-        }
-      }).then(res => {
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.put("/profile/acceptFriendRequest", friendRequestForm).then(res => {
         if (res.code === '200') {
           this.$message({
             type: "success",
-            message: "successfully send request"
-          })
-
-        } else {
-          this.$message({
-            type: "error",
-            message: res.msg
-          })
-        }
-      })
-    },
-
-    sendFriendRequest(id){
-      request.post("/profile/addFriend", {
-        params: {
-          profileID: this.profile.id,
-          targetID: id,
-        }
-      }).then(res => {
-        if (res.code === '200') {
-          this.$message({
-            type: "success",
-            message: "successfully delete"
+            message: "successfully accept request"
           })
           this.load()
         } else {
@@ -418,18 +433,44 @@ export default {
       })
     },
 
-    deleteFriend(id){
-      //console.log(id)
-      request.delete("/profile/friendDelete",{
-          params: {
-            profileID: this.profile.id,
-            targetID: id,
-          }
-      }).then(res => {
+    sendFriendRequest(id){
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.post("/profile/addFriend", friendRequestForm).then(res => {
         if (res.code === '200') {
           this.$message({
             type: "success",
-            message: "successfully delete"
+            message: "successfully send friend request"
+          })
+          this.load()
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+      })
+
+
+    },
+
+    deleteFriend(id){
+      //console.log(id)
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.delete("/profile/friendDelete", {data: friendRequestForm}).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully delete or reject"
           })
           this.load()
         } else {
@@ -443,17 +484,17 @@ export default {
     },
     blockUser(id){
       //console.log(id)
-      request.post("/profile/blockUser",{
-        params: {
-          profileID: this.profile.id,
-          targetID: id,
-        }
-      }).then(res => {
+      let friendRequestForm;
+      friendRequestForm = {};
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+      request.post("/profile/blockUser", friendRequestForm).then(res => {
         if (res.code === '200') {
           this.$message({
             type: "success",
-            message: "successfully delete"
+            message: "successfully block"
           })
+          this.load()
         } else {
           this.$message({
             type: "error",
@@ -463,8 +504,55 @@ export default {
         this.load()
       })
     },
+    unBlock(id){
+      //console.log(id)
+      let friendRequestForm;
+      friendRequestForm = {};
 
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.delete("/profile/unBlock", {data: friendRequestForm}).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully unblock"
+          })
+          this.load()
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
+      })
+    },
+    setPrivacy(){
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      request.put("/profile/updatePrivacy", friendRequestForm).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully set privacy"
+          })
+
+          localStorage.setItem("profile", JSON.stringify(res.data));
+          this.refreshProfile()
+
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+      })
+    }
   },
+
 }
 </script>
 
