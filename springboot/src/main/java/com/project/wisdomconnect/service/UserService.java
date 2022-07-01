@@ -106,6 +106,8 @@ public class UserService extends ServiceImpl<UserMapper, User> implements UserSe
             // set token
             String token = TokenUtils.genToken(user.getId().toString(), user.getPassword());
             userDTO.setToken(token);
+
+
             return userDTO;
         }else {
             throw new ServiceException(Constants.CODE_400, Constants.CODE_400_MESSAGE);

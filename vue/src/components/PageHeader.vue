@@ -10,7 +10,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>Personal Information</el-dropdown-item>
-            <el-dropdown-item>Change Password</el-dropdown-item>
+            <el-dropdown-item @click="logout">logout</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -26,7 +26,17 @@ export default {
   components:{
     ArrowDown
   },
-
+  methods:{
+    logout(){
+      localStorage.removeItem("user");
+      localStorage.removeItem("profile");
+      this.$message({
+        type: "success",
+        message: "Successfully logout"
+      })
+      this.$router.push("/login")
+    },
+  },
   data() {
     return{
       user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,

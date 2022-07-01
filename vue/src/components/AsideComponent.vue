@@ -21,9 +21,9 @@
       <span>Fast Code</span>
     </el-menu-item>
 
-    <el-menu-item index="4">
+    <el-menu-item index="4" @click="routeToProfileDemo">
       <el-icon><setting/></el-icon>
-      <span>DEVELOPING</span>
+      <span>ProfileDemo</span>
     </el-menu-item>
   </el-menu>
 </template>
@@ -49,6 +49,9 @@ export default {
     },
     routeToFastCode(){
       this.$router.push("/fastcode-controller")
+    },
+    routeToProfileDemo(){
+      this.$router.push("/profile-demo")
     },
   }
 }

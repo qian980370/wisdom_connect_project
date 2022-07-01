@@ -278,6 +278,7 @@ export default {
     // },
     logout(){
       localStorage.removeItem("user");
+      localStorage.removeItem("profile");
       this.refreshUser();
       this.$message({
         type: "success",

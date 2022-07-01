@@ -18,7 +18,7 @@ import com.project.wisdomconnect.utils.TimeGetter;
 import com.project.wisdomconnect.utils.TokenUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import javax.servlet.http.HttpSession;
 
 
 import javax.annotation.Resource;
@@ -72,6 +72,7 @@ public class UserController {
 //        }
 
         UserDTO dto = userService.login(userDTO);
+        dto.setPassword(null);
         return Result.success(dto);
     }
 
