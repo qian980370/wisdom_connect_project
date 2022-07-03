@@ -29,69 +29,23 @@
 
 
         <div class="interests_display_container">
+          <div class="interests_display_content">
+            <table>
+              <tr v-for="(row,index) in sliceList(hobbyTableData,3)" >
+                <td v-for="(data,i) in row " :key="i">
+                  <img :src="data.icon">
+                  <button src="C:\Users\86139\IdeaProjects\wisdom_connect_project\vue\src\image\delete_icon.png" @click="deleteHobby(i)"></button>
+                  <p>{{data.name}}</p>
+                </td>
+              </tr>
+            </table>
+          </div>
           <!--------Table------>
 
 
+
           <!--------Table------>
-          <div class="interests_display_content">
-            <table>
-              <tr>
-                <td>
-                  <div class="interests_display_content_img">
-                    <img :src="userinfo[0].icon">
-                    <img src="./vue/src/image/delete_icon.png" id="delete_interest_btn">
-                  </div>
-                  <p>{{userinfo[0].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[1].icon">
-                  <p>{{userinfo[1].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[2].icon">
-                  <p>{{userinfo[1].name}}</p>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <!--------Table------>
-          <div class="interests_display_content">
-            <table>
-              <tr>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-              </tr>
-            </table>
-          </div>
-          <!--------Table------>
-          <div class="interests_display_content">
-            <table>
-              <tr>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-                <td>
-                  <img src="../image/flower1.png">
-                  <p>Basketball</p>
-                </td>
-              </tr>
-            </table>
-          </div>
+
 
         </div>
 
@@ -120,33 +74,92 @@ export default {
   name: "InterestList",
   data(){
     return{
-      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
-
-      userinfo :null
+      form: {},
+      query: '',
+      search: '',
+      hobbyTableData:[
+      ],
+      profile : localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
+    }
+  },
+  computed: {
+    sliceList() {
+      return function (data,count) {
+        if (data != undefined) {
+          let index = 0;
+          let arrTemp = [];
+          for (let i = 0; i < data.length; i++) {
+            index = parseInt(i / count);
+            if (arrTemp.length <= index) {
+              arrTemp.push([]);
+            }
+            arrTemp[index].push(data[i])
+          }
+          return arrTemp
+        }
+      }
     }
   },
   created() {
     this.load()
+    console.log(this.profile);
   },
   methods:{
-    refreshUser(){
-      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    refreshProfile(){
+      this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
+      // console.log(this.profile);
+      this.privacy = this.profile.privacy;
     },
     load(){
-      this.refreshUser();
-      request.get("/hobby/page", {
+      this.refreshProfile();
+      this.getAllHobbies();
+      this.getRandomHobbies();
+
+    },
+    getAllHobbies(){
+      request.get("/hobby/hobbyList", {
         params: {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          query: this.query
+          profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res.data);
-        this.userinfo = res.data.records
-        // this.tableData = res.data.records;
-        // this.total = res.data.total;
+        console.log(res);
+        this.hobbyTableData = res.data;
       })
-    }
+    },
+    getRandomHobbies(){
+      request.get("/hobby/randomHobbies", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        console.log(res);
+        this.randomHobbyTableData = res.data;
+      })
+    },
+    deleteHobby(id){
+      //console.log(id)
+      let friendRequestForm;
+      friendRequestForm = {};
+
+      friendRequestForm.profileID = this.profile.id;
+      friendRequestForm.targetID = id;
+
+      request.delete("/hobby/hobbyDelete", {data: friendRequestForm}).then(res => {
+        if (res.code === '200') {
+          this.$message({
+            type: "success",
+            message: "successfully delete hobby"
+          })
+          this.load()
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+
+      })
+    },
   }
 }
 </script>

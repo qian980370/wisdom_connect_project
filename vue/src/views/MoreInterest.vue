@@ -32,78 +32,15 @@
               <td>
                 <div class="more_interests_display_content_img">
                   <img src="./web/flower1.jpg">
-                  <img src="./vue/src/image/add_icon.png" id="add_interest_btn">
+                  <img src="C:\Users\86139\IdeaProjects\wisdom_connect_project\vue\src\image\add_icon.png" id="add_interest_btn">
                 </div>
                 <p>Basketball</p>
               </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
+
             </tr>
           </table>
         </div>
-        <!--------Table------>
-        <div class="more_interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="more_interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-            </tr>
-          </table>
-        </div>
-        <!--------Table------>
-        <div class="more_interests_display_content">
-          <table>
-            <tr>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-              <td>
-                <img src="../image/flower1.png">
-                <p>Basketball</p>
-              </td>
-            </tr>
-          </table>
-        </div>
+
 
       </div>
 
