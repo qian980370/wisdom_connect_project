@@ -34,7 +34,7 @@
               <tr v-for="(row,index) in sliceList(hobbyTableData,3)" >
                 <td v-for="(data,i) in row " :key="i">
                   <img :src="data.icon">
-                  <button src="C:\Users\86139\IdeaProjects\wisdom_connect_project\vue\src\image\delete_icon.png" @click="deleteHobby(i)"></button>
+                  <button style=background:url(\Users\86139\IdeaProjects\wisdom_connect_project\vue\src\image\delete_icon.png) @click="deleteHobby(i)"></button>
                   <p>{{data.name}}</p>
                 </td>
               </tr>
