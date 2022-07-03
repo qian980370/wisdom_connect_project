@@ -37,7 +37,10 @@
             <table>
               <tr>
                 <td>
-                  <img :src="userinfo[0].icon">
+                  <div class="interests_display_content_img">
+                    <img :src="userinfo[0].icon">
+                    <img src="./vue/src/image/delete_icon.png" id="delete_interest_btn">
+                  </div>
                   <p>{{userinfo[0].name}}</p>
                 </td>
                 <td>
@@ -248,6 +251,7 @@ export default {
   width: 100px;
   height: 100px;
   cursor: pointer;
+  z-index: 0px;
 }
 
 .interests_display_content td{
@@ -273,6 +277,19 @@ export default {
 .interests_buttons{
   margin-left: 50px;
 }
+
+.interests_display_content_img{
+  position: relative;
+}
+
+#delete_interest_btn{
+  position: absolute;
+  height: 30px;
+  width: auto;
+  z-index: 20px;
+  left: 96px;
+}
+
 #remove_btn{
   height: 44px;
   width: 215px;

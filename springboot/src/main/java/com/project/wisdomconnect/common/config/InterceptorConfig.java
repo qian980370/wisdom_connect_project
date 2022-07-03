@@ -14,7 +14,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(authInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/login", "/user/register", "/file/download/**");
+                .excludePathPatterns("/user/login", "/user/register", "/file/download/**", "/fastcode/create");
 //        .excludePathPatterns("/user/login", "/user/register", "/imserver/**", "/files/**", "/alipay/**",
 //                "/doc.html", "/webjars/**", "/swagger-resources/**");
 
