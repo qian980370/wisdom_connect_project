@@ -30,7 +30,10 @@
           <table>
             <tr>
               <td>
-                <img src="../image/flower1.png">
+                <div class="more_interests_display_content_img">
+                  <img src="./web/flower1.jpg">
+                  <img src="./vue/src/image/add_icon.png" id="add_interest_btn">
+                </div>
                 <p>Basketball</p>
               </td>
               <td>
@@ -155,6 +158,7 @@ export default {
   border-radius: 5px;
 }
 .more_interests_form_header p{
+  width: 370px;
   font-size: 28px;
   font-weight: bold;
   color:#864a98;
@@ -217,11 +221,18 @@ export default {
   width: 100px;
   height: 100px;
   cursor: pointer;
+  z-index: 0px;
 }
 
 .more_interests_display_content td{
   width: 240px;
-  height: 160px;
+  height: 150px;
+  border: solid 2px white;
+}
+.more_interests_display_content td:hover{
+  width: 240px;
+  height: 150px;
+  border: solid 2px #bfa0c8;
 }
 .more_interests_display_content tr{
   padding-top: 40px;
@@ -236,12 +247,46 @@ export default {
 .more_interests_buttons{
   margin-left: 50px;
 }
+
+.more_interests_display_content_img{
+  position: relative;
+}
+
+#add_interest_btn{
+  position: absolute;
+  height: 30px;
+  width: auto;
+  z-index: 20px;
+  left: 96px;
+}
+
+
 #more_interests_add_btn{
   height: 44px;
   width: 215px;
   background-color: #bfa0c8;
   color: white;
   border: 0px;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#more_interests_add_btn:hover{
+  height: 44px;
+  width: 215px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#more_interests_add_btn:active{
+  height: 44px;
+  width: 215px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
   margin-top: 70px;
   font-size: 18px;
   border-radius: 5px;
@@ -256,7 +301,24 @@ export default {
   font-size: 18px;
   border-radius: 5px;
 }
-
-
-
+#more_interests_refresh_btn:hover{
+  height: 44px;
+  width: 215px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+#more_interests_refresh_btn:active{
+  height: 44px;
+  width: 215px;
+  background-color: white;
+  color: #bfa0c8;
+  border: solid 2px #bfa0c8;
+  margin-top: 70px;
+  font-size: 18px;
+  border-radius: 5px;
+}
 </style>
