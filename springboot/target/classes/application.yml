@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/wisdom_connect_database?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
     username: root
-    password: 545466
+    password: 15853198730
   mvc:
     hiddenmethod:
       filter:
@@ -26,10 +26,10 @@ spring:
     default-encoding: utf-8
 files:
   upload:
-#    path: D:/2022s1/wisdomConnect/wisdom_connect_project/files/ #ziqian
+    path: D:/2022s1/wisdomConnect/wisdom_connect_project/files/ #ziqian
 #    path: C:\Users\86139\IdeaProjects\wisdom_connect_project/files/  #yifei
 #    path: C:\Users\HUS\IdeaProjects\wisdom-connect/files/  #sibo
-    path: E:/Intellij/wisdom_connect_project/files/ #lizhuo
+#    path: E:/Intellij/wisdom_connect_project/files/ #lizhuo
 #    path: /Users/mac/IdeaProjects/wisdom_connect_project/files/ #keren
 #    path: E:\IdeaProjects\8715git\wisdom_connect_project/files/ #haobin
   download:

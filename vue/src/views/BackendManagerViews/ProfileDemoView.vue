@@ -101,12 +101,7 @@
             </el-radio-group>
 
           </el-form-item>
-          <el-form-item label="Friend List">
-            <el-input v-model="form.friend" />
-          </el-form-item>
-          <el-form-item label="Hobby List">
-            <el-input v-model="form.hobby" />
-          </el-form-item>
+
           <el-form-item label="Age">
             <el-input v-model="form.age" />
           </el-form-item>
