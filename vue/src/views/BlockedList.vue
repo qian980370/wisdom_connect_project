@@ -30,42 +30,15 @@
         <div class="blockedlist_display_container">
           <!--------Table------>
 
-          <div class="blockedlist_display_content">
+          <div class="myprofile_display_content" v-for="item in blockTableData">
             <table>
-              <tr>
-                <td><img src="../image/flower1.png"></td>
-                <td><p>James</p></td>
+              <tr >
+                <td><img :src="item.url"></td>
+                <td><p>{{ item.username }}</p></td>
               </tr>
             </table>
           </div>
 
-          <div class="blockedlist_display_content">
-            <table>
-              <tr>
-                <td><img src="../image/flower1.png"></td>
-                <td><p>James</p></td>
-              </tr>
-            </table>
-          </div>
-
-          <!--------Table------>
-          <div class="blockedlist_display_content">
-            <table>
-              <tr>
-                <td> <img src="../image/flower1.png"></td>
-                <td><p>James</p></td>
-              </tr>
-            </table>
-          </div>
-          <!--------Table------>
-          <div class="blockedlist_display_content">
-            <table>
-              <tr>
-                <td> <img src="../image/flower1.png"></td>
-                <td><p>James</p></td>
-              </tr>
-            </table>
-          </div>
         </div>
       </div>
 
@@ -76,23 +49,41 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "BlockedList",
+  data(){
+    return{
+      blockTableData:[
+      ],
+      profile : localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
+    }
+
+  },
+  created() {
+    this.load();
+  },
 
   methods: {
-    load() {
-      request.get("profile", {
+    refreshProfile(){
+      this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
+      // console.log(this.profile);
+      this.privacy = this.profile.privacy;
+    },
+    load(){
+      this.getAllBlock();
+    },
+    getAllBlock(){
+      request.get("/profile/blockList", {
         params: {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          query: this.query
+          profileID: this.profile.id,
         }
-      }).then(res => {
+      }).then(res =>{
         console.log(res);
-        this.tableData = res.data.records;
-        this.total = res.data.total;
+        this.blockTableData = res.data;
       })
-    }
+    },
   }
 }
 </script>
