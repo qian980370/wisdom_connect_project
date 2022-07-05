@@ -32,7 +32,7 @@
           <div class="interests_display_content">
             <table>
               <tr v-for="(row,index) in sliceList(hobbyTableData,3)" >
-                <td v-for="(data,i) in row " :key="i">
+                <td v-for="(data,i) in row " :key="i" >
                   <img :src="data.icon">
                   <button src="C:\Users\86139\IdeaProjects\wisdom_connect_project\vue\src\image\delete_icon.png" @click="deleteHobby(i)"></button>
                   <p>{{data.name}}</p>
@@ -160,6 +160,9 @@ export default {
 
       })
     },
+    selectHobby(){
+
+    }
   }
 }
 </script>

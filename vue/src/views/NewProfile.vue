@@ -1,135 +1,80 @@
 <template>
-  <head>
-    <meta charset="UTF-8">
-    <title>wisdom connect</title>
-  </head>
 
-  <body>
-
-  <div class="logo_and_title">
-    <table>
-      <tr>
-        <td><img src="../image/logo.png" alt="logo"></td>
-        <td><h1>Wisdom Connect</h1></td>
-      </tr>
-    </table>
-  </div>
+  <wisdom-header></wisdom-header>
 
   <div class="addprofiles_container">
     <div class="addprofiles_form">
       <div class="addprofiles_form_title"><p>Personal Info</p></div>
 
-      <table class="addprofiles_upload_table">
-        <tr>
-          <td rowspan="2"><div class="addprofiles_upload_img"><img src="../image/camera_icon.png" alt="pic"></div></td>
-          <td>
-            <input type="input" placeholder="Name" class="Name">
-            <input type="input" placeholder="Age" class="Age">
-          </td>
-        </tr>
-      </table>
+      <el-form v-model="form" label-width="80px" style="margin-left: 30px;">
 
+        <el-form-item label="Owner ID">
+          <el-input v-model="form.owner" />
+        </el-form-item>
+        <el-form-item label="Profile Name">
+          <el-input v-model="form.username" />
+        </el-form-item>
+        <el-form-item label="Privacy">
+          <el-radio-group v-model="form.privacy">
+            <el-radio :label=1>hide</el-radio>
+            <el-radio :label=0>open</el-radio>
+          </el-radio-group>
 
+        </el-form-item>
+        <el-form-item label="Friend List">
+          <el-input v-model="form.friend" />
+        </el-form-item>
+        <el-form-item label="Hobby List">
+          <el-input v-model="form.hobby" />
+        </el-form-item>
+        <el-form-item label="Age">
+          <el-input v-model="form.age" />
+        </el-form-item>
 
-      <div class="addprofiles_form_title"><p>Select Your Interests</p></div>
+        <el-form-item label="Gender">
+          <el-radio-group v-model="form.gender">
+            <el-radio label="male">Male</el-radio>
+            <el-radio label="female">Female</el-radio>
+            <el-radio label="secret">Secret</el-radio>
+          </el-radio-group>
 
-      <div class="addprofiles_interests">
-        <table class="addprofiles_interests_table">
-          <tr>
-            <table>
-              <tr>
-                <td>
-                  <img :src="userinfo[0].icon">
-                  <p>{{userinfo[0].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[1].icon">
-                  <p>{{userinfo[1].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[2].icon">
-                  <p>{{userinfo[1].name}}</p>
-                </td>
-              </tr>
-            </table>
-          </tr>
+        </el-form-item>
 
-          <tr>
-            <table>
-              <tr>
-                <td>
-                  <img :src="userinfo[3].icon">
-                  <p>{{userinfo[3].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[4].icon">
-                  <p>{{userinfo[4].name}}</p>
-                </td>
-                <td>
-                  <img :src="userinfo[5].icon">
-                  <p>{{userinfo[5].name}}</p>
-                </td>
-              </tr>
-            </table>
-          </tr>
+        <el-form-item>
+          <div>
+          <el-button type="primary" @click="onSubmit" class="form-button">Apply</el-button>
+          </div>
 
-          <tr>
-              <table>
-                <tr>
-                  <td>
-                    <img :src="userinfo[6].icon">
-                    <p>{{userinfo[6].name}}</p>
-                  </td>
-                  <td>
-                    <img :src="userinfo[7].icon">
-                    <p>{{userinfo[7].name}}</p>
-                  </td>
-                  <td>
-                    <img :src="userinfo[8].icon">
-                    <p>{{userinfo[8].name}}</p>
-                  </td>
-                </tr>
-              </table>
-          </tr>
-
-        </table>
-
-        <table class="addprofiles_interests_btn_table">
-          <tr>
-            <td><button id="addinterests_btn">Refresh</button></td>
-            <td><button id="refreshinterests_btn">Add</button></td>
-          </tr>
-        </table>
-
-      </div>
-
-
-      <hr>
-      <div class="addprofiles_add">
-        <button id="add_btn">Add profile</button>
-      </div>
-
-      <!-- <div class="addprofiles_logout">
-          <button id="logout_btn">Log out</button>
-      </div>
-       -->
+        </el-form-item>
+        <el-form-item>
+          <div>
+            <el-button @click="dialogProfileVisible = false" class="form-button">Cancel</el-button>
+          </div>
+        </el-form-item>
+      </el-form>
 
     </div>
 
   </div>
 
-  </body>
+
+
+
 
 </template>
 
 <script>
 import request from "@/utils/request";
+import WisdomHeader from '../components/WisdomHeader.vue'
+import { Plus } from '@element-plus/icons-vue';
+
 
 export default {
   name: "NewProfile",
+  components:{WisdomHeader,Plus},
   data(){
     return{
-      ProfileForm:{},
+      form:{},
       rules: {
         username: [
           {required: true, message: 'please input username', trigger: 'blur'},
@@ -201,6 +146,8 @@ export default {
   /* background-color: azure; */
 }
 
+
+
 .addprofiles_form{
   width: 540px;
   height: 1160px;
@@ -211,7 +158,19 @@ export default {
   text-align: center;
   border-radius: 5px;
 }
+
+.addprofiles_form >>> .el-input__inner{
+  height: 50px;
+  width: 360px;
+  border: 0px;
+  padding-left: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+  outline-color: #bfa0c8;
+}
 .addprofiles_form_title{
+  height: 100px;
+  margin-top: 40px;
   font-size: 28px;
   font-weight: bold;
   color:#864a98;
@@ -318,7 +277,7 @@ export default {
 
 
 
-.addprofiles_add button{
+.form-button {
   height: 44px;
   width: 240px;
   background-color: #bfa0c8;
@@ -327,6 +286,7 @@ export default {
   margin-top: 30px;
   font-size: 18px;
   border-radius: 5px;
+  margin-left: 40px;
 }
 /* .addprofiles_logout button{
     height: 44px;

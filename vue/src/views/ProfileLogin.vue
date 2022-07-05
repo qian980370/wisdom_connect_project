@@ -3,14 +3,7 @@
 <!--    <h2>wisdom connect</h2>-->
 <!--  </div>-->
   <div style="width: 100%; height: 120vh;  overflow: hidden">
-    <div class="logo_and_title">
-      <table>
-        <tr>
-          <td><img  src="../image/logo.png" alt="logo"></td>
-          <td><h1>Wisdom Connect</h1></td>
-        </tr>
-      </table>
-    </div>
+    <wisdom-header></wisdom-header>
 
 
     <div class="profiles_container">
@@ -48,12 +41,15 @@
 
 <script>
 import request from "@/utils/request";
+import WisdomHeader from '../components/WisdomHeader.vue'
+
 
 export default {
   name: "ProfileLogin",
+  components:{WisdomHeader},
   data(){
     return{
-      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+      user : null,
 
       userinfo :null
     }

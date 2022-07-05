@@ -30,6 +30,7 @@ import Flayout from "@/layout/Flayout";
 import FastCodeView from "@/views/BackendManagerViews/FastCodeView";
 import ProfileDemoView from "@/views/BackendManagerViews/ProfileDemoView";
 import ProfileDetailDemo from "@/views/BackendManagerViews/ProfileDetailDemo";
+// import NewProfile from "@/views/NewProfile";
 
 
 const routes = [
@@ -115,6 +116,7 @@ const routes = [
     name: 'FacilitySignup',
     component: FacilitySignup
   },
+
   {
     path: '/resetpassword',
     name: 'ResetPassword',
