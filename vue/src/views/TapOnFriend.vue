@@ -36,9 +36,9 @@
             </table>
           </div>
 
-          <div class="myprofile_display_content" v-for="item in friendList">
+          <div class="myprofile_display_content" v-for="item in friendTableData">
             <table>
-              <tr>
+              <tr >
                 <td><img :src="item.url"></td>
                 <td><p>{{ item.username }}</p></td>
               </tr>
@@ -53,7 +53,7 @@
           <table>
             <tr>
               <td><button id="videocall_btn">Make a Video Call</button></td>
-              <td><button id="me_btn" @click="this.$router.push({name:'Personal',params:{userId:userid,userName:username,icon:icon}})">Me</button></td>
+              <td><button id="me_btn" @click="this.$router.push('/personal')">Me</button></td>
             </tr>
           </table>
         </div>
@@ -70,22 +70,40 @@
 </template>
 
 <script>
+import request from "@/utils/request";
+
 export default {
   name: "TapOnFriend",
-  data(){
-    return{
-      userid:'',
-      username:'',
-      friendList:[{username:'jason',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'},
-        {username:'eric',url:'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png'}],
-      icon:'',
+  data() {
+    return {
+      friendTableData: [],
+      profile: localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
     }
   },
   created() {
-    this.userid = this.$route.params.userId
-    this.username = this.$route.params.userName
-    this.icon=this.$route.params.icon
-    // console.log(id)
+    this.load();
+  },
+  methods: {
+
+    refreshProfile() {
+      this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
+      // console.log(this.profile);
+      this.privacy = this.profile.privacy;
+    },
+    load(){
+      this.refreshProfile();
+      this.getAllFriends();
+    },
+    getAllFriends(){
+      request.get("/profile/friendList", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        console.log(res);
+        this.friendTableData = res.data;
+      })
+    },
   }
 }
 </script>

@@ -22,8 +22,8 @@
 
             <table>
               <tr>
-                <td><img :src="icon"></td>
-                <td><p>{{username}}</p></td>
+                <td><img :src="profile.icon"></td>
+                <td><p>{{profile.username}}</p></td>
               </tr>
             </table>
 
@@ -65,40 +65,22 @@ export default {
   name: "Personal",
   data(){
     return{
-      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
-      userinfo :null,
-      userid:'',
-      username:'',
-      icon:'',
+      profile: localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
     }
   },
   created() {
     this.load();
-    this.userid = this.$route.params.userId
-    this.username = this.$route.params.userName
-    this.icon=this.$route.params.icon
 
     // console.log(this.user);
   },
   methods: {
-    refreshUser() {
-      this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    refreshProfile() {
+      this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
+      // console.log(this.profile);
+      this.privacy = this.profile.privacy;
     },
-    // handleClose(){
-    //   this.dialogVisible = false;
-    // },
-    load() {
-      this.refreshUser();
-      request.get("/profile/page", {
-        params: {
-          pageNum: this.currentPage,
-          pageSize: this.pageSize,
-          query: this.query
-        }
-      }).then(res => {
-        console.log(res);
-        this.userinfo = res.data.records;
-      })
+    load(){
+      this.refreshProfile();
     },
 
   }
