@@ -33,8 +33,10 @@
             <table>
               <tr v-for="(row,index) in sliceList(hobbyTableData,3)" >
                 <td v-for="(data,i) in row " :key="i">
-                  <img :src="data.icon">
-                  <button id="delete_interest_btn" @click="deleteHobby(i)"></button>
+                  <div class="interests_display_content_img">
+                    <img :src="data.icon">
+                    <button id="delete_interest_btn" @click="deleteHobby(i)"></button>
+                  </div>
                   <p>{{data.name}}</p>
                 </td>
               </tr>
@@ -298,10 +300,12 @@ export default {
 #delete_interest_btn{
   position: absolute;
   height: 30px;
-  width: auto;
+  width: 30px;
   z-index: 20px;
   left: 96px;
-  background:url(../image/delete_icon.png);
+  background: url("../image/delete_icon.png") no-repeat;
+  background-size: 28px 28px;
+  border: none;
 }
 
 #remove_btn{

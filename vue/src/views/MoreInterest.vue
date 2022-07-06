@@ -31,7 +31,7 @@
             <tr>
               <td>
                 <div class="more_interests_display_content_img">
-                  <img src="../image/add_icon.png" id="add_interest_btn">
+                  <button id="add_interest_btn"></button>
                 </div>
                 <p>Basketball</p>
               </td>
@@ -191,9 +191,12 @@ export default {
 #add_interest_btn{
   position: absolute;
   height: 30px;
-  width: auto;
+  width: 30px;
   z-index: 20px;
   left: 96px;
+  background: url("../image/add_icon.png") no-repeat;
+  background-size: 28px 28px;
+  border: none;
 }
 
 
