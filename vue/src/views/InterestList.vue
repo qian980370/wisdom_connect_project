@@ -34,7 +34,7 @@
               <tr v-for="(row,index) in sliceList(hobbyTableData,3)" >
                 <td v-for="(data,i) in row " :key="i">
                   <img :src="data.icon">
-                  <button style=background:url(../image/delete_icon.png) @click="deleteHobby(i)"></button>
+                  <button id="delete_interest_btn" @click="deleteHobby(i)"></button>
                   <p>{{data.name}}</p>
                 </td>
               </tr>
@@ -301,6 +301,7 @@ export default {
   width: auto;
   z-index: 20px;
   left: 96px;
+  background:url(../image/delete_icon.png);
 }
 
 #remove_btn{
