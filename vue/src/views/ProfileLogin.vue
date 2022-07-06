@@ -12,7 +12,7 @@
 
         <div class="profiles_display_container">
           <!--------Table------>
-          <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username,icon:item.icon}})">
+          <div class="profiles_display_content" v-for="item in userinfo" @click=next(item)>
             <table >
               <tr>
                 <td><img  :src="item.icon"></td>
@@ -60,6 +60,19 @@ export default {
   methods:{
     refreshUser(){
       this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    },
+    handleAccess(row){
+      localStorage.setItem("profile", JSON.stringify(row));
+      this.$router.push({
+        name: 'ProfileDetailView',
+        params:{
+          profileId: this.form.id
+        }
+      })
+    },
+    next(item){
+      localStorage.setItem("profile", JSON.stringify(item));
+      this.$router.push('/taponfriend')
     },
     load(){
       this.refreshUser();

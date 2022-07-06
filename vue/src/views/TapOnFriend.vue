@@ -22,7 +22,7 @@
 
         <div class="myprofile_addfriend">
           <!-- <input type="input" placeholder="add a friend"/></td> -->
-          <button style="margin: 20px auto">Add Firends</button>
+          <button style="margin: 20px auto" @click="next()">Add Firends</button>
         </div>
 
         <div class="myprofile_display_container">
@@ -76,12 +76,14 @@ export default {
   name: "TapOnFriend",
   data() {
     return {
+      username: null,
       friendTableData: [],
       profile: localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
     }
   },
   created() {
     this.load();
+    this.username = this.profile.username;
   },
   methods: {
 
@@ -93,6 +95,9 @@ export default {
     load(){
       this.refreshProfile();
       this.getAllFriends();
+    },
+    next(){
+      this.$router.push('/addfriend')
     },
     getAllFriends(){
       request.get("/profile/friendList", {

@@ -7,10 +7,21 @@
       <div class="addprofiles_form_title"><p>Personal Info</p></div>
 
       <el-form v-model="form" label-width="80px" style="margin-left: 30px;">
-
-        <el-form-item label="Owner ID">
-          <el-input v-model="form.owner" />
+        <el-form-item label="Upload Profile Icon">
+          <el-upload
+              class="avatar-uploader"
+              action="http://localhost:9090/file/upload"
+              :show-file-list="false"
+              :on-change="handleLicensePreview"
+              :before-upload="beforeLicenseUpload"
+              :on-success="handleAvatarSuccess"
+              :headers="uploadHeaders"
+          >
+            <img v-if="this.img != null" :src="this.img" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+          </el-upload>
         </el-form-item>
+
         <el-form-item label="Profile Name">
           <el-input v-model="form.username" />
         </el-form-item>
@@ -21,12 +32,7 @@
           </el-radio-group>
 
         </el-form-item>
-        <el-form-item label="Friend List">
-          <el-input v-model="form.friend" />
-        </el-form-item>
-        <el-form-item label="Hobby List">
-          <el-input v-model="form.hobby" />
-        </el-form-item>
+
         <el-form-item label="Age">
           <el-input v-model="form.age" />
         </el-form-item>
@@ -48,7 +54,7 @@
         </el-form-item>
         <el-form-item>
           <div>
-            <el-button @click="dialogProfileVisible = false" class="form-button">Cancel</el-button>
+            <el-button @click="$router.push('/profilelogin')" class="form-button">Cancel</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -75,17 +81,118 @@ export default {
   data(){
     return{
       form:{},
+      img : null,
+      uploadHeaders:{},
       rules: {
         username: [
           {required: true, message: 'please input username', trigger: 'blur'},
         ],
-      },userinfo :null
+      },
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+      // profile: localStorage.getItem("profile") ?  JSON.parse(localStorage.getItem("profile")) : null,
+      userinfo :null,
+
     }
   },
   created() {
-    this.load();
+    // this.load();
+    this.uploadHeaders.token = this.user.token;
+    console.log('profile');
+
+    // console.log(this.profile.id);
+    // this.form.id = this.profile.id;
+
   },
   methods: {
+    // bindFormId(){
+    //   this.form.id =
+    // },
+    onSubmit(){
+      if (this.form.id){
+        console.log("update");
+        request.put("/profile", this.form).then(res =>{
+          console.log(res);
+          if (res.code === '200'){
+            this.$message({
+              type: "success",
+              message: "Successfully update user"
+            })
+          }else{
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.$router.push('/profilelogin')
+          // this.load();
+          // this.dialogProfileVisible=false;
+        });
+      }else{
+        console.log("create");
+        console.log(this.form);
+        if (this.form.level !== 1 && this.form.level !== 2){
+          this.form.level = 1;
+        }
+        console.log(this.form);
+        request.post("/profile/create", this.form).then(res =>{
+          console.log(res);
+          if (res.code === '200'){
+            this.$message({
+              type: "success",
+              message: "Successfully add hobby"
+            })
+          }else{
+            this.$message({
+              type: "error",
+              message: res.msg
+            })
+          }
+          this.$router.push('/profilelogin')
+
+          // this.load();
+          // this.dialogProfileVisible=false;
+        });
+      }
+    },
+    handleLicensePreview(res){
+      const isLt2M = res.size / 1024 / 1024 < 2;
+      if (!isLt2M) {
+        this.$message.error('Avatar picture size can not exceed 2MB!');
+      } else {
+        //store file
+        // this.img = URL.createObjectURL(res.raw);
+      }
+    },
+    handleAvatarSuccess(res){
+      // console.log(res);
+      this.form.icon = res;
+
+      this.img = res;
+      console.log(this.img)
+      this.load();
+      this.$message({
+        type: "success",
+        message: "Successfully upload file"
+      })
+    },
+    beforeLicenseUpload(res){
+      //console.log(res);
+      if (res.type !== 'image/jpeg' && res.type !== 'image/png' && res.type !== 'image/jpg') {
+        this.$message({
+          type: "error",
+          message: 'Avatar picture must be JPG format!'
+        })
+        return false
+      } else if (res.size / 1024 / 1024 > 2) {
+        this.$message({
+          type: "error",
+          message: 'Avatar picture size can not exceed 2MB!'
+        })
+        return false
+      }
+      return true
+
+    },
     refreshUser(){
       this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
 
@@ -288,18 +395,7 @@ export default {
   border-radius: 5px;
   margin-left: 40px;
 }
-/* .addprofiles_logout button{
-    height: 44px;
-    width: 240px;
-    background-color: #bfa0c8;
-    border: 0px;
-    margin-top: 20px;
-    font-size: 18px;
-    color:white;
-    margin-bottom: 40px;
-    border-radius: 5px;
 
-} */
 
 
 </style>
