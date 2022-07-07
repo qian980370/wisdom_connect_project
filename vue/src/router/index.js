@@ -30,6 +30,8 @@ import Flayout from "@/layout/Flayout";
 import FastCodeView from "@/views/BackendManagerViews/FastCodeView";
 import ProfileDemoView from "@/views/BackendManagerViews/ProfileDemoView";
 import ProfileDetailDemo from "@/views/BackendManagerViews/ProfileDetailDemo";
+import AddFriend from "@/views/AddFriend";
+// import NewProfile from "@/views/NewProfile";
 
 
 const routes = [
@@ -115,6 +117,7 @@ const routes = [
     name: 'FacilitySignup',
     component: FacilitySignup
   },
+
   {
     path: '/resetpassword',
     name: 'ResetPassword',
@@ -169,6 +172,11 @@ const routes = [
     path: '/taponfriend',
     name: 'TapOnFriend',
     component: TapOnFriend
+  },
+  {
+    path: '/addfriend',
+    name: 'AddFriend',
+    component: AddFriend
   },
   {
     path: '/videocall',

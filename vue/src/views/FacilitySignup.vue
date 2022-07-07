@@ -153,26 +153,26 @@ export default {
         ],
         password:[
             {required:true,message:'please input the password',trigger: 'blur'},
-            {min: 3, max: 8, message: 'invalid password', trigger: 'blur'}],
+            {min: 3, max: 8, message: 'valid password length should be 3 to 8', trigger: 'blur'}],
         address: [
           { required: true, message: 'please input the address', trigger: 'blur' }
 
         ],
         abn: [
           { required: true, message: 'please input the abn', trigger: 'blur' },
-          {validator(rule, value, callback){
-              const reg= /^[a-zA-Z][\w-. @]*$/;
-              if(value === '' || value === undefined){
-                callback();
-              }else {
-                if (!reg.test(value)){
-                  callback(new Error('要求为：英文字母开头，后续为字母数字及_-. @符号'));
-                }else {
-                  callback();
-                }
-              }
-            },
-            trigger: 'blur'}
+          // {validator(rule, value, callback){
+          //     const reg= /^[a-zA-Z][\w-. @]*$/;
+          //     if(value === '' || value === undefined){
+          //       callback();
+          //     }else {
+          //       if (!reg.test(value)){
+          //         callback(new Error('要求为：英文字母开头，后续为字母数字及_-. @符号'));
+          //       }else {
+          //         callback();
+          //       }
+          //     }
+          //   },
+          //   trigger: 'blur'}
 
         ],
         email:[

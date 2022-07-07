@@ -3,14 +3,7 @@
 <!--    <h2>wisdom connect</h2>-->
 <!--  </div>-->
   <div style="width: 100%; height: 120vh;  overflow: hidden">
-    <div class="logo_and_title">
-      <table>
-        <tr>
-          <td><img  src="../image/logo.png" alt="logo"></td>
-          <td><h1>Wisdom Connect</h1></td>
-        </tr>
-      </table>
-    </div>
+    <wisdom-header></wisdom-header>
 
 
     <div class="profiles_container">
@@ -19,7 +12,7 @@
 
         <div class="profiles_display_container">
           <!--------Table------>
-          <div class="profiles_display_content" v-for="item in userinfo" @click="this.$router.push({name:'TapOnFriend',params:{userId:item.id,userName:item.username,icon:item.icon}})">
+          <div class="profiles_display_content" v-for="item in userinfo" @click=next(item)>
             <table >
               <tr>
                 <td><img  :src="item.icon"></td>
@@ -48,12 +41,15 @@
 
 <script>
 import request from "@/utils/request";
+import WisdomHeader from '../components/WisdomHeader.vue'
+
 
 export default {
   name: "ProfileLogin",
+  components:{WisdomHeader},
   data(){
     return{
-      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
+      user : null,
 
       userinfo :null
     }
@@ -64,6 +60,19 @@ export default {
   methods:{
     refreshUser(){
       this.user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {}
+    },
+    handleAccess(row){
+      localStorage.setItem("profile", JSON.stringify(row));
+      this.$router.push({
+        name: 'ProfileDetailView',
+        params:{
+          profileId: this.form.id
+        }
+      })
+    },
+    next(item){
+      localStorage.setItem("profile", JSON.stringify(item));
+      this.$router.push('/taponfriend')
     },
     load(){
       this.refreshUser();

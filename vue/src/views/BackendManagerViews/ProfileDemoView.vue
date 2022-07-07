@@ -188,6 +188,7 @@ export default {
         });
       }else{
         console.log("create");
+        this.form.owner = this.user.id;
         console.log(this.form);
         if (this.form.level !== 1 && this.form.level !== 2){
           this.form.level = 1;

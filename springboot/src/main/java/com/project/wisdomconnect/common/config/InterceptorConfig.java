@@ -19,7 +19,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 //                "/doc.html", "/webjars/**", "/swagger-resources/**");
 
         registry.addInterceptor(managerAuthInterceptor())
-                .addPathPatterns("/fastcode/**", "/**/page", "/profile/page-controller")
+//                .addPathPatterns("/fastcode/**", "/**/page", "/profile/page-controller")
+                .addPathPatterns("/fastcode/**", "/profile/page-controller")
                 .excludePathPatterns("/fastcode/create");
     }
     @Bean

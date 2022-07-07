@@ -1,17 +1,6 @@
 <template>
   <div style="width: 100%; height: 100vh;  overflow: hidden">
-<!--    <div class="header">-->
-<!--      <h2>wisdom connect</h2>-->
-<!--    </div>-->
-
-    <div class="logo_and_title">
-      <table>
-        <tr>
-          <td><img  src="../image/logo.png" alt="logo"></td>
-          <td><h1>Wisdom Connect</h1></td>
-        </tr>
-      </table>
-    </div>
+    <wisdom-header></wisdom-header>
 
     <div class="login_container">
       <div class="login_form">
@@ -53,9 +42,11 @@ import { ElButton } from 'element-plus'
 import { ElFormItem } from 'element-plus'
 import request from "@/utils/request";
 
+import WisdomHeader from '../components/WisdomHeader.vue'
+
 export default {
   name: "FacilityLoginView",
-  components: {Money, MapLocation, LocationFilled, Document, Setting, Lock, User},
+  components: {Money, MapLocation, LocationFilled, Document, Setting, Lock, User, WisdomHeader},
   data(){
     return{
       loginForm:{},

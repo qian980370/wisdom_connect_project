@@ -46,6 +46,9 @@ public class ProfileController {
         if (!Objects.equals(user.getRole(), "manager")){
             profile.setOwner(user.getId());
         }
+        if (Objects.equals(user.getRole(), "manager") && profile.getOwner() == null){
+            profile.setOwner(user.getId());
+        }
         // check is there any duplicated data in database
         try{
             Profile res2 = profileMapper.selectOne(Wrappers.<Profile>lambdaQuery().eq(Profile::getUsername, profile.getUsername()));
