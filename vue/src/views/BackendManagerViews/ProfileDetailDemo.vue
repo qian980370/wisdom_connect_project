@@ -362,7 +362,7 @@ export default {
     //   this.dialogVisible = false;
     // },
     load(){
-      this.refreshProfile();
+      // this.refreshProfile();
       this.getAllFriends();
       this.getRandomFriends();
       this.getFriendsRequest();
@@ -377,6 +377,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
+        console.log("data test")
         console.log(res);
         this.friendTableData = res.data;
       })

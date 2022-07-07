@@ -35,7 +35,7 @@
                 <td v-for="(data,i) in row " :key="i">
                   <div class="interests_display_content_img">
                     <img :src="data.icon">
-                    <button id="delete_interest_btn" @click="deleteHobby(i)"></button>
+                    <button id="delete_interest_btn" @click="deleteHobby(data.id)"></button>
                   </div>
                   <p>{{data.name}}</p>
                 </td>
@@ -266,7 +266,7 @@ export default {
   width: 100px;
   height: 100px;
   cursor: pointer;
-  z-index: 0px;
+  z-index: 0;
 }
 
 .interests_display_content td{
@@ -301,7 +301,7 @@ export default {
   position: absolute;
   height: 30px;
   width: 30px;
-  z-index: 20px;
+  z-index: 20;
   left: 96px;
   background: url("../image/delete_icon.png") no-repeat;
   background-size: 28px 28px;
