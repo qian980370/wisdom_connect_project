@@ -321,6 +321,9 @@ export default {
   },
   data(){
     return{
+      websocket: null,
+      webSocketURL: 'ws://localhost:9090/chat',
+
       privacy: '123',
       form: {},
       query: '',
@@ -347,10 +350,58 @@ export default {
     }
 
   },
+
   created() {
     this.load();
+
+    this.initialWebSocket()
+  },
+  destroyed() {
+    this.websocket.close()
   },
   methods:{
+    initialWebSocket(){
+      this.webSocketURL = 'ws://localhost:9090/chat/' + this.profile.id
+      if(typeof WebSocket === 'undefined'){
+        return console.log('your browser is not support websocket')
+      }
+      this.websocket = new WebSocket(this.webSocketURL)
+      this.websocket.onmessage = this.websocketOnMessage
+      this.websocket.onopen = this.websocketOnOpen
+      this.websocket.onerror = this.websocketOnError
+      this.websocket.onclose = this.websocketClose
+
+    },
+    websocketOnOpen() {
+
+      let actions = { test: 'test' }
+      this.websocketSend(JSON.stringify(actions))
+    },
+    websocketOnError() {
+      // 连接建立失败重连
+      this.initialWebSocket()
+    },
+    websocketOnMessage(e) {
+      // 数据接收
+      let res = JSON.parse(e.data)
+      console.log('receive: ', res)
+      if (res.isSystem) {
+        let onlineName = res.message;
+        this.getAllFriends();
+
+      }else {
+
+      }
+    },
+    websocketSend(Data) {
+
+      this.websocket.send(Data)
+    },
+    websocketClose(e) {
+
+      console.log('close connection', e)
+    },
+
 
     refreshProfile(){
       this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
