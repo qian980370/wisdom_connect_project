@@ -347,6 +347,7 @@ export default {
       blockTableData:[
       ],
       profile : localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : null,
+      user : localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : null,
     }
 
   },
@@ -374,7 +375,7 @@ export default {
     },
     websocketOnOpen() {
 
-      let actions = { test: 'test' }
+      let actions = { token: this.user.token, profileName: this.profile.username }
       this.websocketSend(JSON.stringify(actions))
     },
     websocketOnError() {
@@ -383,15 +384,9 @@ export default {
     },
     websocketOnMessage(e) {
       // 数据接收
-      let res = JSON.parse(e.data)
-      console.log('receive: ', res)
-      if (res.isSystem) {
-        let onlineName = res.message;
-        this.getAllFriends();
-
-      }else {
-
-      }
+      // let res = JSON.parse(e.data)
+      console.log('receive: ', e.data)
+      this.getAllFriends()
     },
     websocketSend(Data) {
 
