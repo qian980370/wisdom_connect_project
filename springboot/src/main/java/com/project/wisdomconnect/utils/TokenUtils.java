@@ -66,4 +66,24 @@ public class TokenUtils {
             return null;
         }
     }
+
+    /**
+     * get user information for backend
+     * @return
+     */
+    public static User decodeToken(String token) {
+        try {
+            if (StrUtil.isNotBlank(token)){
+                String aud = JWT.decode(token).getAudience().get(0);
+                Integer userId = Integer.valueOf(aud);
+                return staticUserMapper.selectById(userId);
+            }else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            log.error("analysis token fail", e);
+            return null;
+        }
+    }
 }

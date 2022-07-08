@@ -11,8 +11,8 @@ public class Chat {
     @TableId(type = IdType.AUTO)
     private Integer id;
     private Integer holderone;
-    private String holdertwo;
+    private Integer holdertwo;
     private String message;
-    private String calling;
+    private Integer calling;
 
 }

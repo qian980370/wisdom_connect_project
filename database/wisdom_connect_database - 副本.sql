@@ -1,16 +1,32 @@
+/*
+ Navicat Premium Data Transfer
 
+ Source Server         : local
+ Source Server Type    : MySQL
+ Source Server Version : 50737
+ Source Host           : localhost:3306
+ Source Schema         : wisdom_connect_database
 
+ Target Server Type    : MySQL
+ Target Server Version : 50737
+ File Encoding         : 65001
+
+ Date: 09/07/2022 02:04:51
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
 -- Table structure for blockrelationship
 -- ----------------------------
-
+DROP TABLE IF EXISTS `blockrelationship`;
 CREATE TABLE `blockrelationship`  (
   `id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `profileid` int(8) UNSIGNED ZEROFILL NOT NULL,
   `blockid` int(8) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (`id`, `profileid`, `blockid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of blockrelationship
@@ -20,7 +36,7 @@ INSERT INTO `blockrelationship` VALUES (00000002, 00000001, 00000008);
 -- ----------------------------
 -- Table structure for call
 -- ----------------------------
-
+DROP TABLE IF EXISTS `call`;
 CREATE TABLE `call`  (
   `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `starter` int(8) UNSIGNED ZEROFILL NOT NULL,
@@ -28,7 +44,7 @@ CREATE TABLE `call`  (
   `link` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `finished` int(2) NOT NULL DEFAULT 0 COMMENT '0 is means call is not done',
   PRIMARY KEY (`id`, `starter`, `receiver`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of call
@@ -37,25 +53,33 @@ CREATE TABLE `call`  (
 -- ----------------------------
 -- Table structure for chat
 -- ----------------------------
-
+DROP TABLE IF EXISTS `chat`;
 CREATE TABLE `chat`  (
-  `id` int(8) NOT NULL,
-  `holderone` int(8) NOT NULL,
-  `holdertwo` int(8) NOT NULL,
+  `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `holderone` int(8) UNSIGNED ZEROFILL NOT NULL,
+  `holdertwo` int(8) UNSIGNED ZEROFILL NOT NULL,
   `message` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
-  `calling` int(2) NOT NULL DEFAULT 0,
+  `calling` int(2) NOT NULL DEFAULT 0 COMMENT '0 is oncall, 1 is chatting, 2 is refuse, 3 is noresponse, 4 is closed',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 20253 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of chat
 -- ----------------------------
-INSERT INTO `chat` VALUES (1982541823, 1982541826, 1982541825, NULL, 0);
+INSERT INTO `chat` VALUES (0000020244, 00000001, 00000009, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020245, 00000001, 00000009, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020246, 00000007, 00000001, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020247, 00000009, 00000001, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020248, 00000009, 00000001, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020249, 00000001, 00000007, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020250, 00000009, 00000007, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020251, 00000009, 00000007, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020252, 00000009, 00000007, 'need url', 0);
 
 -- ----------------------------
 -- Table structure for fastcode
 -- ----------------------------
-
+DROP TABLE IF EXISTS `fastcode`;
 CREATE TABLE `fastcode`  (
   `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `md5` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
@@ -68,7 +92,7 @@ CREATE TABLE `fastcode`  (
   `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
   `state` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT 'wait for code',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of fastcode
@@ -79,11 +103,12 @@ INSERT INTO `fastcode` VALUES (00000000006, '44a5d03f0b067e1b76649f857efb3645', 
 INSERT INTO `fastcode` VALUES (00000000007, 'aa94f2c611e593d4c22af66fbd51e7bc', 'abc', 2, 'facility', '804404826@qq.com', '123', '123', 'teskNike', 'done');
 INSERT INTO `fastcode` VALUES (00000000008, '4366bf1779a72e3c756f5a6c2091c6d2', '926', 2, 'facility', 'anniesun9873@gmail.com', '802934795066', '37 Sunflower Street', 'Sunflower', 'done');
 INSERT INTO `fastcode` VALUES (00000000009, 'c160a12e422c024695dac71d9519a376', NULL, NULL, 'facility', '123132', '12313', '121121', '1231', 'wait for code');
+INSERT INTO `fastcode` VALUES (00000000010, '627a1ddf32e77a53a53a1311598ead77', NULL, NULL, 'facility', '12312@qq.com', 'a123123', '1231', '2132123', 'wait for code');
 
 -- ----------------------------
 -- Table structure for file
 -- ----------------------------
-
+DROP TABLE IF EXISTS `file`;
 CREATE TABLE `file`  (
   `id` int(11) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT COMMENT 'id',
   `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'file name',
@@ -95,7 +120,7 @@ CREATE TABLE `file`  (
   `enable` tinyint(1) NULL DEFAULT 1 COMMENT 'enable or disable',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uni_md5`(`md5`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of file
@@ -116,24 +141,28 @@ INSERT INTO `file` VALUES (00000000027, 'p2.png', 'png', 3, '8945f2acb4719791db8
 -- ----------------------------
 -- Table structure for friendrelationship
 -- ----------------------------
-
+DROP TABLE IF EXISTS `friendrelationship`;
 CREATE TABLE `friendrelationship`  (
   `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `profileid1` int(8) UNSIGNED ZEROFILL NOT NULL,
   `profileid2` int(8) UNSIGNED ZEROFILL NOT NULL,
   `state` int(1) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 is waiting for response',
   PRIMARY KEY (`id`, `profileid1`, `profileid2`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of friendrelationship
 -- ----------------------------
-INSERT INTO `friendrelationship` VALUES (0000000002, 00000009, 00000001, 1);
+INSERT INTO `friendrelationship` VALUES (0000000003, 00000001, 00000009, 1);
+INSERT INTO `friendrelationship` VALUES (0000000004, 00000001, 00000005, 0);
+INSERT INTO `friendrelationship` VALUES (0000000005, 00000009, 00000005, 0);
+INSERT INTO `friendrelationship` VALUES (0000000006, 00000001, 00000007, 1);
+INSERT INTO `friendrelationship` VALUES (0000000007, 00000009, 00000007, 1);
 
 -- ----------------------------
 -- Table structure for hobby
 -- ----------------------------
-
+DROP TABLE IF EXISTS `hobby`;
 CREATE TABLE `hobby`  (
   `id` int(7) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -141,7 +170,7 @@ CREATE TABLE `hobby`  (
   `tophobbyname` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `icon` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of hobby
@@ -156,24 +185,25 @@ INSERT INTO `hobby` VALUES (0000006, 'NBA 2K22', 2, 'Video Game', 'http://localh
 -- ----------------------------
 -- Table structure for hobbyrelationship
 -- ----------------------------
-
+DROP TABLE IF EXISTS `hobbyrelationship`;
 CREATE TABLE `hobbyrelationship`  (
   `id` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `profileid` int(8) UNSIGNED ZEROFILL NOT NULL,
   `hobbyid` int(8) UNSIGNED ZEROFILL NOT NULL,
   PRIMARY KEY (`id`, `profileid`, `hobbyid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of hobbyrelationship
 -- ----------------------------
 INSERT INTO `hobbyrelationship` VALUES (0000000001, 00000001, 00000001);
 INSERT INTO `hobbyrelationship` VALUES (0000000003, 00000001, 00000004);
+INSERT INTO `hobbyrelationship` VALUES (0000000004, 00000001, 00000006);
 
 -- ----------------------------
 -- Table structure for profile
 -- ----------------------------
-
+DROP TABLE IF EXISTS `profile`;
 CREATE TABLE `profile`  (
   `id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `owner` int(8) NOT NULL,
@@ -186,23 +216,23 @@ CREATE TABLE `profile`  (
   `oncall` int(2) NOT NULL DEFAULT 0,
   `last_login` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of profile
 -- ----------------------------
-INSERT INTO `profile` VALUES (00000001, 2, '123', 0, 12, 'male', 'http://localhost:9090/file/download/8a8e2c028a79435f8a697b4d530e4036.jpg', 0, 0, NULL);
+INSERT INTO `profile` VALUES (00000001, 2, '123', 0, 12, 'secret', 'http://localhost:9090/file/download/8a8e2c028a79435f8a697b4d530e4036.jpg', 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000002, 3, 'haha', 0, 31, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000005, 4, 'xixi', 0, 22, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000006, 2, '321', 0, 22, 'female', 'http://localhost:9090/file/download/8a8e2c028a79435f8a697b4d530e4036.jpg', 0, 0, NULL);
-INSERT INTO `profile` VALUES (00000007, 3, 'aa', 1, 22, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
+INSERT INTO `profile` VALUES (00000007, 3, 'aa', 0, 22, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000008, 3, 'bb', 0, 22, 'male', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 INSERT INTO `profile` VALUES (00000009, 4, 'cc', 0, 33, 'female', 'http://localhost:9090/file/download/c9b95e67af8549c684cf9bb1674f069b.png', 0, 0, NULL);
 
 -- ----------------------------
 -- Table structure for user
 -- ----------------------------
-
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `id` int(8) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
@@ -215,7 +245,7 @@ CREATE TABLE `user`  (
   `role` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL DEFAULT '0',
   `code` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
@@ -227,4 +257,4 @@ INSERT INTO `user` VALUES (00000006, 'testDavid', '123', '22@aa.com', '07/05/202
 INSERT INTO `user` VALUES (00000007, 'teskNike', '123', '804404826@qq.com', '10/05/2022 21:27:56', NULL, '123', '123', 'facility', NULL);
 INSERT INTO `user` VALUES (00000008, 'Sunflower', '123', 'anniesun9873@gmail.com', '11/05/2022 13:44:24', NULL, '37 Sunflower Street', '802934795066', 'facility', NULL);
 
-
+SET FOREIGN_KEY_CHECKS = 1;

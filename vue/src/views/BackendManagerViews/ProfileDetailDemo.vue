@@ -49,6 +49,13 @@
 
       <el-table-column fixed="right" label="Operations" width="200px">
         <template #default="scope">
+
+          <el-popconfirm title="Are you sure to call this?" @confirm="callFriend(scope.row.id)">
+            <template #reference>
+              <el-button type="text" size="small" >Call</el-button>
+            </template>
+          </el-popconfirm>
+
           <el-popconfirm title="Are you sure to delete this?" @confirm="deleteFriend(scope.row.id)">
             <template #reference>
               <el-button type="text" size="small" >Delete</el-button>
@@ -303,7 +310,37 @@
 
     </el-table>
 
+    <el-dialog id="chatForm" v-model="dialogChatVisible1" :title=this.roomId width="30%" :before-close="chatClose">
+      <div style="width: 85%">
 
+        <el-form>
+          <el-form-item :label="this.state">
+
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="chatAccept" :disabled="this.disableAccept">Accept</el-button>
+            <el-button @click="chatClose">Refuse</el-button>
+          </el-form-item>
+        </el-form>
+
+      </div>
+    </el-dialog>
+
+    <el-dialog id="chatForm2" v-model="dialogChatVisible2" :title=this.roomId width="30%" :before-close="chatClose">
+      <div style="width: 85%">
+
+        <el-form>
+          <el-form-item :label="this.state">
+
+          </el-form-item>
+          <el-form-item>
+
+            <el-button @click="chatClose">Refuse</el-button>
+          </el-form-item>
+        </el-form>
+
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -323,6 +360,12 @@ export default {
     return{
       websocket: null,
       webSocketURL: 'ws://localhost:9090/chat',
+      oncall: false,
+      roomId: null,
+      dialogChatVisible1: false,
+      dialogChatVisible2: false,
+      disableAccept : false,
+      state: 'no call',
 
       privacy: '123',
       form: {},
@@ -351,18 +394,32 @@ export default {
     }
 
   },
+  watch:{
+    $route(to,from){
+      this.websocket.close()
+      if (this.oncall){
+        this.chatClose()
+      }
+    }
+  },
 
   created() {
     this.load();
 
     this.initialWebSocket()
   },
+
+
   destroyed() {
     this.websocket.close()
+    if (this.oncall){
+      console.log("des")
+      this.chatClose()
+    }
   },
   methods:{
     initialWebSocket(){
-      this.webSocketURL = 'ws://localhost:9090/chat/' + this.profile.id
+      this.webSocketURL = 'ws://localhost:9090/chat/' + this.user.token + '/' + this.profile.id
       if(typeof WebSocket === 'undefined'){
         return console.log('your browser is not support websocket')
       }
@@ -375,8 +432,30 @@ export default {
     },
     websocketOnOpen() {
 
-      let actions = { token: this.user.token, profileName: this.profile.username }
-      this.websocketSend(JSON.stringify(actions))
+
+    },
+    chatAccept(){
+      this.disableAccept = true
+      let callForm = {};
+      callForm.sender = this.profile.id
+      callForm.receiver = this.roomId
+      this.state = 'calling';
+      callForm.message = "1"
+
+      this.websocketSend(JSON.stringify(callForm))
+    },
+    chatClose(){
+      let callForm = {};
+      callForm.sender = this.profile.id
+      callForm.receiver = this.roomId
+      callForm.message = "2"
+
+      this.websocketSend(JSON.stringify(callForm))
+      this.state = 'no call';
+      this.oncall = false;
+      this.roomId = null;
+      this.dialogChatVisible1 = false;
+      this.dialogChatVisible2 = false;
     },
     websocketOnError() {
       // 连接建立失败重连
@@ -384,8 +463,54 @@ export default {
     },
     websocketOnMessage(e) {
       // 数据接收
-      // let res = JSON.parse(e.data)
-      console.log('receive: ', e.data)
+      let res = JSON.parse(e.data)
+      console.log('receive: ', res)
+      if (res.isSystem){ //friend online offline notifications
+        this.$message({
+          type: "success",
+          message: res.message + "; friend: " + res.fromName
+        })
+      }else {
+        if (res.isGetRoomID){ // room build
+          this.oncall = true;
+
+          this.roomId = res.message;
+
+
+          //get room information
+          request.get("/chatcontroller/room", {
+            params: {
+              roomID: this.roomId,
+            }
+          }).then(res2 =>{
+            if(res2.data.holderone === this.profile.id){ //current user is chat sender
+              this.dialogChatVisible2 = true
+            }else { //current user is chat receiver
+              this.dialogChatVisible1 = true
+            }
+            this.state = 'on call';
+          })
+        }else {
+          if(res.message == 1){
+            this.state = 'calling';
+          }else {
+            this.$message({
+              type: "error",
+              message: "your friend closed your call"
+            })
+
+            this.state = 'no call';
+            this.oncall = false;
+            this.roomId = null;
+            this.dialogChatVisible1 = false;
+            this.dialogChatVisible2 = false;
+          }
+
+
+
+        }
+      }
+
       this.getAllFriends()
     },
     websocketSend(Data) {
@@ -395,6 +520,19 @@ export default {
     websocketClose(e) {
 
       console.log('close connection', e)
+    },
+
+    callFriend(id){
+      //console.log(id)
+
+      let callForm = {};
+      callForm.sender = this.profile.id
+      callForm.receiver = id
+      callForm.message = "need url"
+
+      this.websocketSend(JSON.stringify(callForm))
+
+
     },
 
 
@@ -408,7 +546,7 @@ export default {
     //   this.dialogVisible = false;
     // },
     load(){
-      // this.refreshProfile();
+      this.refreshProfile();
       this.getAllFriends();
       this.getRandomFriends();
       this.getFriendsRequest();
@@ -423,8 +561,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log("data test")
-        console.log(res);
+        // console.log(res);
         this.friendTableData = res.data;
       })
     },
@@ -434,7 +571,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res);
+        // console.log(res);
         this.hobbyTableData = res.data;
       })
     },
@@ -444,7 +581,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res);
+        // console.log(res);
         this.randomHobbyTableData = res.data;
       })
     },
@@ -503,7 +640,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res);
+        // console.log(res);
         this.blockTableData = res.data;
       })
     },
@@ -514,7 +651,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res);
+        // console.log(res);
         this.friendRequestTableData = res.data;
       })
     },
@@ -525,7 +662,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        console.log(res);
+        // console.log(res);
         this.randomFriendTableData = res.data;
       })
     },
