@@ -79,6 +79,10 @@
       <span>Random Friends</span>
     </div>
     <div style="margin: 10px 0">
+      <el-input v-model="query" placeholder="please input information of file name to search" style="width: 20%" clearable></el-input>
+      <el-button type="primary" style="margin-left: 7px" @click="searchUser">Search</el-button>
+    </div>
+    <div style="margin: 10px 0">
       <el-button type="primary" @click="getRandomFriends">Random Friend</el-button>
     </div>
     <el-table :data="randomFriendTableData" border stripe style="width: 100%">
@@ -358,6 +362,7 @@ export default {
   },
   data(){
     return{
+
       websocket: null,
       webSocketURL: 'ws://localhost:9090/chat',
       oncall: false,
@@ -369,7 +374,7 @@ export default {
 
       privacy: '123',
       form: {},
-      query: '',
+      query: null,
       search: '',
       //store the friend list data
       friendTableData:[
@@ -418,6 +423,17 @@ export default {
     }
   },
   methods:{
+    searchUser(){
+      request.get("/profile/searchProfile", {
+        params: {
+          profileID: this.profile.id,
+          query: this.query
+        }
+      }).then(res =>{
+        // console.log(res);
+        this.randomFriendTableData = res.data;
+      })
+    },
     initialWebSocket(){
       this.webSocketURL = 'ws://localhost:9090/chat/' + this.user.token + '/' + this.profile.id
       if(typeof WebSocket === 'undefined'){
@@ -505,12 +521,8 @@ export default {
             this.dialogChatVisible1 = false;
             this.dialogChatVisible2 = false;
           }
-
-
-
         }
       }
-
       this.getAllFriends()
     },
     websocketSend(Data) {
@@ -561,7 +573,7 @@ export default {
           profileID: this.profile.id,
         }
       }).then(res =>{
-        // console.log(res);
+        console.log(res);
         this.friendTableData = res.data;
       })
     },
