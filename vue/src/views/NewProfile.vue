@@ -237,13 +237,7 @@ export default {
 </script>
 
 <style scoped>
-#logo_and_title{
-  width: 400px;
-  height: 120px;
-  text-align: center;
-  padding-left: 37%;
-  padding-top: 2%;
-}
+
 .addprofiles_container{
   /* background: url('jack-finnigan-M9EctVUPrp4-unsplash.jpg') no-repeat center center fixed; */
 

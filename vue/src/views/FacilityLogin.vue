@@ -90,13 +90,7 @@ export default {
 </script>
 
 <style scoped>
-.logo_and_title{
-  width: 400px;
-  height: 120px;
-  text-align: center;
-  padding-left: 37%;
-  padding-top: 2%;
-}
+
 .logo_and_title img{
   width: 80px;
 }
