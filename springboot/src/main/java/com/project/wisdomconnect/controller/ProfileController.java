@@ -96,6 +96,48 @@ public class ProfileController {
         return Result.success(profilePage);
     }
 
+    //http://127.0.0.1:9090/user?pageNum=1&pageSize=1&query=
+    @GetMapping("/searchProfile")
+    public Result<?> searchProfile(@RequestParam Integer profileID,
+                              @RequestParam String query){
+        User user = TokenUtils.getUser();
+        LambdaQueryWrapper<Profile> profileWrapper = Wrappers.<Profile>lambdaQuery().orderByAsc(Profile::getId);
+        if (StrUtil.isNotBlank(query)) {
+            profileWrapper.like(Profile::getUsername, query);
+        }
+        profileWrapper.like(Profile::getPrivacy, 0);
+
+
+        //check block
+        LambdaQueryWrapper<BlockRelationship> blockWrapper = Wrappers.<BlockRelationship>lambdaQuery().orderByAsc(BlockRelationship::getId);
+        blockWrapper.like(BlockRelationship::getProfileid, profileID).or().like(BlockRelationship::getBlockid, profileID);
+        List<BlockRelationship> blockResult = blockRelationshipMapper.selectList(blockWrapper);
+
+        Integer target;
+        boolean isFirst = true;
+
+        for (BlockRelationship f : blockResult){
+            if (!Objects.equals(f.getProfileid(), profileID)){
+                target = f.getProfileid();
+            }else {
+                target = f.getBlockid();
+            }
+            if (isFirst){
+                profileWrapper.notLike(Profile::getId, target).and(i -> i.notLike(Profile::getId, profileID));
+                isFirst = false;
+            }else{
+                final Integer res = target;
+                profileWrapper.and(i -> i.notLike(Profile::getId, res));
+            }
+        }
+        List<Profile> profileCollection;
+
+        profileCollection = profileMapper.selectList(profileWrapper);
+
+        return Result.success(profileCollection);
+    }
+
+
     @GetMapping("/page-manager")
     public Result<?> findPageManager(@RequestParam(defaultValue = "1") Integer pageNum,
                               @RequestParam(defaultValue = "10") Integer pageSize,
