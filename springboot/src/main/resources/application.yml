@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/wisdom_connect_database?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
-    username: root
-    password: 15853198730
+    url: jdbc:mysql://erictest.mysql.database.azure.com:3306/wisdom_connect_database?useSSL=true
+    username: eric
+    password: Zzq980730
   mvc:
     hiddenmethod:
       filter:
