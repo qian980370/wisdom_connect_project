@@ -37,7 +37,7 @@
             <p>Blocked Lists</p>
           </div>
 
-          <div class="me_display_content_logout" @click="$router.push('/facilitylogin')">
+          <div class="me_display_content_logout" @click="logout()">
             <p>Logout</p>
           </div>
         </div>
@@ -76,12 +76,19 @@ export default {
   methods: {
     refreshProfile() {
       this.profile = localStorage.getItem("profile") ? JSON.parse(localStorage.getItem("profile")) : {}
-      // console.log(this.profile);
+      console.log(this.profile);
       this.privacy = this.profile.privacy;
     },
     load(){
       this.refreshProfile();
     },
+    cleanLocalStorage(){
+      localStorage.clear();
+    },
+    logout(){
+      this.cleanLocalStorage();
+      this.$router.push('/facilitylogin');
+    }
 
   }
 }

@@ -28,7 +28,7 @@
         </div>
 
         <div class="profiles_logout">
-          <button id="logout_btn" @click="$router.push('/facilitylogin')">Log out</button>
+          <button id="logout_btn" @click="logout()">Log out</button>
         </div>
 
 
@@ -85,9 +85,18 @@ export default {
       }).then(res =>{
         console.log(res);
         this.userinfo = res.data.records
+        console.log(res.data.records);
+
         // this.tableData = res.data.records;
         // this.total = res.data.total;
       })
+    },
+    cleanLocalStorage(){
+      localStorage.clear();
+    },
+    logout(){
+      this.cleanLocalStorage();
+      this.$router.push('/facilitylogin');
     }
   }
 }
