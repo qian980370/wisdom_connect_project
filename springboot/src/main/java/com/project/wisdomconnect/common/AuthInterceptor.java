@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String token = request.getHeader("token");
 
         if (StrUtil.isBlank(token)) {
-            System.out.println(Constants.CODE_301_MESSAGE + "1");
+            System.out.println(Constants.CODE_301_MESSAGE + "normal auth not pass 1");
             throw new ServiceException(Constants.CODE_301, Constants.CODE_301_MESSAGE);
 
         }
@@ -35,7 +35,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         Integer userId = Integer.valueOf(JWT.decode(token).getAudience().get(0));
         User user = userMapper.selectById(userId);
         if (user == null) {
-            System.out.println(Constants.CODE_301_MESSAGE + "2");
+            System.out.println(Constants.CODE_301_MESSAGE + "normal auth not pass 2");
             throw new ServiceException(Constants.CODE_301, Constants.CODE_301_MESSAGE);
         }
         // verify token
@@ -43,7 +43,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         try {
             jwtVerifier.verify(token);
         } catch (Exception e) {
-            System.out.println(Constants.CODE_301_MESSAGE + "3");
+            System.out.println(Constants.CODE_301_MESSAGE + "normal auth not pass 3");
             throw new ServiceException(Constants.CODE_301, Constants.CODE_301_MESSAGE);
         }
         return true;

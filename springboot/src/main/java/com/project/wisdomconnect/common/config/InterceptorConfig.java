@@ -21,7 +21,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(managerAuthInterceptor())
 //                .addPathPatterns("/fastcode/**", "/**/page", "/profile/page-controller")
                 .addPathPatterns("/fastcode/**", "/profile/page-controller")
-                .excludePathPatterns("/fastcode/create");
+                .excludePathPatterns("/fastcode/create", "/file/download/**");
     }
     @Bean
     public AuthInterceptor authInterceptor(){

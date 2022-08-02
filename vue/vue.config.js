@@ -5,7 +5,7 @@ module.exports = {
     port: 8080,
     proxy: {
       '/api': {
-        target: 'http://localhost:9090',
+        target: 'http://ericbackend.azurewebsites.net/',
         changeOrigin: true,
         pathRewrite: {
           '/api': ''

@@ -364,7 +364,7 @@ export default {
     return{
 
       websocket: null,
-      webSocketURL: 'ws://localhost:9090/chat',
+      webSocketURL: 'ws://ericbackend.azurewebsites.net/chat',
       oncall: false,
       roomId: null,
       dialogChatVisible1: false,
@@ -435,10 +435,11 @@ export default {
       })
     },
     initialWebSocket(){
-      this.webSocketURL = 'ws://localhost:9090/chat/' + this.user.token + '/' + this.profile.id
+      this.webSocketURL = 'ws://ericbackend.azurewebsites.net/chat/' + this.user.token + '/' + this.profile.id
       if(typeof WebSocket === 'undefined'){
         return console.log('your browser is not support websocket')
       }
+      console.log(this.webSocketURL)
       this.websocket = new WebSocket(this.webSocketURL)
       this.websocket.onmessage = this.websocketOnMessage
       this.websocket.onopen = this.websocketOnOpen
