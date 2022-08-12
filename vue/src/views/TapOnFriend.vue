@@ -41,6 +41,10 @@
               <tr >
                 <td><img :src="item.url"></td>
                 <td><p>{{ item.username }}</p></td>
+                <td class="myprofile_display_content_status">
+                  <p>online</p>
+                  <p>available</p>
+                </td>
               </tr>
             </table>
           </div>
@@ -379,7 +383,9 @@ export default {
   color:#864a98;
   font-weight: bold;
 }
-
+.myprofile_display_content_status p{
+  font-size: 6px;
+}
 .myprofile_talk_to_sb_new{
   width: 400px;
   height: 120px;
