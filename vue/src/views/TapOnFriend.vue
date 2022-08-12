@@ -44,6 +44,7 @@
                 <td class="myprofile_display_content_status">
                   <p>online</p>
                   <p>available</p>
+                  <button id="call_a_friend_btn"></button>
                 </td>
               </tr>
             </table>
@@ -385,6 +386,16 @@ export default {
 }
 .myprofile_display_content_status p{
   font-size: 6px;
+}
+
+#call_a_friend_btn{
+  height: 30px;
+  width: 30px;
+  z-index: 20px;
+  left: 96px;
+  background: url(../image/call_icon.png) no-repeat;
+  background-size: 28px 28px;
+  border: none;
 }
 .myprofile_talk_to_sb_new{
   width: 400px;
