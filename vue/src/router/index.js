@@ -39,7 +39,7 @@ const routes = [
     path: '/',
     name: 'Layout',
     component: Layout,
-    redirect: "/home",
+    redirect: "/personal",
     children: [
       {
         path: 'home',
