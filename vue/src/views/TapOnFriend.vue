@@ -41,9 +41,9 @@
               <tr >
                 <td><img :src="item.url"></td>
                 <td><p>{{ item.username }}</p></td>
-                <td class="myprofile_display_content_status">
-                  <p>online</p>
-                  <p>available</p>
+                <td>
+                  <p class="myprofile_display_content_status_online">online</p>
+                  <p class="myprofile_display_content_status_available">available</p>
                   <button id="call_a_friend_btn"></button>
                 </td>
               </tr>
@@ -384,10 +384,21 @@ export default {
   color:#864a98;
   font-weight: bold;
 }
-.myprofile_display_content_status p{
+.myprofile_display_content_status_online{
+  font-size: 6px;
+  color: green;
+}
+.myprofile_display_content_status_offline{
+  font-size: 6px;
+  color: red;
+}
+.myprofile_display_content_status_available{
   font-size: 6px;
 }
-
+.myprofile_display_content_status_unavailable{
+  font-size: 6px;
+  color: gray;
+}
 #call_a_friend_btn{
   height: 30px;
   width: 30px;
