@@ -6,11 +6,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.project.wisdomconnect.common.Constants;
 import com.project.wisdomconnect.common.Result;
-import com.project.wisdomconnect.entity.Chat;
-import com.project.wisdomconnect.entity.FriendRelationship;
-import com.project.wisdomconnect.entity.Profile;
-import com.project.wisdomconnect.entity.User;
+import com.project.wisdomconnect.entity.*;
 import com.project.wisdomconnect.mapper.ChatMapper;
+import com.project.wisdomconnect.mapper.ConferenceMapper;
 import com.project.wisdomconnect.mapper.FriendRelationshipMapper;
 import com.project.wisdomconnect.mapper.ProfileMapper;
 import com.project.wisdomconnect.utils.MessageUtils;
@@ -41,6 +39,9 @@ public class ChatEndpoint {
     @Autowired
     ChatMapper chatMapper;
 
+    @Autowired
+    ConferenceMapper conferenceMapper;
+
     //store the client end sessions
     private static Map<Integer, Session> onlineSessions  = new ConcurrentHashMap<>();
 
@@ -52,6 +53,7 @@ public class ChatEndpoint {
         chatEndpoint.profileMapper = this.profileMapper;
         chatEndpoint.friendRelationshipMapper = this.friendRelationshipMapper;
         chatEndpoint.chatMapper = this.chatMapper;
+        chatEndpoint.conferenceMapper = this.conferenceMapper;
     }
 
 
@@ -307,6 +309,7 @@ public class ChatEndpoint {
 
 
             //build room
+
             Chat chat = new Chat();
 
             chat.setMessage(dict.get("message"));

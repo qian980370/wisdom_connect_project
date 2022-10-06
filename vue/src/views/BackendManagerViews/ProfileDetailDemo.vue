@@ -321,6 +321,8 @@
           <el-form-item :label="this.state">
 
           </el-form-item>
+          <el-form-item :label="this.message">
+          </el-form-item>
           <el-form-item>
             <el-button type="primary" @click="chatAccept" :disabled="this.disableAccept">Accept</el-button>
             <el-button @click="chatClose">Refuse</el-button>
@@ -337,9 +339,11 @@
           <el-form-item :label="this.state">
 
           </el-form-item>
+          <el-form-item :label="this.message">
+          </el-form-item>
           <el-form-item>
 
-            <el-button @click="chatClose">Refuse</el-button>
+            <el-button @click="chatClose">Close</el-button>
           </el-form-item>
         </el-form>
 
@@ -362,9 +366,13 @@ export default {
   },
   data(){
     return{
-
+      message: null,
+      conferenceRoomID: null,
+      conference: null,
+      pin: null,
       websocket: null,
-      webSocketURL: 'ws://ericbackend.azurewebsites.net/chat',
+      //webSocketURL: 'ws://ericbackend.azurewebsites.net/chat/',
+      webSocketURL: 'ws://localhost:9090/chat/',
       oncall: false,
       roomId: null,
       dialogChatVisible1: false,
@@ -412,6 +420,7 @@ export default {
     this.load();
 
     this.initialWebSocket()
+    this.releaseConferenceRoom();
   },
 
 
@@ -434,12 +443,20 @@ export default {
         this.randomFriendTableData = res.data;
       })
     },
+
+    //initial websocket state
     initialWebSocket(){
-      this.webSocketURL = 'ws://ericbackend.azurewebsites.net/chat/' + this.user.token + '/' + this.profile.id
+      //send token and profile id to backend, please follow the below format
+      // this.webSocketURL = 'ws://ericbackend.azurewebsites.net/chat/' + this.user.token + '/' + this.profile.id
+      this.webSocketURL = 'ws://localhost:9090/chat/' + this.user.token + '/' + this.profile.id
+      // check the supporting of your browser
       if(typeof WebSocket === 'undefined'){
         return console.log('your browser is not support websocket')
       }
+      // debug log
       console.log(this.webSocketURL)
+
+      // store websocket attribute
       this.websocket = new WebSocket(this.webSocketURL)
       this.websocket.onmessage = this.websocketOnMessage
       this.websocket.onopen = this.websocketOnOpen
@@ -451,26 +468,39 @@ export default {
 
 
     },
+    // click accept when get a call request
     chatAccept(){
       this.disableAccept = true
+
+      // call form is used to build websocket request
       let callForm = {};
+      // sender is current user's profile id
       callForm.sender = this.profile.id
+      // receiver is used to save the chat room id
       callForm.receiver = this.roomId
+      // update your state
       this.state = 'calling';
+      // message = 1 is means this is a call acceptance websocket request
       callForm.message = "1"
 
       this.websocketSend(JSON.stringify(callForm))
     },
     chatClose(){
-      let callForm = {};
-      callForm.sender = this.profile.id
-      callForm.receiver = this.roomId
-      callForm.message = "2"
 
+      // call form is used to build websocket request
+      let callForm = {};
+      // sender is current user's profile id
+      callForm.sender = this.profile.id
+      // receiver is used to save the chat room id
+      callForm.receiver = this.roomId
+      // message = 2 is means this is a call disacceptance websocket request
+      callForm.message = "2"
+      this.releaseConferenceRoom();
       this.websocketSend(JSON.stringify(callForm))
       this.state = 'no call';
       this.oncall = false;
       this.roomId = null;
+      this.message = null;
       this.dialogChatVisible1 = false;
       this.dialogChatVisible2 = false;
     },
@@ -479,16 +509,16 @@ export default {
       this.initialWebSocket()
     },
     websocketOnMessage(e) {
-      // 数据接收
+      // receive websocket reply or broadcast message
       let res = JSON.parse(e.data)
       console.log('receive: ', res)
-      if (res.isSystem){ //friend online offline notifications
+      if (res.isSystem){ //friend online offline notifications; broadcast message
         this.$message({
           type: "success",
           message: res.message + "; friend: " + res.fromName
         })
       }else {
-        if (res.isGetRoomID){ // room build
+        if (res.isGetRoomID){ // room build, receive chat room id; Be attention Chat room is different with pxiep conference node room
           this.oncall = true;
 
           this.roomId = res.message;
@@ -500,6 +530,9 @@ export default {
               roomID: this.roomId,
             }
           }).then(res2 =>{
+
+            this.message = res2.data.message;
+
             if(res2.data.holderone === this.profile.id){ //current user is chat sender
               this.dialogChatVisible2 = true
             }else { //current user is chat receiver
@@ -507,15 +540,15 @@ export default {
             }
             this.state = 'on call';
           })
-        }else {
-          if(res.message == 1){
+        }else { //accept or refuse call feedback message
+          if(res.message == 1){ //accept
             this.state = 'calling';
-          }else {
+          }else { //refuse
             this.$message({
               type: "error",
               message: "your friend closed your call"
             })
-
+            this.releaseConferenceRoom();
             this.state = 'no call';
             this.oncall = false;
             this.roomId = null;
@@ -535,15 +568,74 @@ export default {
       console.log('close connection', e)
     },
 
+    // get conference room
+    getConferenceRoom(id){
+      request.get("/conference/getRoom", {
+        params: {
+          profileID: this.profile.id,
+        }
+      }).then(res =>{
+        // console.log(res);
+        if (res.code === '200') {
+          this.conferenceRoom = res.data
+          this.conference = res.data.conferenceid;
+          this.pin = res.data.pin;
+          this.$message({
+            type: "success",
+            message: "successfully get a room"
+          })
+          //console.log(this.conferenceRoom);
+          let callForm = {};
+          callForm.sender = this.profile.id;
+          callForm.receiver = id;
+          callForm.message = "node-" + this.conference + ";pin-" + this.pin;
+          this.websocketSend(JSON.stringify(callForm))
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+      })
+    },
+
+
+    // get conference room
+    releaseConferenceRoom(){
+      let releaseRoomRequestForm;
+      releaseRoomRequestForm = {};
+
+      releaseRoomRequestForm.profileID = this.profile.id;
+      releaseRoomRequestForm.targetID = null;
+      request.post("/conference/releaseRoom", releaseRoomRequestForm).then(res =>{
+        // console.log(res);
+        if (res.code === '200') {
+          this.conferenceRoom = null;
+          this.conference = null;
+          this.pin = null;
+          this.$message({
+            type: "success",
+            message: "successfully release a room"
+          })
+
+        } else {
+          this.$message({
+            type: "error",
+            message: res.msg
+          })
+        }
+      })
+    },
+
     callFriend(id){
       //console.log(id)
 
-      let callForm = {};
-      callForm.sender = this.profile.id
-      callForm.receiver = id
-      callForm.message = "need url"
 
-      this.websocketSend(JSON.stringify(callForm))
+
+
+      this.getConferenceRoom(id);
+      //因为异步问题，所以websocket部分移交至this.getConferenceRoom()内部执行
+
 
 
     },

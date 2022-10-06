@@ -28,6 +28,9 @@ public interface Constants {
     String CODE_415 = "415"; // profile id missed
     String CODE_416 = "416"; // database result unmatched issue
     String CODE_417 = "417"; // repeat request error
+    String CODE_418 = "418"; // room unavailable error
+    String CODE_419 = "419"; // user has own a room error
+    String CODE_420 = "420"; // user not have a room error
 
     String CODE_200_MESSAGE = "success"; // SUCCESS
     String CODE_500_MESSAGE = "system error"; // system error
@@ -52,4 +55,7 @@ public interface Constants {
     String CODE_415_MESSAGE = "profile id missed"; // profile id missed
     String CODE_416_MESSAGE = "database result unmatched issue"; // database result unmatched issue
     String CODE_417_MESSAGE = "repeat request error"; // repeat request error
+    String CODE_418_MESSAGE = "room unavailable error"; // room unavailable error
+    String CODE_419_MESSAGE = "user has own a room error"; // user has own a room error
+    String CODE_420_MESSAGE = "user not have a room error"; // user not have a room error
 }
