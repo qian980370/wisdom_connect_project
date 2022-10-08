@@ -11,7 +11,7 @@
  Target Server Version : 50737
  File Encoding         : 65001
 
- Date: 26/07/2022 17:22:04
+ Date: 08/10/2022 22:27:44
 */
 
 SET NAMES utf8mb4;
@@ -61,7 +61,7 @@ CREATE TABLE `chat`  (
   `message` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NULL DEFAULT NULL,
   `calling` int(2) NOT NULL DEFAULT 0 COMMENT '0 is oncall, 1 is chatting, 2 is refuse, 3 is noresponse, 4 is closed',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 20264 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 20279 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of chat
@@ -84,6 +84,42 @@ INSERT INTO `chat` VALUES (0000020260, 00000001, 00000009, 'need url', 2);
 INSERT INTO `chat` VALUES (0000020261, 00000001, 00000007, 'need url', 2);
 INSERT INTO `chat` VALUES (0000020262, 00000001, 00000009, 'need url', 2);
 INSERT INTO `chat` VALUES (0000020263, 00000001, 00000007, 'need url', 2);
+INSERT INTO `chat` VALUES (0000020264, 00000001, 00000009, 'node', 2);
+INSERT INTO `chat` VALUES (0000020265, 00000001, 00000009, 'node', 2);
+INSERT INTO `chat` VALUES (0000020266, 00000001, 00000009, 'node', 2);
+INSERT INTO `chat` VALUES (0000020267, 00000001, 00000009, 'node', 2);
+INSERT INTO `chat` VALUES (0000020268, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020269, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020270, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020271, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020272, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020273, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020274, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020275, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020276, 00000001, 00000009, 'node-null;pin-null', 2);
+INSERT INTO `chat` VALUES (0000020277, 00000001, 00000009, 'node-VMR1;pin-1234', 2);
+INSERT INTO `chat` VALUES (0000020278, 00000001, 00000009, 'node-VMR1;pin-1234', 2);
+
+-- ----------------------------
+-- Table structure for conference
+-- ----------------------------
+DROP TABLE IF EXISTS `conference`;
+CREATE TABLE `conference`  (
+  `id` int(6) NOT NULL COMMENT 'database id',
+  `conferenceID` varchar(8) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'conferenece room id',
+  `pin` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL COMMENT 'conferenece room pin',
+  `participantLimit` int(2) NOT NULL DEFAULT 4 COMMENT 'maximum participant number of a room',
+  `participantCurr` int(2) NOT NULL DEFAULT 0 COMMENT 'participant in the room',
+  `available` int(1) NOT NULL DEFAULT 1 COMMENT '1 is avaliable, 0 is unavaliable',
+  `tenant` int(8) NULL DEFAULT NULL COMMENT 'holder of room',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = latin1 COLLATE = latin1_swedish_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of conference
+-- ----------------------------
+INSERT INTO `conference` VALUES (1, 'VMR1', '1234', 4, 0, 1, NULL);
+INSERT INTO `conference` VALUES (2, 'VMR2', '1234', 4, 0, 1, NULL);
 
 -- ----------------------------
 -- Table structure for fastcode
